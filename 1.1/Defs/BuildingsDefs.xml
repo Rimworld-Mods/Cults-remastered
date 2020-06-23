@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!-- /////////////////////
+		Cults Research Bench -->
+
+	<ThingDef ParentName="BenchBase">
+		<defName>Cults_OccultResearchBench</defName>
+		<label>occult research bench</label>
+		<description>A simplistic table covered in strange symbols, notes, and a tome of forbidden knowledge. Researchers work here to uncover forces beyond. Prolonged usage will result in sanity loss, yet the rewards will be worthwhile.</description>
+		<thingClass>Building_ResearchBench</thingClass>
+		<size>(3,2)</size>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Woody</li>
+			<li>Stony</li>
+		</stuffCategories>
+		<costStuffCount>100</costStuffCount>
+		<costList>
+			<!-- <Cults_Grimoire>1</Cults_Grimoire> -->
+		</costList>
+		<graphicData>
+			<texPath>Building/OccultResearchBench/OccultResearchBench</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<shaderType>CutoutComplex</shaderType>
+			<drawSize>(4,4)</drawSize>
+			<damageData>
+				<cornerTL>Damage/Corner</cornerTL>
+				<cornerTR>Damage/Corner</cornerTR>
+				<cornerBL>Damage/Corner</cornerBL>
+				<cornerBR>Damage/Corner</cornerBR>
+			</damageData>
+		</graphicData>
+		<castEdgeShadows>true</castEdgeShadows>
+		<staticSunShadowHeight>0.20</staticSunShadowHeight>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>PassThroughOnly</passability>
+		<pathCost>70</pathCost>
+		<statBases>
+			<MaxHitPoints>250</MaxHitPoints>
+			<WorkToBuild>2800</WorkToBuild>
+			<Flammability>1.0</Flammability>
+			<ResearchSpeedFactor>0.6</ResearchSpeedFactor>
+		</statBases>
+		<placeWorkers>
+			<li>PlaceWorker_PreventInteractionSpotOverlap</li>
+		</placeWorkers>
+		<fillPercent>0.5</fillPercent>
+		<interactionCellOffset>(0,0,-1)</interactionCellOffset>
+		<hasInteractionCell>true</hasInteractionCell>
+		<designationCategory>Cults_DesignationCategory</designationCategory>
+		<surfaceType>Item</surfaceType>
+	</ThingDef>
+
+	<!-- /////////////////////
+	Cults Altar -->
+
+	<ThingDef ParentName="BenchBase">
+		<defName>Cults_StandardAltar</defName>
+		<label>cult altar</label>
+		<thingClass>Cults.Building_StandardAltar</thingClass>
+		<description>A solid surface on which to elevate speeches of worship to extra-cosmic entities.</description>
+		<tickerType>Rare</tickerType>
+		<thingCategories>
+			<li>BuildingsMisc</li>
+		</thingCategories>
+		<graphicData>
+			<texPath>Building/Altar/StandardAltar/StandardAltar</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<shaderType>CutoutComplex</shaderType>
+			<drawSize>(4.0,2.0)</drawSize>
+			<damageData>
+				<cornerTL>Damage/Corner</cornerTL>
+				<cornerTR>Damage/Corner</cornerTR>
+				<cornerBL>Damage/Corner</cornerBL>
+				<cornerBR>Damage/Corner</cornerBR>
+			</damageData>
+		</graphicData>
+		<drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+		<defaultPlacingRot>South</defaultPlacingRot>
+		<minifiedDef>MinifiedThing</minifiedDef>
+		<socialPropernessMatters>true</socialPropernessMatters>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Woody</li>
+			<li>Stony</li>
+		</stuffCategories>
+		<costStuffCount>125</costStuffCount>
+		<altitudeLayer>Building</altitudeLayer>
+		<fillPercent>0.5</fillPercent>
+		<useHitPoints>True</useHitPoints>
+		<statBases>
+			<WorkToBuild>12500</WorkToBuild>
+			<MaxHitPoints>300</MaxHitPoints>
+			<Flammability>1.0</Flammability>
+			<Beauty>10</Beauty>
+			<JoyGainFactor>1</JoyGainFactor>
+			<Mass>70</Mass>
+		</statBases>
+		<size>(3,1)</size>
+		<designationCategory>Cults_DesignationCategory</designationCategory>
+		<passability>PassThroughOnly</passability>
+		<pathCost>70</pathCost>
+		<hasInteractionCell>true</hasInteractionCell>
+		<interactionCellOffset>(0,0,-1)</interactionCellOffset>
+		<surfaceType>Item</surfaceType>
+		<inspectorTabs>
+			<li>Cults.ITab_Worship</li>
+		</inspectorTabs>
+		<building>
+			<spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+			<watchBuildingStandDistanceRange>
+				<min>1</min>
+				<max>9</max>
+			</watchBuildingStandDistanceRange>
+			<watchBuildingStandRectWidth>3</watchBuildingStandRectWidth>
+		</building>
+		<researchPrerequisites>
+			<li>Cults_ForbiddenAltar</li>
+		</researchPrerequisites>
+		<placeWorkers>
+			<li>PlaceWorker_WatchArea</li>
+		</placeWorkers>
+		<comps>
+			<li>
+				<compClass>CompQuality</compClass>
+			</li>
+		</comps>
+		<designationHotKey>Misc2</designationHotKey>
+	</ThingDef>
+
+</Defs>
