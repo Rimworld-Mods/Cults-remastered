@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThinkTreeDef>
+        <defName>Cults_InsertHookTest</defName>
+        <insertTag>Humanlike_PreMain</insertTag>
+        <insertPriority>15</insertPriority>
+        <!-- <thinkRoot Class="JobGiver_WanderMapEdge" /> -->
+        <!-- <thinkRoot Class="Cults.JobGiver_Worship" /> -->
+
+        <thinkRoot Class="ThinkNode_Tagger">
+            <subNodes>
+                <li Class="ThinkNode_PrioritySorter">
+                    <subNodes>
+                        <li Class="JobGiver_GetFood"/>
+                        <!-- <li Class="JobGiver_GetRest"/> -->
+                        <li Class="JobGiver_SatisfyChemicalNeed"/>
+                        <li Class="JobGiver_TakeDrugsForDrugPolicy"/>
+                        <li Class="JobGiver_MoveDrugsToInventory"/>
+                        <!--
+                        <li Class="JobGiver_MeditateInBed"/>
+                        <li Class="ThinkNode_Priority_GetJoy">
+                            <subNodes>
+                                <li Class="JobGiver_GetJoy"/>
+                                <li Class="JobGiver_GetJoyInBed"/>
+                            </subNodes>
+                        </li>
+                        -->
+                        <li Class="Cults.JobGiver_Worship"/>
+                    </subNodes>
+                </li>
+            </subNodes>
+        </thinkRoot>
+    </ThinkTreeDef>
+
+    <JobDef>
+        <defName>Cults_Job_Worship</defName>
+        <driverClass>Cults.JobDriver_Worship</driverClass>
+        <reportString>Worshiping.</reportString>
+    </JobDef>
+    <!--
+    <ThinkTreeDef>
+        <defName>Cults_ThinkTree_Worship</defName>
+        <insertTag>Humanlike_PreMain</insertTag>
+        <insertPriority>104</insertPriority>
+        <thinkRoot Class="ThinkNode_Priority">
+            <subNodes>
+                <li Class="ThinkNode_ConditionalMentalState">
+                    <state>Cults_DeepSleepCarcosa</state>
+                    <subNodes>
+                        <li Class="ThinkNode_Priority">
+                            <subNodes>
+                                <li Class="CultOfCthulhu.JobGiver_DeepSleepCarcosa">
+                                </li>
+                            </subNodes>
+                        </li>
+                    </subNodes>
+                </li>
+                <li Class="ThinkNode_ConditionalMentalState">
+                    <state>Cults_Disillusioned</state>
+                    <subNodes>
+                        <li Class="ThinkNode_Priority">
+                            <subNodes>
+                                <li Class="CultOfCthulhu.JobGiver_Disillusioned">
+                                </li>
+                            </subNodes>
+                        </li>
+                    </subNodes>
+                </li>
+            </subNodes>
+        </thinkRoot>
+    </ThinkTreeDef>
+-->
+</Defs>

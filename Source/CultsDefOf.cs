@@ -20,8 +20,30 @@ namespace Cults
     [DefOf]
     public static class CultsDefOf
     {
-        public static LetterDef Cults_Letter;
-        public static TimeAssignmentDef Cults_Worship;
-        public static ThingDef Cults_StandardAltar;
+        //-------------------------------------------------------
+        // General
+        public static LetterDef Cults_Letter_Success;
+        public static TimeAssignmentDef Cults_TimeAssignment_Worship;
+
+        //-------------------------------------------------------
+        // Buildings
+        //public static ThingDef Cults_Building_StandardAltar;
+
+        //-------------------------------------------------------
+        // AI, think, work
+        public static ThinkTreeDef Cults_InsertHookTest;
+        public static JobDef Cults_Job_Worship;
+
+        //-------------------------------------------------------
+        // Items
+        
+        //-------------------------------------------------------
+        // Cosmic entities
+        public static CosmicEntityDef Cults_CosmicEntity_Cthulhu;
+        public static CosmicEntityDef Cults_CosmicEntity_Bast;
+        public static CosmicEntityDef Cults_CosmicEntity_Hastur;
+
+        //-------------------------------------------------------
+        // ...
     }
 }

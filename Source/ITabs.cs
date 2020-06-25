@@ -195,23 +195,6 @@ namespace Cults{
             */
         }
     }
-
-
-    public class Cults_MainTabWindow_Restrict : MainTabWindow_Restrict {
-        public override void PostOpen()
-		{
-			base.PostOpen();
-            Log.Message("Open");
-		}
-
-        public override void DoWindowContents(Rect fillRect)
-		{
-			base.DoWindowContents(fillRect);
-            Log.Message("Drawing");
-		}
-    }
-
-
     
     [StaticConstructorOnStartup]
 	internal class TexButton

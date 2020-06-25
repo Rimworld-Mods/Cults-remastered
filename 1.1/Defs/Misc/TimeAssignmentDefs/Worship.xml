@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <TimeAssignmentDef>
-    <defName>Cults_Worship</defName>
+    <defName>Cults_TimeAssignment_Worship</defName>
     <label>worship</label>
     <color>(225,50,50)</color>
   </TimeAssignmentDef>
