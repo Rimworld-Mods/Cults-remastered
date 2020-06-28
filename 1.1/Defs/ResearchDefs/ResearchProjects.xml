@@ -5,6 +5,14 @@
         <requiredResearchBuilding>Cults_OccultResearchBench</requiredResearchBuilding>
         <techLevel>Neolithic</techLevel>
         <tab>Cults_ResearchTab</tab>
+        <modExtensions>
+            <li Class="Cults.ForbiddenResearchExtension" />
+        </modExtensions>
+        <!--
+        <requiredResearchFacilities>
+            <li>Cults_Building_StandardAltar</li>
+        </requiredResearchFacilities>
+        -->
     </ResearchProjectDef>
 
     <!-- //////////////////////////////////// -->

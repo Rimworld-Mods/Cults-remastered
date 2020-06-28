@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>	
+	<!-- MainTab button -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/MainButtonDef[defName="Restrict"]/tabWindowClass</xpath>
+		<value>
+			<tabWindowClass>Cults.MainTabWindow_Restrict</tabWindowClass>
+		</value>
+	</Operation>
+	
+	<!-- Research job -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/WorkGiverDef[giverClass="WorkGiver_Researcher"]/giverClass</xpath>
+		<value>
+			<giverClass>Cults.WorkGiver_CultResearcher</giverClass>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/JobDef[driverClass="JobDriver_Research"]/driverClass</xpath>
+		<value>
+			<driverClass>Cults.JobDriver_CultResearch</driverClass>
+		</value>
+	</Operation>
+</Patch>

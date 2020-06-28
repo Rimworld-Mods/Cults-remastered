@@ -40,10 +40,21 @@ namespace Cults
         //-------------------------------------------------------
         // Cosmic entities
         public static CosmicEntityDef Cults_CosmicEntity_Cthulhu;
-        public static CosmicEntityDef Cults_CosmicEntity_Bast;
+        public static CosmicEntityDef Cults_CosmicEntity_Nyarlathotep;
+        public static CosmicEntityDef Cults_CosmicEntity_Dagon;
         public static CosmicEntityDef Cults_CosmicEntity_Hastur;
+        public static CosmicEntityDef Cults_CosmicEntity_Shub;
+        public static CosmicEntityDef Cults_CosmicEntity_Tsathoggua;
+        public static CosmicEntityDef Cults_CosmicEntity_Bast;
 
         //-------------------------------------------------------
-        // ...
+        // Research
+        public static ResearchProjectDef Cults_ForbiddenSculptures;
+        public static ThingDef Cults_Building_StandardAltar;
+
+        //-------------------------------------------------------
+        // Vanilla
+        public static ThingDef SimpleResearchBench;
+        public static ThingDef HiTechResearchBench;
     }
 }

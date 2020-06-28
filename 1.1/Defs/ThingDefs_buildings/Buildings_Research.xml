@@ -8,7 +8,7 @@
 		<defName>Cults_OccultResearchBench</defName>
 		<label>occult research bench</label>
 		<description>A simplistic table covered in strange symbols, notes, and a tome of forbidden knowledge. Researchers work here to uncover forces beyond. Prolonged usage will result in sanity loss, yet the rewards will be worthwhile.</description>
-		<thingClass>Building_ResearchBench</thingClass>
+		<thingClass>Cults.Building_OccultResearchBench</thingClass>
 		<size>(3,2)</size>
 		<stuffCategories>
 			<li>Metallic</li>
@@ -50,5 +50,27 @@
 		<hasInteractionCell>true</hasInteractionCell>
 		<designationCategory>Cults_DesignationCategory</designationCategory>
 		<surfaceType>Item</surfaceType>
+		<tickerType>Normal</tickerType>
+		
+		<comps>
+		<!--
+			<li Class="Cults.CompProperties_OccultResearch">
+				<item>Shit</item>
+				<amount>32</amount>
+			</li>
+			-->
+
+		<!--
+				<li Class="CompProperties_Forbiddable" />
+			-->
+		<!--
+
+			-->
+		    <li Class="CompProperties_AffectedByFacilities">
+				<linkableFacilities>
+					<li>MultiAnalyzer</li>
+				</linkableFacilities>
+			</li>
+		</comps>
 	</ThingDef>
 </Defs>

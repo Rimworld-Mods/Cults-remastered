@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <RoomRoleDef>
+        <defName>Cults_RoomRole_Temple</defName>
+        <label>temple</label>
+        <workerClass>Cults.RoomRoleWorker_Temple</workerClass>
+    </RoomRoleDef>
+</Defs>

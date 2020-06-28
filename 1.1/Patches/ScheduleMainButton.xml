@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Patch>
-  <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/MainButtonDef[defName="Restrict"]/tabWindowClass</xpath>
-    <value>
-        <tabWindowClass>Cults.MainTabWindow_Restrict</tabWindowClass>
-    </value>
-  </Operation>
-</Patch>

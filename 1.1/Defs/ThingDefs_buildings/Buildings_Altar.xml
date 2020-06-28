@@ -53,7 +53,9 @@
 		<interactionCellOffset>(0,0,-1)</interactionCellOffset>
 		<surfaceType>Item</surfaceType>
 		<inspectorTabs>
+			<li>Cults.ITab_Sacrifice</li>
 			<li>Cults.ITab_Worship</li>
+			<li>Cults.ITab_AltarDebug</li>
 		</inspectorTabs>
 		<building>
 			<spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>

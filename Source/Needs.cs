@@ -13,7 +13,7 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
-
+// TODO: rename to cult affinity
 namespace Cults{
     public class DivineAffinity : Need{
 
@@ -49,6 +49,4 @@ namespace Cults{
             //Log.Message("Need Interval");
         }
     }
-
-
 }

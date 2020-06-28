@@ -13,53 +13,96 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
-// https://github.com/roxxploxx/RimWorldModGuide/wiki
+//using System.Reflection;
+//using HarmonyLib;
+
+/*
+First deity is discovered via research, rest of them via worship
+New scheduled work type - Worship
+Sermons now occur (with a small chance) when 3 or more colonists worship at the same time
+No more occult research center forbid, pawns will use this bench only if current research project is occult one.
+
+Finish forship AI job
+*/
 
 namespace Cults
 {
-
-
     public class CultKnowledge : GameComponent
     {
-        public CultKnowledge(Game game){}
+        public CultKnowledge(Game game)
+        {
+        }
+        public static List<CosmicEntity> deities; // discovered deities
 
-        public static bool is_exposed;
-        public static CosmicEntityDef selected_deity;
-        public List<CosmicEntity> deities;
+        // Save
+        private static string cultName = "Unnamed cult";
+        public static bool isExposed;
+        public static bool performSermons;
+        public static CosmicEntityDef selectedDeity;
 
-		public override void LoadedGame()
-		{
-            Log.Message("Game is loaded! filling deity list");
-            deities = new List<CosmicEntity>();
-            deities.Add(new CosmicEntity(CultsDefOf.Cults_CosmicEntity_Cthulhu));
-            deities.Add(new CosmicEntity(CultsDefOf.Cults_CosmicEntity_Bast));
-            deities.Add(new CosmicEntity(CultsDefOf.Cults_CosmicEntity_Hastur));
-		}
+        // functions
+        public static void RenameCult(string n)
+        {
+            CultKnowledge.cultName = n;
+        }
+        public static string GetCultName() => CultKnowledge.cultName;
 
-        public override void FinalizeInit()
-		{
-            Log.Message("Game init!");
-		}
+
+        public override void FinalizeInit() // first
+        {
+        }
+        public override void LoadedGame() // second
+        {
+        }
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref is_exposed, "isExposed", false, true);
-            Scribe_Defs.Look(ref selected_deity, "selectedDeity");
-            Scribe_Collections.Look(ref deities, "deities", LookMode.Deep, deities);
-
-            /*
-            Dictionary<string, int> test = new Dictionary<string, int>();
-            test.Add("key1",23);
-            test.Add("key2",13);
-
-
-            Scribe_Collections.Look(ref test, "dict", LookMode.Value);
-            */
-
-
-
+            Scribe_Values.Look(ref isExposed, "isExposed", false, true);
+            Scribe_Values.Look(ref cultName, "cultName", "Unnamed cult", true);
+            Scribe_Values.Look(ref performSermons, "performSermons", true, true);
+            Scribe_Defs.Look(ref selectedDeity, "selectedDeity");
+            Scribe_Collections.Look(ref deities, "deities", LookMode.Deep);
         }
 
+        public static void DiscoverDeity()
+        {
+            List<CosmicEntityDef> available_defs = new List<CosmicEntityDef>{
+                Cults.CultsDefOf.Cults_CosmicEntity_Cthulhu,
+                Cults.CultsDefOf.Cults_CosmicEntity_Nyarlathotep,
+                Cults.CultsDefOf.Cults_CosmicEntity_Dagon,
+                Cults.CultsDefOf.Cults_CosmicEntity_Hastur,
+                Cults.CultsDefOf.Cults_CosmicEntity_Shub,
+                Cults.CultsDefOf.Cults_CosmicEntity_Tsathoggua,
+                Cults.CultsDefOf.Cults_CosmicEntity_Bast,
+            };
+
+            // remove duplicated
+            if(deities == null) deities = new List<CosmicEntity>();
+            foreach(CosmicEntity deity in deities)
+            {
+                for(int i = 0; i < available_defs.Count; i++)
+                {
+                    if(deity.def == available_defs[i]) {
+                        available_defs.RemoveAt(i);
+                        i -= 1;
+                    }
+                }
+            }
+
+            if(available_defs.Count == 0){
+                Log.Message("Discovered all deities");
+                return;
+            }
+
+            // select random and discover
+            System.Random rand = new System.Random();
+            int index = rand.Next() % available_defs.Count;
+            deities.Add(new CosmicEntity(available_defs[index]));
+            Messages.Message("Discovered " + available_defs[index].label, null, MessageTypeDefOf.PositiveEvent);
+
+            // sort list
+            deities.SortBy(d => d.def.index);
+        }
     }
 
     /*
@@ -73,31 +116,21 @@ namespace Cults
         }
     }
     */
-    
+
 
     [StaticConstructorOnStartup]
-    public static class MyMod
+    public static class Start
     {
-        static MyMod() //our constructor
+        static Start() // quick debug
         {
+            /*
+            Harmony harmony = new Harmony( "Arvkus.Cults" );
+            harmony.PatchAll( Assembly.GetExecutingAssembly() );
+            */
 
             Log.Message(ModsConfig.IsActive(ModContentPack.RoyaltyModPackageId).ToString());
-            Log.Message("Cults mod success"); //Outputs "Hello World!" to the dev console.
-            //
-
-            //CosmicEntity deity = new CosmicEntity(CultsDefOf.Cults_CosmicEntity_Cthulhu);
-            //Log.Message("list: " + deity.def.tiers[0]);
+            Log.Message("Cults mod success");
         }
     }
 
-
-    public class Building_StandardAltar : Building
-    {
-        public override void SpawnSetup(Map map, bool ral)
-        {
-            base.SpawnSetup(map, ral);
-            Log.Message("Built altar " + ral.ToString() + " !");
-            Log.Message("   " + this.def.label);
-        }
-    }
 }
