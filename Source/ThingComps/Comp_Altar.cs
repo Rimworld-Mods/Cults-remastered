@@ -13,22 +13,20 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
+
+
 namespace Cults
 {
-    class CompProperties_OccultResearch : CompProperties {
-
-        public string item = null;
-        public int amount = 0;
-        public CompProperties_OccultResearch()
+    class CompProperties_Altar : CompProperties {
+        public CompProperties_Altar()
 		{
-			this.compClass = typeof(CompSpawnerWombs);
+			this.compClass = typeof(CompAltar);
 		}
     }
 
-    public class CompSpawnerWombs : CompForbiddable //ThingComp
+    public class CompAltar : ThingComp
     {
-        public string message = "";
-        private CompProperties_OccultResearch Props => (CompProperties_OccultResearch)this.props;
+        //private CompProperties_Altar Props => (CompProperties_Altar)this.props;
 
         public override void PostSpawnSetup(bool raf) // respawn after laod
         {
@@ -36,39 +34,23 @@ namespace Cults
             //FieldInfo fieldInfo = typeof(ResearchProjectDef).GetField("researchMods", RSUUtil.universal);
         }
 
-        public override void PostDraw()
-        {
-        }
-        public override void PostExposeData()
-		{
-		}
-
-        public override void CompTick()
-        {
-        }
 
         public override string CompInspectStringExtra()
         {
-            string text = "Harmony: " + message;
-            return text;
+            return "inspect text";
         }
 
-        private bool f = false;
+        /*
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
 		{
             yield return new Command_Action
             {
                 defaultLabel = "DEBUG: Reproduce",
-                icon = TexCommand.Draft,
+                icon = ContentFinder<Texture2D>.Get("Commands/Altar/Upgrade2"),
                 action = delegate
                 {
-                    if(f){
-                        f = false;
-                        parent.SetForbidden(false);
-                    }else{
-                        f = true;
-                        parent.SetForbidden(true);
-                    }
+                    this.parent.def = CultsDefOf.Cults_Building_BloodAltar;
+                    this.parent.Notify_ColorChanged();
                     Log.Message("CLICK");
                     
                     
@@ -76,6 +58,7 @@ namespace Cults
             };
 			yield break;
 		}
+        */
 
     }
 

@@ -24,6 +24,7 @@ namespace Cults
         // General
         public static LetterDef Cults_Letter_Success;
         public static TimeAssignmentDef Cults_TimeAssignment_Worship;
+        public static NeedDef Cults_Need_Spirituality;
 
         //-------------------------------------------------------
         // Buildings
@@ -31,7 +32,6 @@ namespace Cults
 
         //-------------------------------------------------------
         // AI, think, work
-        public static ThinkTreeDef Cults_InsertHookTest;
         public static JobDef Cults_Job_Worship;
 
         //-------------------------------------------------------
@@ -49,12 +49,20 @@ namespace Cults
 
         //-------------------------------------------------------
         // Research
+        public static ResearchProjectDef Cults_ForbiddenStudies;
+        public static ResearchProjectDef Cults_ForbiddenDeities;
+        public static ResearchProjectDef Cults_ForbiddenAttire;
         public static ResearchProjectDef Cults_ForbiddenSculptures;
-        public static ThingDef Cults_Building_StandardAltar;
+        public static ResearchProjectDef Cults_ForbiddenObelisk;
+        public static ResearchProjectDef Cults_ForbiddenAltarI;
+        public static ResearchProjectDef Cults_ForbiddenAltarII;
+        public static ResearchProjectDef Cults_ForbiddenAltarIII;
 
         //-------------------------------------------------------
-        // Vanilla
-        public static ThingDef SimpleResearchBench;
-        public static ThingDef HiTechResearchBench;
+        // Buildings
+        public static ThingDef Cults_Building_StandardAltar;
+        public static ThingDef Cults_Building_SacrificialAltar;
+        public static ThingDef Cults_Building_BloodAltar;
+        public static ThingDef Cults_Building_NightmareAltar;
     }
 }

@@ -15,20 +15,15 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    public class RoomRoleWorker_Temple : RoomRoleWorker
-	{
-		public override float GetScore(Room room)
-		{
-			int num = 0;
-			List<Thing> containedAndAdjacentThings = room.ContainedAndAdjacentThings;
-			for (int i = 0; i < containedAndAdjacentThings.Count; i++)
-			{
-				if (containedAndAdjacentThings[i] is Building_BaseAltar)
-				{
-					num++;
-				}
-			}
-			return 30f * (float)num;
-		}
-	}
+
+    public class Building_OccultResearchBench : Building_ResearchBench
+    {
+        public Building_OccultResearchBench(){}
+        private int num = 0;
+        public override void Tick(){
+            base.Tick();
+            num +=1;
+            Log.Message(num.ToString());
+        }
+    }
 }

@@ -23,9 +23,16 @@ namespace Cults{
     }
 
     [StaticConstructorOnStartup]
-    internal class Texture{
+    internal class Textures{
         public static readonly Texture2D BarInstantMarkerTex = ContentFinder<Texture2D>.Get("UI/Misc/BarInstantMarker");
 		public static readonly Texture2D NeedUnitDividerTex = ContentFinder<Texture2D>.Get("UI/Misc/NeedUnitDivider");
         public static readonly Texture2D RedColorTex = SolidColorMaterials.NewSolidColorTexture(Color.red);
+
+        public static readonly Texture2D AnimalColorTex = SolidColorMaterials.NewSolidColorTexture(new Color(.4f, .4f, .2f, 1f));
+        public static readonly Texture2D HumanColorTex = SolidColorMaterials.NewSolidColorTexture(new Color(.5f, .3f, .3f, 1f));
+
+        //public static readonly Texture2D Gizmo_ = ContentFinder<Texture2D>.Get("UI/Misc/NeedUnitDivider");
+
+
     }
 }

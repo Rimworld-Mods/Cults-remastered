@@ -73,6 +73,7 @@ namespace Cults
 			this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
 			yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
 			Toil research = new Toil();
+			
 			research.tickAction = delegate
 			{
 				Pawn actor = research.actor;
@@ -81,6 +82,13 @@ namespace Cults
 				Find.ResearchManager.ResearchPerformed(statValue, actor);
 				actor.skills.Learn(SkillDefOf.Intellectual, 0.1f);
 				actor.GainComfortFromCellIfPossible(chairsOnly: true);
+				// -- new code --
+				if(Find.ResearchManager.currentProj.HasModExtension<ForbiddenResearchExtension>())
+				{
+					Spirituality need = pawn.needs.TryGetNeed<Spirituality>();
+					if(need != null) need.Gain();
+				}
+				// --- ------ ---
 			};
 			research.FailOn(() => jobDriver_Research.Project == null);
 			research.FailOn(() => !jobDriver_Research.Project.CanBeResearchedAt(jobDriver_Research.ResearchBench, ignoreResearchBenchPowerStatus: false));

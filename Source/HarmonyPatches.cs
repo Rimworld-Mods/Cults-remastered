@@ -17,69 +17,23 @@ using HarmonyLib;
 
 namespace Cults
 {
-    public class ForbiddenResearchExtension : DefModExtension
-    {
-    }
-
-    // Overrides ResearchProjectDef.CanBeResearchedAt;
-    
-    [HarmonyPatch(typeof(ResearchProjectDef), "CanBeResearchedAt")]
-    public class ExtraResearchCheck
-    {
-        private static void Prefix(ref bool __state, ResearchProjectDef __instance, ref Building_ResearchBench bench)
-        {   
-            //if(!Find.ResearchManager.currentProj.HasModExtension<ForbiddenResearchExtension>())
-                /*
-                if(bench.def.defName == "Cults_OccultResearchBench"){
-                    return false;
-                    //__instance.requiredResearchFacilities = new List<ThingDef>();
-                    //__instance.requiredResearchFacilities.Add(CultsDefOf.Cults_Building_StandardAltar);
-                }else{
-                    return true;
-                }
-                */
-                // if(__instance.requiredResearchFacilities == null) __instance.requiredResearchFacilities = new List<ThingDef>();
-                // __instance.requiredResearchFacilities.Add(CultsDefOf.Cults_Building_StandardAltar);
-            
-            
-            /*
-            if (__instance.requiredResearchBuilding == null){
-
-                __instance.requiredResearchFacilities
-                __state = bench.def.defName;
-                // GenDefDatabase.GetDef(typeof(ThingDef), "SimpleResearchBench", true);
-                // public static ThingDef SimpleResearchBench;
-                // public static HiTechResearchBench;
-                if(bench.def.defName !=  "Cults_OccultResearchBench") __instance.requiredResearchBuilding = bench.def;
-                // if(bench.def.defName ==  "HiTechResearchBench") __instance.requiredResearchBuilding = bench.def;
-                //if(bench.def.defName ==  "SimpleResearchBench") __instance.requiredResearchBuilding = bench.def;
-
-            }
-            */
-        }
-        
-        private static void Postfix(bool __result, ref bool __state)
-        {   
-            /*
-            if(!__state){
-                return __state;
-            }
-            return __result;
-            */
-        }
-        
-        
-    }
-    
-    /*
     [HarmonyPatch(typeof(ResearchManager), "FinishProject")]
     public class ExtraFinishProjectFunction
     {
-        private static void Prefix()
+        private static void Prefix(ref ResearchProjectDef proj) // on research finish "event"
         {
-            // Discover deity here
-            Log.Message("Finished research");
+            CultKnowledge.DiscoverRandomDeity();
         }
     }
-    */
+
+    [HarmonyPatch(typeof(Pawn_TimetableTracker), "CurrentAssignment", MethodType.Getter)]
+    public class WorshipAssignment
+    {
+        private static TimeAssignmentDef Postfix(TimeAssignmentDef __result) 
+        {
+            // custom TimeAssignment def breaks vanilla functions, do not return it
+            return (__result == CultsDefOf.Cults_TimeAssignment_Worship)? TimeAssignmentDefOf.Anything : __result;
+        }
+    }
+
 }

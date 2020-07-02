@@ -13,22 +13,12 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
+using HarmonyLib;
+
 namespace Cults
 {
-    public class RoomRoleWorker_Temple : RoomRoleWorker
-	{
-		public override float GetScore(Room room)
-		{
-			int num = 0;
-			List<Thing> containedAndAdjacentThings = room.ContainedAndAdjacentThings;
-			for (int i = 0; i < containedAndAdjacentThings.Count; i++)
-			{
-				if (containedAndAdjacentThings[i] is Building_BaseAltar)
-				{
-					num++;
-				}
-			}
-			return 30f * (float)num;
-		}
-	}
+    // to differentiate regular research from occult one
+    public class ForbiddenResearchExtension : DefModExtension
+    {
+    }
 }

@@ -20,32 +20,14 @@ JobDriver - Identifying job, specify every detail of that job in a list of "Toil
 
 ThinkTree (xml) -> JobGiver (cs) -> JobDriver -> Toil
 
-	private void DoTimeAssignment(Rect rect, Pawn p, int hour)
-		{
-			rect = rect.ContractedBy(1f);
-			bool mouseButton = Input.GetMouseButton(0);
-			TimeAssignmentDef assignment = p.timetable.GetAssignment(hour);
-			GUI.DrawTexture(rect, assignment.ColorTexture);
-			if (!mouseButton)
-			{
-				MouseoverSounds.DoRegion(rect);
-			}
-			if (!Mouse.IsOver(rect))
-			{
-				return;
-			}
-			Widgets.DrawBox(rect, 2);
-			if (mouseButton && assignment != TimeAssignmentSelector.selectedAssignment && TimeAssignmentSelector.selectedAssignment != null)
-			{
-				SoundDefOf.Designate_DragStandard_Changed.PlayOneShotOnCamera();
-				p.timetable.SetAssignment(hour, TimeAssignmentSelector.selectedAssignment);
-				PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.TimeAssignments, KnowledgeAmount.SmallInteraction);
-				if (TimeAssignmentSelector.selectedAssignment == TimeAssignmentDefOf.Meditate)
-				{
-					PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.MeditationSchedule, KnowledgeAmount.Total);
-				}
-			}
-		}
+public override bool HasJobOnCell(Pawn pawn, IntVec3 c, bool forced = false)
+{
+    if (c.IsForbidden(pawn) || pawn.Map.designationManager.DesignationAt(c, DesDef) == null || !pawn.CanReserve(c, 1, -1, ReservationLayerDefOf.Floor, forced))
+    {
+        return false;
+    }
+    return true;
+}
 
 */
 namespace Cults
@@ -54,14 +36,42 @@ namespace Cults
     {
         protected override Job TryGiveJob(Pawn pawn)
         {
-            TimeAssignmentDef assignment = pawn.timetable.CurrentAssignment;
+            
+            if(!CultKnowledge.IsExposed()) return null;
+            if(CultKnowledge.selectedDeity == null) return null;
 
+            /*
+                Get [CurrentAssignment] indirectly, because [pawn.timetable.CurrentAssignment] getter has harmony patch.
+                Patch overrides result from [Cults_TimeAssignment_Worship] to [TimeAssignmentDefOf.Anything]
+                Vanilla functions can't check custom timetable defs otherwise they throw [NotImplementedException]
+                [JobGiver_Worship] happens before core colonist behavior
 
-            IntVec3 spot = new IntVec3(103,0,103);
-            Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_Worship, spot);
+                Classes that check a schedule:
+                    ThinkNode_Priority_GetJoy
+                    JobGiver_GetRest
+                    JobGiver_Work
+            */
+            // TimeAssignmentDef assignment = pawn.timetable.CurrentAssignment;
+            TimeAssignmentDef assignment = pawn.timetable.times[GenLocalDate.HourOfDay(pawn)]; 
 
-            //  && pawn.needs.TryGetNeed<Need>() == null
-            if(assignment == Cults.CultsDefOf.Cults_TimeAssignment_Worship) return job;
+            // TODO: implement reservations
+
+            IEnumerable<Building_BaseAltar> altars = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<Building_BaseAltar>();
+            TraverseParms parms = TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false);
+            Thing altar = GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, altars, PathEndMode.OnCell, parms);
+            
+            if(altar != null)
+            {
+                if(!WatchBuildingUtility.TryFindBestWatchCell(altar, pawn, true, out IntVec3 spot, out Building chair))
+                {
+                    if(!WatchBuildingUtility.TryFindBestWatchCell(altar, pawn, false, out spot, out chair)) return null;
+                };
+                
+                Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_Worship, spot, altar);
+                //if(pawn.CurJob != null)Log.Message("info " + pawn.HasReserved(pawn.CurJob.targetA).ToString() + " " + pawn.CurJobDef.defName.ToString());
+                //if(pawn.CanReserve(spot, 1, -1)) pawn.Reserve(spot, job, 1, -1);
+                if(assignment == Cults.CultsDefOf.Cults_TimeAssignment_Worship) return job;
+            };
             return null;
         }
 
@@ -74,44 +84,68 @@ namespace Cults
 
     class JobDriver_Worship : JobDriver
     {
-        private float worship_done;
-        private const TargetIndex target_cell = TargetIndex.A;
-        protected IntVec3 cell => job.GetTarget(TargetIndex.A).Cell;
+        private TargetIndex spotIndex = TargetIndex.A;
+        private TargetIndex altarIndex = TargetIndex.B;
+
+        protected IntVec3 spotPos => job.GetTarget(TargetIndex.A).Cell;
+        protected IntVec3 altarPos => job.GetTarget(TargetIndex.B).Cell;
 
         [DebuggerHidden]
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            Toil worship = new Toil();
-            worship.defaultCompleteMode = ToilCompleteMode.Delay;
-            worship.WithProgressBarToilDelay(TargetIndex.A, false, -0.5f);
-            worship.defaultDuration = 600;
-            worship.initAction = delegate
-            {
-                job.targetA = new IntVec3(110,0,103);
-                this.worship_done = 0;
-            };
-            worship.tickAction = delegate
-            {
-                //Log.Message("Worship job tick action");
-                this.worship_done += 1;
+            this.rotateToFace = altarIndex;
+            this.FailOnDespawnedOrNull(TargetIndex.B);
+            this.FailOn(() => CultKnowledge.selectedDeity == null);
+            this.AddFinishAction(() =>
+            {   
                 /*
-                if(worship_done == 300){
-                    Log.Message("Worship job success");
-                    this.EndJobWith(JobCondition.Succeeded);
+                Log.Message("Clearing reservation");
+                this.pawn.ClearAllReservations();
+                //if(this.TargetA.Cell.GetEdifice(this.pawn.Map) == null) return; // ??
+                if (this.pawn.Map.reservationManager.ReservedBy(this.TargetA.Cell.GetEdifice(this.pawn.Map), this.pawn))
+                {
+                    Log.Message("Clearing reservation");
+                    this.pawn.ClearAllReservations();
                 }
                 */
-            };
-
-            worship.AddFinishAction(delegate{
-                Log.Message("Worship job success");
+                      
+                /*
+                if (this.TargetC.Cell.GetEdifice(this.pawn.Map) != null)
+                {
+                    if (this.pawn.Map.reservationManager.ReservedBy(this.TargetC.Cell.GetEdifice(this.pawn.Map), this.pawn))
+                        this.pawn.ClearAllReservations(); // this.pawn.Map.reservationManager.Release(this.TargetC.Cell.GetEdifice(this.pawn.Map), pawn);
+                }
+                */
             });
 
-            
+            Toil worship = new Toil();
 
-            //yield return Toils_Reserve.Reserve(target_cell, 1, -1);
-            yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.OnCell);
+            worship.defaultCompleteMode = ToilCompleteMode.Delay;
+            worship.WithProgressBarToilDelay(TargetIndex.A, false, -0.5f);
+            worship.defaultDuration = 500;
+            worship.initAction = delegate
+            {
+            };
+
+            worship.tickAction = delegate
+            {
+                pawn.GainComfortFromCellIfPossible();
+                Spirituality need = pawn.needs.TryGetNeed<Spirituality>();
+                if(need != null) need.Gain();
+            };
+
+            worship.AddFinishAction(delegate
+            {
+                float chance = 0.1f; //CultKnowledge.selectedDeity.discoveryChance;
+                if( Rand.Range(0.0f, 1.0f) < chance)
+                {
+                    CultKnowledge.DiscoverRandomDeity();
+                }
+            });
+
+            yield return Toils_Reserve.Reserve(spotIndex, 1, -1);
+            yield return Toils_Goto.GotoCell(spotIndex, PathEndMode.OnCell);
             yield return worship;
-            //yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.InteractionCell);
         }
         
         public override bool TryMakePreToilReservations(bool errorOnFailed)

@@ -40,7 +40,7 @@ namespace Cults
 
         public ITab_Worship()
         {
-            this.size = WorshipCardUtility.cardSize;
+            this.size = WorshipCardUtility.defaultSize;
             this.labelKey = "Worship";  // used to get the Tab's label
         }
 
@@ -53,11 +53,15 @@ namespace Cults
         protected override void UpdateSize()
         {   
             if(CultKnowledge.deities == null) return;
-
             base.UpdateSize();
+            
             float required_space = 70f + (CultKnowledge.deities.Count * 50f) + 30f;
-            WorshipCardUtility.cardSize = new Vector2(500f, Mathf.Clamp(required_space, 350f, 600f));
-            this.size = WorshipCardUtility.cardSize;
+            float max_height = 600f;
+
+            this.size = new Vector2(
+                WorshipCardUtility.defaultSize.x, 
+                Mathf.Clamp(required_space, WorshipCardUtility.defaultSize.y, max_height)
+            );
         }
     }
 
@@ -66,13 +70,13 @@ namespace Cults
 
     public static class WorshipCardUtility
     {
-        public static Vector2 cardSize = new Vector2(500f, 350f);
+        public static Vector2 defaultSize = new Vector2(500f, 350f);
         private static float margin = 17f;
         private static float secondColumnX = 255;
 
         public static void DrawTab()
         {
-            Rect rect = new Rect(0, 0, cardSize.x, cardSize.y);
+            Rect rect = new Rect(0, 0, defaultSize.x, defaultSize.y);
             DrawCultLabel();
             DrawProgressBars();
             DrawOptions();
@@ -88,7 +92,7 @@ namespace Cults
             Widgets.Label(rect, cult_title);
 
             // Cult rename button
-            rect = new Rect(cardSize.x - 85f - margin, margin, 30f, 30f);
+            rect = new Rect(defaultSize.x - 85f - margin, margin, 30f, 30f);
             if (Widgets.ButtonImage(rect, TexButton.Rename))
             {
                 Find.WindowStack.Add(new Dialog_NamePlayerCult());
@@ -115,7 +119,7 @@ namespace Cults
 
         public static void DrawOptions()
         {
-            Building_AbstractAltar selected = Find.Selector.SingleSelectedThing as Building_AbstractAltar;
+            Building_BaseAltar selected = Find.Selector.SingleSelectedThing as Building_BaseAltar;
             Rect rect;
             
             rect = new Rect(secondColumnX, 86f, 75f, 25f);
@@ -145,8 +149,8 @@ namespace Cults
                 string info = CultKnowledge.selectedDeity.description;
 
                 Rect rect;
-                float length = WorshipCardUtility.cardSize.x - secondColumnX - margin;
-                float height = WorshipCardUtility.cardSize.y - 260f - margin;
+                float length = WorshipCardUtility.defaultSize.x - secondColumnX - margin;
+                float height = WorshipCardUtility.defaultSize.y - 260f - margin;
 
                 rect = new Rect(secondColumnX, 180f, length, 30f);
                 Text.Font = GameFont.Medium;
@@ -163,7 +167,7 @@ namespace Cults
                 Widgets.DrawBox(rect,1);
                 */
             }else{
-                float length = WorshipCardUtility.cardSize.x - secondColumnX - margin;
+                float length = WorshipCardUtility.defaultSize.x - secondColumnX - margin;
                 string info = "Select the Deity and schedule time to start worship. \n\n"
                 + "If 3 or more colonists worship at the same time, one of them might perform sermon, whitch gives favor bonus.";
             
@@ -176,7 +180,7 @@ namespace Cults
 
         }
 
-        public static void OpenDeitySelectMenu(Building_AbstractAltar altar)
+        public static void OpenDeitySelectMenu(Building_BaseAltar altar)
         {
             List<FloatMenuOption> list = new List<FloatMenuOption>();
             list.Add(new FloatMenuOption("NONE", delegate
@@ -268,7 +272,7 @@ namespace Cults
 
             Rect barRect = is_default_color ?
                 Widgets.FillableBar(rect3, current_level_percentage) :
-                Widgets.FillableBar(rect3, current_level_percentage, Texture.RedColorTex);
+                Widgets.FillableBar(rect3, current_level_percentage, Textures.RedColorTex);
 
             // arrows
             Widgets.FillableBarChangeArrows(rect3, CultKnowledge.selectedDeity == this.deity.def? 1 : 0);

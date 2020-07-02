@@ -21,7 +21,7 @@ namespace Cults
 
         public ITab_AltarDebug()
         {
-            this.size = WorshipCardUtility.cardSize;
+            this.size = WorshipCardUtility.defaultSize;
             this.labelKey = "Debug";
         }
 
@@ -37,13 +37,14 @@ namespace Cults
             rect = new Rect(17f, 25f, 120f, 25f);
             if (Widgets.ButtonText(rect, "Discover", true, false, true))
             {
-                CultKnowledge.DiscoverDeity();
+                CultKnowledge.DiscoverRandomDeity();
             }
 
             rect = new Rect(17f, 50f, 120f, 25f);
-            if (Widgets.ButtonText(rect, " Finish research ", true, false, true))
+            if (Widgets.ButtonText(rect, "Expose", true, false, true))
             {
-                Find.ResearchManager.FinishProject(CultsDefOf.Cults_ForbiddenSculptures, true, null);
+                CultKnowledge.ExposeToHorror();
+                //Find.ResearchManager.FinishProject(CultsDefOf.Cults_ForbiddenSculptures, true, null);
             }
             
             rect = new Rect(17f, 75f, 120f, 25f);

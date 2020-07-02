@@ -13,8 +13,8 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
-//using System.Reflection;
-//using HarmonyLib;
+using System.Reflection;
+using HarmonyLib;
 
 /*
 First deity is discovered via research, rest of them via worship
@@ -23,6 +23,13 @@ Sermons now occur (with a small chance) when 3 or more colonists worship at the 
 No more occult research center forbid, pawns will use this bench only if current research project is occult one.
 
 Finish forship AI job
+Make deity motes
+Horror pawns
+offering and sacrificing
+
+
+Bugs:
+    When schedule worship and pawn sleeps - error
 */
 
 namespace Cults
@@ -36,7 +43,7 @@ namespace Cults
 
         // Save
         private static string cultName = "Unnamed cult";
-        public static bool isExposed;
+        private static bool isExposed;
         public static bool performSermons;
         public static CosmicEntityDef selectedDeity;
 
@@ -47,6 +54,12 @@ namespace Cults
         }
         public static string GetCultName() => CultKnowledge.cultName;
 
+        public static void ExposeToHorror()
+        {
+            Find.LetterStack.ReceiveLetter("Cult beginning", CultsDefOf.Cults_Letter_Success.description, CultsDefOf.Cults_Letter_Success, null);
+            isExposed = true;
+        }
+        public static bool IsExposed() => isExposed;
 
         public override void FinalizeInit() // first
         {
@@ -64,7 +77,7 @@ namespace Cults
             Scribe_Collections.Look(ref deities, "deities", LookMode.Deep);
         }
 
-        public static void DiscoverDeity()
+        public static void DiscoverRandomDeity()
         {
             List<CosmicEntityDef> available_defs = new List<CosmicEntityDef>{
                 Cults.CultsDefOf.Cults_CosmicEntity_Cthulhu,
@@ -117,16 +130,13 @@ namespace Cults
     }
     */
 
-
     [StaticConstructorOnStartup]
     public static class Start
     {
         static Start() // quick debug
         {
-            /*
             Harmony harmony = new Harmony( "Arvkus.Cults" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
-            */
 
             Log.Message(ModsConfig.IsActive(ModContentPack.RoyaltyModPackageId).ToString());
             Log.Message("Cults mod success");

@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<!-- /////////////////////
-	Cults Altar -->
+	Base Altar -->
 
-	<ThingDef ParentName="BenchBase">
-		<defName>Cults_Building_StandardAltar</defName>
-		<label>cult altar</label>
-		<thingClass>Cults.Building_StandardAltar</thingClass>
-		<description>A solid surface on which to elevate speeches of worship to extra-cosmic entities.</description>
-		<tickerType>Rare</tickerType>
+	<ThingDef Name="AltarBase" Abstract="True" ParentName="BenchBase">
+		<passability>PassThroughOnly</passability>
+		<pathCost>70</pathCost>
 		<thingCategories>
 			<li>BuildingsMisc</li>
 		</thingCategories>
-		<graphicData>
-			<texPath>Building/Altar/StandardAltar/StandardAltar</texPath>
-			<graphicClass>Graphic_Multi</graphicClass>
-			<shaderType>CutoutComplex</shaderType>
-			<drawSize>(4.0,2.0)</drawSize>
-			<damageData>
-				<cornerTL>Damage/Corner</cornerTL>
-				<cornerTR>Damage/Corner</cornerTR>
-				<cornerBL>Damage/Corner</cornerBL>
-				<cornerBR>Damage/Corner</cornerBR>
-			</damageData>
-		</graphicData>
 		<drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
 		<defaultPlacingRot>South</defaultPlacingRot>
 		<minifiedDef>MinifiedThing</minifiedDef>
@@ -46,9 +31,7 @@
 			<Mass>70</Mass>
 		</statBases>
 		<size>(3,1)</size>
-		<designationCategory>Cults_DesignationCategory</designationCategory>
-		<passability>PassThroughOnly</passability>
-		<pathCost>70</pathCost>
+		
 		<hasInteractionCell>true</hasInteractionCell>
 		<interactionCellOffset>(0,0,-1)</interactionCellOffset>
 		<surfaceType>Item</surfaceType>
@@ -59,24 +42,95 @@
 		</inspectorTabs>
 		<building>
 			<spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
-			<watchBuildingStandDistanceRange>
-				<min>1</min>
-				<max>9</max>
-			</watchBuildingStandDistanceRange>
-			<watchBuildingStandRectWidth>3</watchBuildingStandRectWidth>
+			<watchBuildingStandDistanceRange>1~5</watchBuildingStandDistanceRange>
+			<watchBuildingStandRectWidth>5</watchBuildingStandRectWidth>
+			<watchBuildingInSameRoom>true</watchBuildingInSameRoom>
 		</building>
 		<researchPrerequisites>
-			<li>Cults_ForbiddenAltar</li>
+			<li>Cults_ForbiddenAltarI</li>
 		</researchPrerequisites>
 		<placeWorkers>
 			<li>PlaceWorker_WatchArea</li>
 		</placeWorkers>
+
+		<graphicData>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<shaderType>CutoutComplex</shaderType>
+			<drawSize>(4.0,2.0)</drawSize>
+			<damageData>
+				<cornerTL>Damage/Corner</cornerTL>
+				<cornerTR>Damage/Corner</cornerTR>
+				<cornerBL>Damage/Corner</cornerBL>
+				<cornerBR>Damage/Corner</cornerBR>
+			</damageData>
+		</graphicData>
+
+		<designationHotKey>Misc2</designationHotKey>
 		<comps>
 			<li>
 				<compClass>CompQuality</compClass>
 			</li>
+			<li>
+				<compClass>Cults.CompAltar</compClass>
+			</li>
 		</comps>
-		<designationHotKey>Misc2</designationHotKey>
+	</ThingDef>
+
+	<!-- /////////////////////
+	Standard Altar -->
+
+	<ThingDef ParentName="AltarBase">
+		<defName>Cults_Building_StandardAltar</defName>
+		<label>standart altar</label>
+		<thingClass>Cults.Building_BaseAltar</thingClass>
+		<description>A solid surface on which to elevate speeches of worship to extra-cosmic entities.</description>
+		<designationCategory>Cults_DesignationCategory</designationCategory>
+		<graphicData>
+			<texPath>Building/Altar/StandardAltar/StandardAltar</texPath>
+		</graphicData>
+	</ThingDef>
+
+	<!-- /////////////////////
+	Animal Altar -->
+
+	<ThingDef ParentName="AltarBase">
+		<defName>Cults_Building_SacrificialAltar</defName>
+		<label>sacrificial altar</label>
+		<thingClass>Cults.Building_BaseAltar</thingClass>
+		<description>A solid surface on which to elevate speeches of worship to extra-cosmic entities.</description>
+		<designationCategory>Cults_DesignationCategory</designationCategory>
+		<graphicData>
+			<texPath>Building/Altar/AnimalAltar/AnimalAltar</texPath>
+		</graphicData>
+	</ThingDef>
+
+	<!-- /////////////////////
+	Human Altar -->
+
+	<ThingDef ParentName="AltarBase">
+		<defName>Cults_Building_BloodAltar</defName>
+		<label>blood altar</label>
+		<thingClass>Cults.Building_BaseAltar</thingClass>
+		<description>A solid surface on which to elevate speeches of worship to extra-cosmic entities.</description>
+		<designationCategory>Cults_DesignationCategory</designationCategory>
+		<graphicData>
+			<texPath>Building/Altar/HumanAltar/HumanAltar</texPath>
+		</graphicData>
+	</ThingDef>
+
+	<!-- /////////////////////
+	Nightmare Altar -->
+
+	<ThingDef ParentName="AltarBase">
+		<defName>Cults_Building_NightmareAltar</defName>
+		<label>corrupted altar</label>
+		<thingClass>Cults.Building_BaseAltar</thingClass>
+		<description>A corpse has sprung up as a tree that corrupts your altar. It will need repairs and a lot of pruning.</description>
+
+		<graphicData>
+			<drawSize>(4.0,8.0)</drawSize>
+			<texPath>Building/Altar/NightmareAltar/NightmareAltar</texPath>
+		</graphicData>
 	</ThingDef>
 
 </Defs>

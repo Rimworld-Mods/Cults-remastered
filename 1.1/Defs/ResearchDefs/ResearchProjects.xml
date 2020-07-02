@@ -25,7 +25,7 @@
         <researchViewX>0</researchViewX>
         <researchViewY>2</researchViewY>
     </ResearchProjectDef>
-
+    <!---->
     <ResearchProjectDef ParentName="OccultResearch">
         <defName>Cults_ForbiddenDeities</defName>
         <label>Probe occult deities</label>
@@ -77,7 +77,7 @@
     </ResearchProjectDef>
 
     <ResearchProjectDef ParentName="OccultResearch">
-        <defName>Cults_ForbiddenObelisks</defName>
+        <defName>Cults_ForbiddenObelisk</defName>
         <label>Obelisk Construction</label>
         <description>Allows for the design and construction of occult obelisks.</description>
         <baseCost>600</baseCost>
@@ -89,7 +89,7 @@
     </ResearchProjectDef>
 
     <ResearchProjectDef ParentName="OccultResearch">
-        <defName>Cults_ForbiddenAltar</defName>
+        <defName>Cults_ForbiddenAltarI</defName>
         <label>Altar</label>
         <description>Allows the creation of an altar of worship to conduct rituals for beings beyond this world.</description>
         <baseCost>200</baseCost>
@@ -101,24 +101,24 @@
     </ResearchProjectDef>
 
     <ResearchProjectDef ParentName="OccultResearch">
-        <defName>Cults_ForbiddenOffer</defName>
+        <defName>Cults_ForbiddenAltarII</defName>
         <label>Altar of Sacrifice</label>
         <description>Allows you to upgrade an altar to an altar of sacrifice to show greater appreciation of extradimensional beings.</description>
         <baseCost>350</baseCost>
         <prerequisites>
-            <li>Cults_ForbiddenAltar</li>
+            <li>Cults_ForbiddenAltarI</li>
         </prerequisites>
         <researchViewX>2</researchViewX>
         <researchViewY>3</researchViewY>
     </ResearchProjectDef>
 
     <ResearchProjectDef ParentName="OccultResearch">
-        <defName>Cults_ForbiddenSacrifice</defName>
+        <defName>Cults_ForbiddenAltarIII</defName>
         <label>Human Sacrifice</label>
         <description>Allows you to upgrade an altar to an altar of human sacrifice, allowing for impressive benefits from cosmic entities.</description>
         <baseCost>500</baseCost>
         <prerequisites>
-            <li>Cults_ForbiddenOffer</li>
+            <li>Cults_ForbiddenAltarII</li>
         </prerequisites>
         <researchViewX>3</researchViewX>
         <researchViewY>3</researchViewY>
