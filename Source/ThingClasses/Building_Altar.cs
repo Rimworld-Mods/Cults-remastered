@@ -89,6 +89,22 @@ namespace Cults
         }
 
         //------------------------------------------------------------------------------
+        // Ritual
+
+        public class RitualParms // exposable
+        {
+            public CosmicEntityDef deity;
+            public Pawn offerror;
+            public Thing sacrifice;
+            public SpellDef reward;
+        }
+
+        public RitualParms ritualFood;
+        public RitualParms ritualItem;
+        public RitualParms ritualAnimal;
+        public RitualParms ritualHuman;
+
+        //------------------------------------------------------------------------------
         // Other
 
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)

@@ -28,6 +28,7 @@ namespace Cults
         public List<string> titles; 
         public readonly string symbol;
         public Texture2D symbolTex;
+        public List<SpellDef> spells;
 
         public override void PostLoad()
         {
@@ -41,9 +42,7 @@ namespace Cults
     public class CosmicEntity : IExposable
     {        
         
-        public CosmicEntity(){
-            Log.Message("Calling retarded constructor");
-        }
+        public CosmicEntity(){}
         public CosmicEntity(CosmicEntityDef def)
         {
             this.def = def;
@@ -53,6 +52,7 @@ namespace Cults
         public float maxFavor => this.def.maxFavor;
         public float baseFavorGainRate => this.def.baseFavorGainRate;
         public float currentFavor;
+
 
         public void ExposeData()
         {

@@ -48,9 +48,11 @@ namespace Cults
             }
             
             rect = new Rect(17f, 75f, 120f, 25f);
-            if (Widgets.ButtonText(rect, " - ", true, false, true))
+            if (Widgets.ButtonText(rect, " Cast spell ", true, false, true))
             {
-
+                
+                SpellDef def = DefDatabase<SpellDef>.GetNamed(CultKnowledge.selectedDeity.spells[1].defName);
+                def.CastSpell();
             }
         }
 

@@ -128,7 +128,7 @@ namespace Cults
 
             rect = new Rect(secondColumnX + 60f, 85f, 120f, 25f);
 
-            string text = CultKnowledge.selectedDeity == null? "NONE" : CultKnowledge.selectedDeity.label;
+            string text = CultKnowledge.selectedDeity == null? "-" : CultKnowledge.selectedDeity.label;
             if (Widgets.ButtonText(rect, text, true, false, true))
             {
                 OpenDeitySelectMenu(selected);

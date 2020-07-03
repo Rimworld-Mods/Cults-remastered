@@ -20,23 +20,24 @@ namespace Cults
         
         public ITab_Sacrifice()
         {
-            this.size = WorshipCardUtility.defaultSize;
+            this.size = SacrificeCardUtility.defaultSize;
             this.labelKey = "Sacrifice";
         }
-
         
         protected override void FillTab()
         {
-            //this.UpdateSize();
             SacrificeCardUtility.DrawTab();
         }
     }
 
+
+
+
+
     public static class SacrificeCardUtility
     {
-        public static Vector2 defaultSize = new Vector2(500f, 350f);
-        private static float margin = 17f;
-        private static float secondColumnX = 255;
+        public static Vector2 defaultSize = new Vector2(540f, 380f);
+        private static Vector2 scrollPos = new Vector2(0,0);
 
         //-------------------------------------------------
 
@@ -45,13 +46,14 @@ namespace Cults
 
         static Tab currentTab = Tab.Offer;
         static Choice currentChoice = Choice.Food;
+        static Choice previousChoice = Choice.Animal;
 
         //-------------------------------------------------
 
-        private static SacrificeUtility sacrificeHuman = new SacrificeUtility();
-        private static SacrificeUtility sacrificeAnimal = new SacrificeUtility();
-        private static OfferUtility offerItem = new OfferUtility();
-        private static OfferUtility offerFood = new OfferUtility();
+        public static SacrificeUtility sacrificeHuman = new SacrificeUtility();
+        public static SacrificeUtility sacrificeAnimal = new SacrificeUtility();
+        public static OfferUtility offerItem = new OfferUtility();
+        public static OfferUtility offerFood = new OfferUtility();
 
         //-------------------------------------------------
         // helper classes
@@ -63,10 +65,17 @@ namespace Cults
             DrawSelections();
         }
 
+        private static void Swap<T>(ref T x, ref T y)
+        {
+            T t = y;
+            y = x;
+            x = t;
+        }
 
         public static void DrawCultLabel()
         {
             // Cult name label
+            float margin = 17;
             Rect rect = new Rect(margin, margin, 300f, 30f);
             string cult_title = Cults.CultKnowledge.GetCultName();
             Text.Font = GameFont.Medium;
@@ -83,7 +92,7 @@ namespace Cults
         public static void DrawSelections()
 		{
             // 70 + 30
-            Rect rect = new Rect(0, 100f, 200f, defaultSize.y - 100f);
+            Rect rect = new Rect(0, 100f, 260f, defaultSize.y - 100f);
 			GUI.color = Color.white;
             
             List<TabRecord> list = new List<TabRecord>();
@@ -94,7 +103,7 @@ namespace Cults
 			TabDrawer.DrawTabs(rect, list);
             rect = rect.ContractedBy(9f);
             GUI.BeginGroup(rect);
-
+            
             if(currentTab == Tab.Offer)
             {
                 if(currentChoice == Choice.Food)
@@ -107,7 +116,8 @@ namespace Cults
                 }
                 else // automatically select
                 {
-
+                    Swap(ref currentChoice, ref previousChoice);
+                    offerFood.Draw(rect);
                 }
             }
             else // currentTab = Tab.Sacrifice
@@ -122,22 +132,31 @@ namespace Cults
                 }
                 else // automatically select
                 {
-
+                    Swap(ref currentChoice, ref previousChoice);
+                    sacrificeAnimal.Draw(rect);
                 }
             }
 
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.EndGroup();
-            
+
+
+            ProgressBar bar = new ProgressBar(new CosmicEntity(CultsDefOf.Cults_CosmicEntity_Cthulhu));
+            //bar.Draw(new Rect(200, 60, defaultSize.x - 200, 70));
+
+            Text.Font = GameFont.Medium;
+            Widgets.Label(new Rect(rect.xMax + 15, 70, defaultSize.x - rect.xMax, 70), "Success factors");
+            DrawEvaluationList(new Rect(rect.xMax + 5, 100, defaultSize.x - rect.xMax - 5, defaultSize.y - 100).ContractedBy(4), ref scrollPos);
 		}
 
         private static void DrawListSelector(string label, float pos, float width, string selection, Action action)
         {
-            Rect rect1 = new Rect(0, pos, width/2, 30f).ContractedBy(4);
+            float ratio = 0.4f;
+            Rect rect1 = new Rect(0, pos, width*ratio, 30f).ContractedBy(4);
             Text.Anchor = TextAnchor.MiddleLeft;
             Widgets.Label(rect1, label);
 
-            Rect rect2 = new Rect(width/2, pos, width/2, 30f);
+            Rect rect2 = new Rect(width*ratio, pos, width*(1-ratio), 30f);
             if (Widgets.ButtonText(rect2, selection , true, false, true))
             {
                 action.Invoke();
@@ -173,80 +192,171 @@ namespace Cults
 			}
 		}
 
+        private static void DrawSpellDescription(Vector2 size, float pos)
+        {
+            Rect rect2 = new Rect(0, pos, size.x, size.y - pos);//.ContractedBy(4);
+            GUI.DrawTexture(rect2, Textures.blackColorTex);
+
+            Rect rect3 = new Rect(0, pos, size.x, size.y - pos).ContractedBy(4);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(rect3, "It's free real estate. There should be a long text with a long description.");
+        }
+
         //-------------------------------------------------
         // Nested classes
 
-        class SacrificeUtility
+        class Actions
         {
-            CosmicEntity selectedDeity;
-            Pawn selectedExecutioner;
-            Pawn selectedSacrifice;
-            string selectedReward;
-
-            public void Draw(Rect rect)
-            {
-                Action action = delegate{};
-                
-                Rect rect3 = new Rect(0, 40f, rect.width/2, 30f);
-                DrawSelector(rect3, "Animal", Choice.Animal, Textures.AnimalColorTex);
-
-                Rect rect4 = new Rect(rect.width/2, 40f, rect.width/2, 30f);
-                DrawSelector(rect4, "Human", Choice.Human, Textures.HumanColorTex);
-                
-                string s;
-                string error = currentChoice == Choice.Animal? "animal" : "human";
-                s = selectedDeity == null? error: selectedDeity.def.label;
-                DrawListSelector("Deity", 80, rect.width, s, action);
-                s = selectedExecutioner == null? "-": selectedExecutioner.def.label;
-                DrawListSelector("Executioner", 120, rect.width,s , action);
-                s = selectedSacrifice == null? "-": selectedSacrifice.def.label;
-                DrawListSelector("Sacrifice", 160, rect.width,s , action);
-                s = selectedReward == null? "-": selectedReward;
-                DrawListSelector("Reward", 200, rect.width,s , action);
-            }
-
+            Action action = delegate{};
         }
 
-        class OfferUtility
+
+        public static void DrawSacrificeMenu(Rect rect)
         {
-            CosmicEntity selectedDeity;
-            Pawn selectedOfferror;
-            Thing selectedOffer;
-            string selectedReward;
+            Action action = delegate{};
+            
+            float num = 0;
+            Rect rect3 = new Rect(0, num, rect.width/2, 30f);
+            DrawSelector(rect3, "Animal", Choice.Animal, Textures.AnimalColorTex);
 
-            public void Draw(Rect rect)
-            {
-                Action action = delegate{};
-                
-                Rect rect3 = new Rect(0, 40f, rect.width/2, 30f);
-                DrawSelector(rect3, "Food", Choice.Food, Textures.AnimalColorTex);
+            Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
+            DrawSelector(rect4, "Human", Choice.Human, Textures.HumanColorTex);
+            
+            string s;
+            num += 40;
+            s = selectedDeity == null? "-": selectedDeity.def.label;
+            DrawListSelector("Deity", num, rect.width, s, action);
+            num += 40;
+            s = selectedExecutioner == null? "-": selectedExecutioner.def.label;
+            DrawListSelector("Executioner", num, rect.width,s , action);
+            num += 40;
+            s = selectedSacrifice == null? "-": selectedSacrifice.def.label;
+            DrawListSelector("Sacrifice", num, rect.width,s , action);
+            num += 40;
+            s = selectedReward == null? "Aspect of Cthulhu": selectedReward;
+            DrawListSelector("Reward", num, rect.width,s , action);
 
-                Rect rect4 = new Rect(rect.width/2, 40f, rect.width/2, 30f);
-                DrawSelector(rect4, "Item", Choice.Item, Textures.HumanColorTex);
-                
-                string s;
-                s = selectedDeity == null? "-": selectedDeity.def.label;
-                DrawListSelector("Deity", 80, rect.width, s, action);
-                s = selectedOfferror == null? "-": selectedOfferror.def.label;
-                DrawListSelector("Offerror", 120, rect.width,s , action);
-                s = selectedOffer == null? "-": selectedOffer.def.label;
-                DrawListSelector("Offer", 160, rect.width,s , action);
-                s = selectedReward == null? "-": selectedReward;
-                DrawListSelector("Reward", 200, rect.width,s , action);
-            }
+            DrawSpellDescription(rect.size, num + 40);
         }
+
+        
+        public static void DrawOfferMenu(Rect rect)
+        {
+            float num = 0;
+            Rect rect3 = new Rect(0, num, rect.width/2, 30f);
+            DrawSelector(rect3, "Food", Choice.Food, Textures.AnimalColorTex);
+
+            Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
+            DrawSelector(rect4, "Item", Choice.Item, Textures.HumanColorTex);
+            
+            string s;
+            num += 40;
+            s = selectedDeity == null? "-": selectedDeity.def.label;
+            DrawListSelector("Deity", num, rect.width, s, action);
+            num += 40;
+            s = selectedOfferror == null? "-": selectedOfferror.def.label;
+            DrawListSelector("Offerror", num, rect.width,s , action);
+            num += 40;
+            s = selectedOffer == null? "-": selectedOffer.def.label;
+            DrawListSelector("Offer", num, rect.width,s , action);
+            num += 40;
+            s = selectedReward == null? "-": selectedReward;
+            DrawListSelector("Reward", num, rect.width,s , action);
+
+            DrawSpellDescription(rect.size, num + 40);
+        }
+        
 
         //-------------------------------------------------
+        // Affinity list functions
 
+        class Evaluation
+        {
+            public Evaluation(int s){
+                this.score = s;
+            }
+            public string label = "Temple is dirty";
+            public string description = "hohoho";
+            public int score = 0;
+        }
+
+        private static List<Evaluation> evaluationList = new List<Evaluation>() {
+            new Evaluation(0),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+            new Evaluation(Rand.RangeInclusive(-100,100)),
+        };
+
+        private static readonly Color NegativeColor = new Color(0.8f, 0.4f, 0.4f);
+		private static readonly Color PositiveColor = new Color(0.1f, 1f, 0.1f); 
+		private static readonly Color NeutralColor = new Color(0.5f, 0.5f, 0.5f, 0.75f);
+
+        private static void DrawEvaluationList(Rect container, ref Vector2 thoughtScrollPosition) // 
+		{
+			Text.Font = GameFont.Small;
+			float height = (float)evaluationList.Count * 24f;
+			Widgets.BeginScrollView(container, ref thoughtScrollPosition, new Rect(0f, 0f, container.width - 16f, height));
+			//Text.Anchor = TextAnchor.MiddleLeft;
+			for (int i = 0; i < evaluationList.Count; i++)
+			{
+				DrawEvaluation(new Rect(0f, 24*i, container.width - 16f, 20f), evaluationList[i]);
+			}
+			Widgets.EndScrollView();
+			Text.Anchor = TextAnchor.UpperLeft;
+		}
+        private static void DrawEvaluation(Rect rect, Evaluation evaluation)
+		{
+            if (Mouse.IsOver(rect))
+            {
+                Widgets.DrawHighlight(rect);
+                TooltipHandler.TipRegion(rect, new TipSignal("Tool tip", 7291));
+            }
+
+            Text.Anchor = TextAnchor.UpperRight;
+            GUI.color = evaluation.score > 0? PositiveColor : (evaluation.score < 0? NegativeColor : NeutralColor);
+            Widgets.Label(new Rect(rect.x + rect.xMax - 36, rect.y, 32f, rect.height), evaluation.score.ToString("##0"));
+
+            Text.Anchor = TextAnchor.MiddleLeft;
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x + 10, rect.y, rect.xMax - 10, rect.height), evaluation.label);
+		}
     }
 }
 
 
 /*
+Apparel hood +5
+Apparel robes +10
+Stars are right +20
+Statues +5, +10, +15
+Eclipse +5
+Aurora +5
 
-                Rect rect2 = new Rect(0, 0, rect.width, 30f);
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(rect2, "Hello there");
-                Widgets.DrawBox(rect2, 1);
+Reward tier -0, -10, -20, -50
+Stars are wrong -50
+
+Executioneer spirituality
+Executioneer talking
+Sacrifice health
+Temple quality (wealth, space, beauty, impressivness)
+
+[ThingMaker]
+Thing obj = (Thing)Activator.CreateInstance(def.thingClass);
+obj.def = def;
+obj.SetStuffDirect(stuff);
+obj.PostMake();
+return obj;
+
+https://rimworldwiki.com/wiki/Psycasts
 
 */
