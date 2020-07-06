@@ -49,13 +49,6 @@ namespace Cults
         static Choice previousChoice = Choice.Animal;
 
         //-------------------------------------------------
-
-        public static SacrificeUtility sacrificeHuman = new SacrificeUtility();
-        public static SacrificeUtility sacrificeAnimal = new SacrificeUtility();
-        public static OfferUtility offerItem = new OfferUtility();
-        public static OfferUtility offerFood = new OfferUtility();
-
-        //-------------------------------------------------
         // helper classes
 
         public static void DrawTab()
@@ -102,50 +95,14 @@ namespace Cults
 			Widgets.DrawMenuSection(rect);
 			TabDrawer.DrawTabs(rect, list);
             rect = rect.ContractedBy(9f);
-            GUI.BeginGroup(rect);
-            
-            if(currentTab == Tab.Offer)
-            {
-                if(currentChoice == Choice.Food)
-                {
-                    offerFood.Draw(rect);
-                }
-                else if(currentChoice == Choice.Item)
-                {
-                    offerItem.Draw(rect);
-                }
-                else // automatically select
-                {
-                    Swap(ref currentChoice, ref previousChoice);
-                    offerFood.Draw(rect);
-                }
-            }
-            else // currentTab = Tab.Sacrifice
-            {
-                if(currentChoice == Choice.Animal)
-                {
-                    sacrificeAnimal.Draw(rect);
-                }
-                else if(currentChoice == Choice.Human)
-                {
-                    sacrificeHuman.Draw(rect);
-                }
-                else // automatically select
-                {
-                    Swap(ref currentChoice, ref previousChoice);
-                    sacrificeAnimal.Draw(rect);
-                }
-            }
 
-            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.BeginGroup(rect);
+            DrawRitualMenu(rect);
             GUI.EndGroup();
 
-
-            ProgressBar bar = new ProgressBar(new CosmicEntity(CultsDefOf.Cults_CosmicEntity_Cthulhu));
-            //bar.Draw(new Rect(200, 60, defaultSize.x - 200, 70));
-
             Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(rect.xMax + 15, 70, defaultSize.x - rect.xMax, 70), "Success factors");
+            Text.Anchor = TextAnchor.UpperLeft;
+            Widgets.Label(new Rect(rect.xMax + 20, 70, defaultSize.x - rect.xMax, 70), "Success factors");
             DrawEvaluationList(new Rect(rect.xMax + 5, 100, defaultSize.x - rect.xMax - 5, defaultSize.y - 100).ContractedBy(4), ref scrollPos);
 		}
 
@@ -203,72 +160,77 @@ namespace Cults
         }
 
         //-------------------------------------------------
-        // Nested classes
+        // Ritual options UI
 
-        class Actions
+        public static void DrawRitualMenu(Rect rect)
         {
-            Action action = delegate{};
-        }
+            Building_BaseAltar altar = Find.Selector.SingleSelectedThing as Building_BaseAltar;
+            Building_BaseAltar.RitualParms parms = new Building_BaseAltar.RitualParms();
 
-
-        public static void DrawSacrificeMenu(Rect rect)
-        {
-            Action action = delegate{};
+            switch(currentChoice){
+                case Choice.Food: parms = altar.ritualParmsFood; break;
+                case Choice.Item: parms = altar.ritualParmsItem; break;
+                case Choice.Animal: parms = altar.ritualParmsAnimal; break;
+                case Choice.Human: parms = altar.ritualParmsHuman; break;
+            }
             
+            Action action = delegate{};
             float num = 0;
-            Rect rect3 = new Rect(0, num, rect.width/2, 30f);
-            DrawSelector(rect3, "Animal", Choice.Animal, Textures.AnimalColorTex);
-
-            Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
-            DrawSelector(rect4, "Human", Choice.Human, Textures.HumanColorTex);
             
-            string s;
-            num += 40;
-            s = selectedDeity == null? "-": selectedDeity.def.label;
-            DrawListSelector("Deity", num, rect.width, s, action);
-            num += 40;
-            s = selectedExecutioner == null? "-": selectedExecutioner.def.label;
-            DrawListSelector("Executioner", num, rect.width,s , action);
-            num += 40;
-            s = selectedSacrifice == null? "-": selectedSacrifice.def.label;
-            DrawListSelector("Sacrifice", num, rect.width,s , action);
-            num += 40;
-            s = selectedReward == null? "Aspect of Cthulhu": selectedReward;
-            DrawListSelector("Reward", num, rect.width,s , action);
+            if(currentTab == Tab.Offer)
+            {
+                Rect rect3 = new Rect(0, num, rect.width/2, 30f);
+                DrawSelector(rect3, "Food", Choice.Food, Textures.AnimalColorTex);
 
+                Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
+                DrawSelector(rect4, "Item", Choice.Item, Textures.HumanColorTex);
+
+                if(currentChoice == Choice.Animal || currentChoice == Choice.Human) Swap(ref currentChoice, ref previousChoice);  // auto-select
+            }
+            else
+            {
+                Rect rect3 = new Rect(0, num, rect.width/2, 30f);
+                DrawSelector(rect3, "Animal", Choice.Animal, Textures.AnimalColorTex);
+
+                Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
+                DrawSelector(rect4, "Human", Choice.Human, Textures.HumanColorTex);
+
+                if(currentChoice == Choice.Food || currentChoice == Choice.Item) Swap(ref currentChoice, ref previousChoice);  // auto-select
+            }
+
+            string s;
+            string t;
+            num += 40;
+            s = altar.ritualDeity == null? "-": altar.ritualDeity.label;
+            DrawListSelector("Deity", num, rect.width, s, delegate{ FloatingOptionsUtility.SelectDeity(altar, parms); });
+            num += 40;
+            s = altar.ritualPreacher == null? "-": altar.ritualPreacher.Name.ToStringShort;
+            t = currentTab == Tab.Offer? "Preacher" : "Executioner";
+            DrawListSelector(t, num, rect.width, s, delegate{ FloatingOptionsUtility.SelectPreacher(altar, parms); });
+            num += 40;
+            s = parms.sacrifice == null? "-": parms.sacrifice is Pawn? (parms.sacrifice as Pawn).Name.ToStringShort : parms.sacrifice.Label;
+            t = currentTab == Tab.Offer? "Offer" : "Sacrifice";
+            DrawListSelector(t, num, rect.width, s, delegate
+            { 
+                if(currentChoice == Choice.Animal) FloatingOptionsUtility.SelectAnimalSacrifice(altar, parms);
+                if(currentChoice == Choice.Human) FloatingOptionsUtility.SelectHumanSacrifice(altar, parms);
+                if(currentChoice == Choice.Food) FloatingOptionsUtility.SelectFoodSacrifice(altar, parms);
+                if(currentChoice == Choice.Item) FloatingOptionsUtility.SelectItemSacrifice(altar, parms);
+            });
+            num += 40;
+            s = parms.reward == null? "-": parms.reward.label;
+            DrawListSelector("Reward", num, rect.width, s, delegate{ FloatingOptionsUtility.SelectRewardSpell(altar, parms); });
+            
             DrawSpellDescription(rect.size, num + 40);
         }
-
-        
-        public static void DrawOfferMenu(Rect rect)
-        {
-            float num = 0;
-            Rect rect3 = new Rect(0, num, rect.width/2, 30f);
-            DrawSelector(rect3, "Food", Choice.Food, Textures.AnimalColorTex);
-
-            Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
-            DrawSelector(rect4, "Item", Choice.Item, Textures.HumanColorTex);
-            
-            string s;
-            num += 40;
-            s = selectedDeity == null? "-": selectedDeity.def.label;
-            DrawListSelector("Deity", num, rect.width, s, action);
-            num += 40;
-            s = selectedOfferror == null? "-": selectedOfferror.def.label;
-            DrawListSelector("Offerror", num, rect.width,s , action);
-            num += 40;
-            s = selectedOffer == null? "-": selectedOffer.def.label;
-            DrawListSelector("Offer", num, rect.width,s , action);
-            num += 40;
-            s = selectedReward == null? "-": selectedReward;
-            DrawListSelector("Reward", num, rect.width,s , action);
-
-            DrawSpellDescription(rect.size, num + 40);
-        }
-        
 
         //-------------------------------------------------
-        // Affinity list functions
+        // Option selector menus
+
+       
+
+        //-------------------------------------------------
+        // Evalutaion
 
         class Evaluation
         {
@@ -335,6 +297,9 @@ namespace Cults
 
 
 /*
+
+// [Widgets.ThingIcon] to generate graphics
+
 Apparel hood +5
 Apparel robes +10
 Stars are right +20
@@ -358,5 +323,49 @@ obj.PostMake();
 return obj;
 
 https://rimworldwiki.com/wiki/Psycasts
+
+
+
+
+CosmicEntity deity [shared]
+Pawn preacher [shadred]
+
+
+Item def
+Bill food (amount)
+Pawn animal
+Pawn human
+
+  <WorkGiverDef>
+    <defName>DoExecution</defName>
+    <label>execute prisoners</label>
+    <giverClass>WorkGiver_Warden_DoExecution</giverClass>
+    <workType>Warden</workType>
+    <verb>do execution on</verb>
+    <gerund>doing execution on</gerund>
+    <priorityInType>110</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+    <WorkGiverDef>
+    <defName>DoBillsCook</defName>
+    <label>cook meals at stove</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Cooking</workType>
+    <priorityInType>100</priorityInType>
+    <fixedBillGiverDefs>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </fixedBillGiverDefs>
+    <verb>cook</verb>
+    <gerund>cooking at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+
+
 
 */

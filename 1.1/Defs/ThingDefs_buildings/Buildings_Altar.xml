@@ -18,6 +18,18 @@
 			<li>Woody</li>
 			<li>Stony</li>
 		</stuffCategories>
+		<recipes>
+			<li>CookMealSimple</li>
+			<li>CookMealFine</li>
+			<li>CookMealLavish</li>
+			<li>CookMealSurvival</li>
+			<li>CookMealSimpleBulk</li>
+			<li>CookMealFineBulk</li>
+			<li>CookMealLavishBulk</li>
+			<li>CookMealSurvivalBulk</li>
+			<li>Make_Pemmican</li>
+			<li>Make_PemmicanBulk</li>
+		</recipes>
 		<costStuffCount>125</costStuffCount>
 		<altitudeLayer>Building</altitudeLayer>
 		<fillPercent>0.5</fillPercent>

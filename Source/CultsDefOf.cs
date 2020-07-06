@@ -33,6 +33,7 @@ namespace Cults
         //-------------------------------------------------------
         // AI, think, work
         public static JobDef Cults_Job_Worship;
+        public static JobDef Cults_DoBill;
 
         //-------------------------------------------------------
         // Items

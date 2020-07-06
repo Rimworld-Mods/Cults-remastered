@@ -16,8 +16,25 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 namespace Cults
 {
 
-    public class Building_BaseAltar : Building
+    public class Building_BaseAltar : Building_WorkTable//, IBillGiver
     {
+        //public Building_BaseAltar() => this.BillStack = new BillStack(this);
+        //public BillStack BillStack { get; }
+        //public IEnumerable<IntVec3> IngredientStackCells => GenAdj.CellsOccupiedBy(this);
+        //public bool UsableForBillsAfterFueling() => true;
+        //public bool CurrentlyUsableForBills() => true;
+
+            /*
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+		{
+			base.SpawnSetup(map, respawningAfterLoad);
+			foreach (Bill item in BillStack)
+			{
+				item.ValidateSettings();
+			}
+		}
+        */
+
         //------------------------------------------------------------------------------
         enum Level { Standard = 0, Sacrificial = 1, Blood = 2, Nightmare = 3, None = 4 }
 
@@ -93,25 +110,83 @@ namespace Cults
 
         public class RitualParms // exposable
         {
-            public CosmicEntityDef deity;
-            public Pawn offerror;
             public Thing sacrifice;
             public SpellDef reward;
         }
 
-        public RitualParms ritualFood;
-        public RitualParms ritualItem;
-        public RitualParms ritualAnimal;
-        public RitualParms ritualHuman;
+        // Common
+        public CosmicEntityDef ritualDeity;
+        public Pawn ritualPreacher;
+
+        // Different
+        public RitualParms ritualParmsFood = new RitualParms();
+        public RitualParms ritualParmsItem = new RitualParms();
+        public RitualParms ritualParmsAnimal = new RitualParms();
+        public RitualParms ritualParmsHuman = new RitualParms();
 
         //------------------------------------------------------------------------------
         // Other
 
+        private void giveJob(Pawn pawn)
+        {
+            // [WorkGiver_DoBill] class has some useful things
+            
+            List<Thing> things = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+
+            List<LocalTargetInfo> target_list = new List<LocalTargetInfo>();
+            List<int> thing_count = new List<int>();
+
+            int required_stack = 20;
+            int current_stack = 0;
+
+            for(int i = 0; i < things.Count; i++)
+            {
+                Thing t = things[i];
+
+                if(t.def.IsMeat)
+                {
+                    target_list.Add(t);
+
+                    if(t.stackCount > required_stack)
+                    {
+                        thing_count.Add(required_stack - current_stack);
+                        break;
+                    }
+                    else{
+                        thing_count.Add(t.stackCount);
+                        current_stack += t.stackCount;
+                    }
+                    
+                }
+
+            }
+
+            
+            Job job = JobMaker.MakeJob(CultsDefOf.Cults_DoBill); // JobDefOf.DoBill); // 
+            job.playerForced = true;
+            job.targetA = this;
+            job.targetQueueB = target_list;
+            job.countQueue = thing_count; 
+            job.targetC = PositionHeld;
+            job.haulMode = HaulMode.ToCellNonStorage;
+            job.locomotionUrgency = LocomotionUrgency.Sprint;
+            job.bill = new Bill_Production(RecipeDefOf.CookMealSimple);
+            job.bill.billStack = this.BillStack;
+
+            // DeletedOrDereferenced.ToString()
+            //Log.Message(job.bill.Label);
+
+            Log.Message(job.bill == null?  "Job bill is null" : "Job bill exists " + job.bill.Label);
+
+            pawn.jobs.TryTakeOrderedJob(job);
+        }
+        // [StartOffering()]
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
 		{
             FloatMenuOption option = new FloatMenuOption("Give something", null);
-            option.action = delegate {
-                Log.Message("Hohohoh");
+            option.action = delegate
+            {
+                 giveJob(pawn);   
             };
 			yield return option;
 		}
