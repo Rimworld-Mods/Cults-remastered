@@ -41,9 +41,10 @@ namespace Cults
             }
 
             rect = new Rect(17f, 50f, 120f, 25f);
-            if (Widgets.ButtonText(rect, "Expose", true, false, true))
+            if (Widgets.ButtonText(rect, "Research test", true, false, true))
             {
-                CultKnowledge.ExposeToHorror();
+                Find.ResearchManager.ResearchPerformed(100f / 0.00825f, null);
+                //CultKnowledge.ExposeToHorror();
                 //Find.ResearchManager.FinishProject(CultsDefOf.Cults_ForbiddenSculptures, true, null);
             }
             

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+ingredients = "these items can be used in this recipe" and count
+fixedIngredientFilter = UI "when bill is started these items can be checked"
+defaultIngredientFilter = UI "when you start a new bill with this recipe, these items are checked"
+-->
+<Defs>
+    <RecipeDef Name="AltarRecipeBase" Abstract="True">
+        <effectWorking>Surgery</effectWorking>
+        <workSkillLearnFactor>0.5</workSkillLearnFactor>
+        <workSkill>Social</workSkill>
+        <workAmount>2500</workAmount>
+        <workSpeedStat>SocialImpact</workSpeedStat>
+
+        <soundWorking>Recipe_CookMeal</soundWorking>
+        <allowMixingIngredients>true</allowMixingIngredients>
+
+        <allowedSpellTierRange>0~5</allowedSpellTierRange>
+        <requiredDeity>Cults_CosmicEntity_Cthulhu</requiredDeity>
+        <exclusiveSpells>
+            <li>Cults_Spell_Favor</li>
+        </exclusiveSpells>
+
+        <!-- <requiredGiverWorkType>Cooking</requiredGiverWorkType> -->
+        <!--
+            mod def extension
+            <CongregationRewardFilter>
+                <li>Favor<li>
+            </CongregationRewardFilter>
+
+        -->
+        <!--
+        <modExtensions>
+            <li Class="Cults.CongregationRecipeDefRewardExtension">
+                <allowedTierRange>0~5</allowedTierRange>
+                <requiredDeity>Cults_CosmicEntity_Cthulhu</requiredDeity>
+                <exclusiveSpells>
+                    <li>Cults_Spell_Favor</li>
+                </exclusiveSpells>
+            </li>
+
+        </modExtensions>
+        -->
+
+    </RecipeDef>
+
+    <!--=============== Offer food ====================-->
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_OfferMeatRaw</defName>
+        <label>Raw meat</label>
+        <description>offer raw meat to the one of many deities</description>
+        <jobString>Offering raw meat.</jobString>
+        <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+        <ingredients>
+            <li>
+                <filter>
+                    <categories>
+                        <li>MeatRaw</li>
+                    </categories>
+                </filter>
+                <count>7.5</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <categories>
+                <li>MeatRaw</li>
+            </categories>
+        </fixedIngredientFilter>
+        <requiredChoice>Food</requiredChoice>
+    </RecipeDef>
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_OfferMeatRaw_Worthy</defName>
+        <label>Raw meat (worthy)</label>
+        <description>offer raw meat to the one of many deities</description>
+        <jobString>Offering raw meat.</jobString>
+        <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+        <ingredients>
+            <li>
+                <filter>
+                    <categories>
+                        <li>MeatRaw</li>
+                    </categories>
+                </filter>
+                <count>15</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <categories>
+                <li>MeatRaw</li>
+            </categories>
+        </fixedIngredientFilter>
+        <requiredChoice>Food</requiredChoice>
+        <isWorthy>True</isWorthy>
+    </RecipeDef>
+
+    <!---->
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_OfferPlantFoodRaw</defName>
+        <label>Raw plant food</label>
+        <description>offer raw plant food to the one of many deities</description>
+        <jobString>Offering raw plant food.</jobString>
+        <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+        <ingredients>
+            <li>
+                <filter>
+                    <categories>
+                        <li>PlantFoodRaw</li>
+                    </categories>
+                </filter>
+                <count>7.5</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <categories>
+                <li>PlantFoodRaw</li>
+            </categories>
+        </fixedIngredientFilter>
+        <requiredChoice>Food</requiredChoice>
+    </RecipeDef>
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_OfferPlantFoodRaw_Worthy</defName>
+        <label>Raw plant food (worthy)</label>
+        <description>offer raw plant food to the one of many deities</description>
+        <jobString>Offering raw plant food.</jobString>
+        <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+        <ingredients>
+            <li>
+                <filter>
+                    <categories>
+                        <li>PlantFoodRaw</li>
+                    </categories>
+                </filter>
+                <count>15</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <categories>
+                <li>PlantFoodRaw</li>
+            </categories>
+        </fixedIngredientFilter>
+        <requiredChoice>Food</requiredChoice>
+        <isWorthy>True</isWorthy>
+    </RecipeDef>
+
+    <!---->
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_OfferFoodMeals</defName>
+        <label>Meals</label>
+        <description>offer meals to the one of many deities</description>
+        <jobString>Offering meals.</jobString>
+        <ingredients>
+            <li>
+                <filter>
+                    <categories>
+                        <li>FoodMeals</li>
+                    </categories>
+                </filter>
+                <count>20</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <categories>
+                <li>FoodMeals</li>
+            </categories>
+        </fixedIngredientFilter>
+        <requiredChoice>Food</requiredChoice>
+    </RecipeDef>
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_OfferFoodMeals_Worthy</defName>
+        <label>Meals (worthy)</label>
+        <description>offer meals to the one of many deities</description>
+        <jobString>Offering meals.</jobString>
+        <ingredients>
+            <li>
+                <filter>
+                    <categories>
+                        <li>FoodMeals</li>
+                    </categories>
+                </filter>
+                <count>40</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <categories>
+                <li>FoodMeals</li>
+            </categories>
+        </fixedIngredientFilter>
+        <requiredChoice>Food</requiredChoice>
+        <isWorthy>True</isWorthy>
+    </RecipeDef>
+
+    <!--=============== Offer items ====================-->
+
+    <!--
+        <RecipeDef>
+            <defName>AdministerMechSerumHealer</defName>
+            <label>administer healer mech serum</label>
+            <description>Administer a healer mech serum.</description>
+            <workerClass>Recipe_AdministerUsableItem</workerClass>
+            <jobString>Administering healer mech serum.</jobString>
+            <targetsBodyPart>false</targetsBodyPart>
+            <anesthetize>false</anesthetize>
+            <workAmount>600</workAmount>
+            <dontShowIfAnyIngredientMissing>true</dontShowIfAnyIngredientMissing>
+            <surgerySuccessChanceFactor>99999</surgerySuccessChanceFactor>
+            <ingredients>
+            <li>
+                <filter>
+                <thingDefs>
+                    <li>MechSerumHealer</li>
+                </thingDefs>
+                </filter>
+                <count>1</count>
+            </li>
+            </ingredients>
+            <fixedIngredientFilter>
+            <thingDefs>
+                <li>MechSerumHealer</li>
+            </thingDefs>
+            </fixedIngredientFilter>
+        </RecipeDef>
+    -->
+
+    <!--=============== Sacrifice ====================-->
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_SacrificeAnimal</defName>
+        <label>sacrifice animal</label>
+        <description>sacrifice animal to the one of many deities</description>
+        <jobString>Sacrificing animal.</jobString>
+        <requiredChoice>Animal</requiredChoice>
+    </RecipeDef>
+
+    <RecipeDef ParentName="AltarRecipeBase" Class="Cults.CongregationRecipeDef">
+        <defName>Cults_SacrificeHuman</defName>
+        <label>sacrifice human</label>
+        <description>sacrifice human being to the one of many deities</description>
+        <jobString>Sacrificing human being.</jobString>
+        <requiredChoice>Human</requiredChoice>
+    </RecipeDef>
+
+</Defs>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThoughtDef>
+        <defName>Cults_Thought_SawBloodMoonSad</defName>
+        <durationDays>1.5</durationDays>
+        <nullifyingTraits>
+            <li>Psychopath</li>
+            <li>Bloodlust</li>
+        </nullifyingTraits>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>saw blood moon</label>
+                <description>I can still feel the blood moon leering at me. That can't be normal!</description>
+                <baseMoodEffect>-10</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+
+    <ThoughtDef>
+        <defName>Cults_Thought_SawBloodMoonHappy</defName>
+        <durationDays>1.5</durationDays>
+        <requiredTraits>
+            <li>Bloodlust</li>
+        </requiredTraits>
+        <stackLimit>1</stackLimit>
+        <stages>
+            <li>
+                <label>glorious blood moon</label>
+                <description>This moon is perfect. I wish it would last forever!</description>
+                <baseMoodEffect>25</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

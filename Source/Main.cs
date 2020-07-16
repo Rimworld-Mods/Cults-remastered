@@ -22,11 +22,11 @@ New scheduled work type - Worship
 Sermons now occur (with a small chance) when 3 or more colonists worship at the same time
 No more occult research center forbid, pawns will use this bench only if current research project is occult one.
 
-Finish forship AI job
-Make deity motes
-Horror pawns
-offering and sacrificing
-
+// Finish evaluations
+// Finish UI and job giving
+// Implement Things (pawns / items)
+// Implement Spells
+// Implement 
 
 Bugs:
     When schedule worship and pawn sleeps - error
@@ -43,7 +43,7 @@ namespace Cults
 
         // Save
         private static string cultName = "Unnamed cult";
-        private static bool isExposed;
+        public static bool isExposed => CultsDefOf.Cults_ForbiddenStudies.IsFinished;
         public static bool performSermons;
         public static CosmicEntityDef selectedDeity;
 
@@ -54,12 +54,21 @@ namespace Cults
         }
         public static string GetCultName() => CultKnowledge.cultName;
 
+        /*
         public static void ExposeToHorror()
         {
             Find.LetterStack.ReceiveLetter("Cult beginning", CultsDefOf.Cults_Letter_Success.description, CultsDefOf.Cults_Letter_Success, null);
             isExposed = true;
         }
-        public static bool IsExposed() => isExposed;
+        */
+
+        public static void GiveFavor(CosmicEntityDef def, float f)
+        {
+            for(int i = 0; i < deities.Count; i++)
+            {
+                if(deities[i].def == def) deities[i].GiveFavor(f);
+            }
+        }
 
         public override void FinalizeInit() // first
         {
@@ -70,7 +79,16 @@ namespace Cults
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref isExposed, "isExposed", false, true);
+            if(deities == null)
+            {
+                deities = new List<CosmicEntity>();
+                List<CosmicEntityDef> available_defs = DefDatabase<CosmicEntityDef>.AllDefs.ToList();
+                foreach(CosmicEntityDef d in available_defs)
+                {
+                    deities.Add(new CosmicEntity(){ def = d });
+                }
+            }
+            //Scribe_Values.Look(ref isExposed, "isExposed", false, true);
             Scribe_Values.Look(ref cultName, "cultName", "Unnamed cult", true);
             Scribe_Values.Look(ref performSermons, "performSermons", true, true);
             Scribe_Defs.Look(ref selectedDeity, "selectedDeity");
@@ -79,39 +97,25 @@ namespace Cults
 
         public static void DiscoverRandomDeity()
         {
-            List<CosmicEntityDef> available_defs = new List<CosmicEntityDef>{
-                Cults.CultsDefOf.Cults_CosmicEntity_Cthulhu,
-                Cults.CultsDefOf.Cults_CosmicEntity_Nyarlathotep,
-                Cults.CultsDefOf.Cults_CosmicEntity_Dagon,
-                Cults.CultsDefOf.Cults_CosmicEntity_Hastur,
-                Cults.CultsDefOf.Cults_CosmicEntity_Shub,
-                Cults.CultsDefOf.Cults_CosmicEntity_Tsathoggua,
-                Cults.CultsDefOf.Cults_CosmicEntity_Bast,
-            };
-
-            // remove duplicated
-            if(deities == null) deities = new List<CosmicEntity>();
+            List<CosmicEntity> discoverable = new List<CosmicEntity>();
+            if(deities == null) return;
             foreach(CosmicEntity deity in deities)
             {
-                for(int i = 0; i < available_defs.Count; i++)
-                {
-                    if(deity.def == available_defs[i]) {
-                        available_defs.RemoveAt(i);
-                        i -= 1;
-                    }
-                }
+                if(!deity.isDiscovered) discoverable.Add(deity);
             }
 
-            if(available_defs.Count == 0){
+            
+
+            if(discoverable.Count == 0){
                 Log.Message("Discovered all deities");
                 return;
             }
 
             // select random and discover
-            System.Random rand = new System.Random();
-            int index = rand.Next() % available_defs.Count;
-            deities.Add(new CosmicEntity(available_defs[index]));
-            Messages.Message("Discovered " + available_defs[index].label, null, MessageTypeDefOf.PositiveEvent);
+            int index = Math.Abs(Rand.Int) % discoverable.Count;
+            //Log.Message(Rand.Int.ToString() + " % " + discoverable.Count + " = " + index);
+            Messages.Message("Discovered " + discoverable[index].def.label, null, MessageTypeDefOf.PositiveEvent);
+            discoverable[index].Discover(); //.Add(new CosmicEntity(){ def = available_defs[index] });
 
             // sort list
             deities.SortBy(d => d.def.index);
@@ -137,10 +141,19 @@ namespace Cults
         {
             Harmony harmony = new Harmony( "Arvkus.Cults" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
-
-            Log.Message(ModsConfig.IsActive(ModContentPack.RoyaltyModPackageId).ToString());
-            Log.Message("Cults mod success");
         }
+    }
+
+    public class CongregationRecipeDef : RecipeDef
+    {
+        public bool isWorthy = false;
+        public string requiredChoice = "None";
+        
+        
+        public float additionalFavorGain = 0;
+        public IntRange allowedSpellTierRange; // = new RangeInt(0,5);
+        public CosmicEntityDef requiredDeity;
+        public List<SpellDef> exclusiveSpells; // = new List<SpellDef>();
     }
 
 }

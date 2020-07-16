@@ -21,4 +21,16 @@ namespace Cults
     public class ForbiddenResearchExtension : DefModExtension
     {
     }
+
+    public class CongregationRecipeRewardExtension : DefModExtension
+    {
+        public ThingDef DefGraphic;
+        public float additionalFavorGain = 0;
+        public bool isOfferWorthy = false;
+        public RangeInt allowedTierRange; // = new RangeInt(0,5);
+        public CosmicEntityDef requiredDeity;
+        public List<SpellDef> exclusiveSpells; // = new List<SpellDef>();
+
+
+    }
 }

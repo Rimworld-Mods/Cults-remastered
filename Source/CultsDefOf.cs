@@ -35,6 +35,9 @@ namespace Cults
         public static JobDef Cults_Job_Worship;
         public static JobDef Cults_DoBill;
 
+        public static RecipeDef Cults_OfferMeatRaw;
+        public static RecipeDef Cults_OfferMeatRaw_Worthy;
+
         //-------------------------------------------------------
         // Items
         
@@ -65,5 +68,20 @@ namespace Cults
         public static ThingDef Cults_Building_SacrificialAltar;
         public static ThingDef Cults_Building_BloodAltar;
         public static ThingDef Cults_Building_NightmareAltar;
+
+        //-------------------------------------------------------
+        // Conditions
+        public static GameConditionDef Cults_GameCondition_StarsAreWrong;
+        public static GameConditionDef Cults_GameCondition_StarsAreRight;
+        public static GameConditionDef Cults_GameCondition_BloodMoon;
+        
+        //-------------------------------------------------------
+        // Thoughts
+        public static ThoughtDef Cults_Thought_SawBloodMoonSad;
+        public static ThoughtDef Cults_Thought_SawBloodMoonHappy;
+
     }
+
 }
+
+

@@ -31,8 +31,29 @@ namespace Cults
     {
         private static TimeAssignmentDef Postfix(TimeAssignmentDef __result) 
         {
-            // custom TimeAssignment def breaks vanilla functions, do not return it
+            // custom TimeAssignment def breaks vanilla pawn AI functions, do not return it
             return (__result == CultsDefOf.Cults_TimeAssignment_Worship)? TimeAssignmentDefOf.Anything : __result;
+        }
+    }
+
+    [HarmonyPatch(typeof(InspectPaneFiller), "DrawTimetableSetting")]
+    public class FixTimeAssignmentInspectPane
+    {
+        private static bool Prefix(ref WidgetRow row, ref Pawn pawn)
+        {
+            // override [InspectPanelFiller] UI current (schedule) assignment draw function
+            TimeAssignmentDef realDef = pawn.timetable.times[GenLocalDate.HourOfDay(pawn)];
+
+            if(realDef == CultsDefOf.Cults_TimeAssignment_Worship)
+            {
+                row.Gap(6f);
+                row.FillableBar(93f, 16f, 1f, realDef.LabelCap, realDef.ColorTexture);
+                return false; // skip original method
+            }
+            else
+            {
+                return true; // normal behavior
+            }
         }
     }
 

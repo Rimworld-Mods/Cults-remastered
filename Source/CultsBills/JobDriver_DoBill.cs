@@ -15,55 +15,13 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 /*
 	This folder contains vanilla bill related classes with slight modifications
+	Used in [BaseAltar] class for cult bills
 */
 
 namespace Cults
 {
-	public class JobDriver_DoBill : JobDriver
+	public class JobDriver_DoBill : Verse.AI.JobDriver_DoBill //: JobDriver
 	{
-		public float workLeft;
-
-		public int billStartTick;
-
-		public int ticksSpentDoingRecipeWork;
-
-		public const PathEndMode GotoIngredientPathEndMode = PathEndMode.ClosestTouch;
-
-		public const TargetIndex BillGiverInd = TargetIndex.A;
-
-		public const TargetIndex IngredientInd = TargetIndex.B;
-
-		public const TargetIndex IngredientPlaceCellInd = TargetIndex.C;
-
-		public IBillGiver BillGiver => (job.GetTarget(TargetIndex.A).Thing as IBillGiver) ?? throw new InvalidOperationException("DoBill on non-Billgiver.");
-
-		public override string GetReport()
-		{
-			if (job.RecipeDef != null)
-			{
-				return ReportStringProcessed(job.RecipeDef.jobString);
-			}
-			return base.GetReport();
-		}
-
-		public override void ExposeData()
-		{
-			base.ExposeData();
-			Scribe_Values.Look(ref workLeft, "workLeft", 0f);
-			Scribe_Values.Look(ref billStartTick, "billStartTick", 0);
-			Scribe_Values.Look(ref ticksSpentDoingRecipeWork, "ticksSpentDoingRecipeWork", 0);
-		}
-
-		public override bool TryMakePreToilReservations(bool errorOnFailed)
-		{
-			if (!pawn.Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null, errorOnFailed))
-			{
-				return false;
-			}
-			pawn.ReserveAsManyAsPossible(job.GetTargetQueue(TargetIndex.B), job);
-			return true;
-		}
-
 		protected override IEnumerable<Toil> MakeNewToils()
 		{
 			AddEndCondition(delegate
@@ -88,11 +46,11 @@ namespace Cults
 				}
 				return false;
 			});
+
 			Toil gotoBillGiver = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
 			Toil toil = new Toil();
 			toil.initAction = delegate
 			{
-				Log.Message("Toil init begin");
 				if (job.targetQueueB != null && job.targetQueueB.Count == 1)
 				{
 					UnfinishedThing unfinishedThing = job.targetQueueB[0].Thing as UnfinishedThing;
@@ -101,8 +59,10 @@ namespace Cults
 						unfinishedThing.BoundBill = (Bill_ProductionWithUft)job.bill;
 					}
 				}
-				Log.Message("Toil init success");
 			};
+
+			
+
 			yield return toil;
 			yield return Toils_Jump.JumpIf(gotoBillGiver, () => job.GetTargetQueue(TargetIndex.B).NullOrEmpty());
 			Toil extract = Toils_JobTransforms.ExtractNextTargetFromQueue(TargetIndex.B);
@@ -114,13 +74,15 @@ namespace Cults
 			yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell).FailOnDestroyedOrNull(TargetIndex.B);
 			Toil findPlaceTarget2 = Toils_JobTransforms.SetTargetToIngredientPlaceCell(TargetIndex.A, TargetIndex.B, TargetIndex.C);
 			yield return findPlaceTarget2;
-			
-			//yield return Toils_Haul.PlaceHauledThingInCell(TargetIndex.C, findPlaceTarget2, storageMode: false);
 			yield return Cults.Toils_Haul.PlaceHauledThingInCell(TargetIndex.C, findPlaceTarget2, storageMode: false);
-			
 			yield return Toils_Jump.JumpIfHaveTargetInQueue(TargetIndex.B, extract);
 			yield return gotoBillGiver;
+
+			// bill!
+			
 			yield return Cults.Toils_Recipe.MakeUnfinishedThingIfNeeded();
+
+			// index 12
 			yield return Cults.Toils_Recipe.DoRecipeWork().FailOnDespawnedNullOrForbiddenPlacedThings().FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
 			yield return Cults.Toils_Recipe.FinishRecipeAndStartStoringProduct();
 			if (job.RecipeDef.products.NullOrEmpty() && job.RecipeDef.specialProducts.NullOrEmpty())
@@ -128,7 +90,6 @@ namespace Cults
 				yield break;
 			}
 
-			
 			Cults.JobDriver_DoBill jobDriver_DoBill = this;
 			yield return Toils_Reserve.Reserve(TargetIndex.B);
 			findPlaceTarget2 = Toils_Haul.CarryHauledThingToCell(TargetIndex.B);
@@ -144,7 +105,9 @@ namespace Cults
 				}
 			};
 			yield return recount;
+			
 		}
+
 
 		private static Toil JumpToCollectNextIntoHandsForBill(Toil gotoGetTargetToil, TargetIndex ind)
 		{
@@ -197,5 +160,7 @@ namespace Cults
 			};
 			return toil;
 		}
+
+
 	}
 }

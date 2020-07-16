@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
+	<packageId>Arvkus.Rimworld.Cults</packageId>
 	<name>Cults Remastered</name>
 	<author>Arvkus</author>
 	<supportedVersions>
 		<li>1.1</li>
 	</supportedVersions>
-	<packageId>Arvkus.Rimworld.Cults</packageId>
+	<incompatibleWith>
+		<li>rimofmadness.callofcthulhu.cults</li>
+		<li>rimofmadness.hplovecraft</li>
+		<li>rimofmadness.cosmichorrors</li>
+	</incompatibleWith>
 	<description>...</description>
+
+
 </ModMetaData>

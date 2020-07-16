@@ -101,19 +101,23 @@ namespace Cults
 
         public static void DrawProgressBars()
         {
-            if(CultKnowledge.deities == null || CultKnowledge.deities.Count == 0){
+            if(CultKnowledge.deities == null || CultKnowledge.deities.Count == 0) return;
+            
+            int i = 0;
+            foreach(CosmicEntity deity in CultKnowledge.deities){
+                if(deity.isDiscovered){
+                    Rect rect = new Rect(0, 70f + (i * 50f), 225f, 50f);
+                    ProgressBar bar = new ProgressBar(deity);
+                    bar.Draw(rect);
+                    i++;
+                }
+            }
+
+            if(i == 0)
+            {
                 Rect rect = new Rect(margin, 70f, 225f, 50f);
                 Text.Font = GameFont.Small;
                 Widgets.Label(rect, "No deities are discovered!");
-                return;
-            }
-
-            for(int i = 0; i < CultKnowledge.deities.Count; i++){
-                //if(deity.isDiscovered){
-                    Rect rect = new Rect(0, 70f + (i * 50f), 225f, 50f);
-                    ProgressBar bar = new ProgressBar(CultKnowledge.deities[i]);
-                    bar.Draw(rect);
-                //}
             }
         }
 
@@ -133,6 +137,7 @@ namespace Cults
             {
                 OpenDeitySelectMenu(selected);
             }
+
 
             rect = new Rect(255f, 100f, 180f, 40f);
             Widgets.CheckboxLabeled(rect.BottomHalf(), "Perform sermons", ref CultKnowledge.performSermons, false);
@@ -181,35 +186,35 @@ namespace Cults
         }
 
         public static void OpenDeitySelectMenu(Building_BaseAltar altar)
-        {
-            List<FloatMenuOption> list = new List<FloatMenuOption>();
-            list.Add(new FloatMenuOption("NONE", delegate
+        {            
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<CosmicEntityDef> list = new List<CosmicEntityDef>();
+
+            foreach (CosmicEntity candidate in CultKnowledge.deities)
+            {
+                if(candidate.isDiscovered) list.Add(candidate.def);
+            }
+
+            // null option
+            options.Add(new FloatMenuOption("NONE", delegate
             {
                 CultKnowledge.selectedDeity = null; // deselect deity
 
             }, MenuOptionPriority.Default, null, null, 0f, null));
 
-            if(CultKnowledge.deities != null){
-                foreach (CosmicEntity deity in CultKnowledge.deities)
-                {
-                    Action action = delegate // select deity
-                    {
-                        CultKnowledge.selectedDeity = deity.def;
-                    };
-
-                    FloatMenuOption option = new FloatMenuOption(
-                        deity.def.label, 
-                        action, 
-                        deity.def.symbolTex, 
-                        new Color(1f, 0f, 0f, 1f), 
-                        MenuOptionPriority.Default
-                    );
-
-                    list.Add(option);
-                }
+            // deity options
+            foreach(CosmicEntityDef thing in list)
+            {
+                options.Add(new FloatMenuOption(
+                    thing.label, 
+                    delegate { CultKnowledge.selectedDeity = thing; }, 
+                    thing.symbolTex, 
+                    new Color(1f, 0f, 0f, 1f), 
+                    MenuOptionPriority.Default
+                ));
             }
 
-            Find.WindowStack.Add(new FloatMenu(list));
+            Find.WindowStack.Add(new FloatMenu(options));
         }
     }
 
@@ -219,8 +224,6 @@ namespace Cults
 
     public class ProgressBar
     {
-        public bool is_default_color = false;
-
         private CosmicEntity deity;
         public string label => deity.def.label;
         public float max_level => deity.def.maxFavor;
@@ -266,20 +269,31 @@ namespace Cults
             Rect rect2 = new Rect(rect.x, rect.y + rect.height / 2f, rect.width, rect.height / 2f);
             rect2 = new Rect(rect2.x + num3, rect2.y, rect2.width - num3 * 2f, rect2.height - num2);
             Rect rect3 = rect2;
+            /*
             float num4 = 1f;
             if (max_level < 1f) num4 = max_level;
             rect3.width *= num4;
+            */
 
-            Rect barRect = is_default_color ?
-                Widgets.FillableBar(rect3, current_level_percentage) :
-                Widgets.FillableBar(rect3, current_level_percentage, Textures.RedColorTex);
+            Rect barRect = Widgets.FillableBar(rect3, Mathf.Clamp(current_level_percentage, 0f, 1f), Textures.RedColorTex);
+
+            if(current_level > max_level) 
+            {
+                Rect rect4 = new Rect(rect3.x, rect3.y, rect3.width  * (current_level_percentage-1), rect3.height);
+                GUI.DrawTexture(rect4, Textures.PurpleColorTex);
+            }
+
+            //if(current_level_percentage >)
+
+
+
 
             // arrows
             Widgets.FillableBarChangeArrows(rect3, CultKnowledge.selectedDeity == this.deity.def? 1 : 0);
 
             for (int i = 0; i < deity.def.favorThresholds.Count; i++)
             {
-                DrawBarThreshold(barRect, deity.def.favorThresholds[i] * num4);
+                DrawBarThreshold(barRect, deity.def.favorThresholds[i] * 1f);
             }
 
             Text.Font = GameFont.Small;
@@ -287,6 +301,7 @@ namespace Cults
 
         private void DrawBarThreshold(Rect barRect, float threshPct)
         {
+            if(threshPct == 0f || threshPct == 1f) return;
             float num = (float)((barRect.width <= 60f) ? 1 : 2);
             Rect position = new Rect(barRect.x + barRect.width * threshPct - (num - 1f), barRect.y + barRect.height / 2f, num, barRect.height / 2f);
             Texture2D image;

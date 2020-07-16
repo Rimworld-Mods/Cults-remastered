@@ -27,13 +27,13 @@ namespace Cults{
         public static readonly Texture2D BarInstantMarkerTex = ContentFinder<Texture2D>.Get("UI/Misc/BarInstantMarker");
 		public static readonly Texture2D NeedUnitDividerTex = ContentFinder<Texture2D>.Get("UI/Misc/NeedUnitDivider");
         public static readonly Texture2D RedColorTex = SolidColorMaterials.NewSolidColorTexture(Color.red);
+        public static readonly Texture2D PurpleColorTex = SolidColorMaterials.NewSolidColorTexture(new Color(.65f, .0f, .7f, 1f));
 
         public static readonly Texture2D AnimalColorTex = SolidColorMaterials.NewSolidColorTexture(new Color(.4f, .2f, .4f, 1f));
         public static readonly Texture2D HumanColorTex = SolidColorMaterials.NewSolidColorTexture(new Color(.6f, .2f, .2f, 1f));
         public static readonly Texture2D blackColorTex = SolidColorMaterials.NewSolidColorTexture(new Color(.1f, .1f, .1f, 1f));
 
         //public static readonly Texture2D Gizmo_ = ContentFinder<Texture2D>.Get("UI/Misc/NeedUnitDivider");
-
-
+   
     }
 }

@@ -18,25 +18,16 @@ namespace Cults
 
     public class Building_BaseAltar : Building_WorkTable//, IBillGiver
     {
-        //public Building_BaseAltar() => this.BillStack = new BillStack(this);
-        //public BillStack BillStack { get; }
-        //public IEnumerable<IntVec3> IngredientStackCells => GenAdj.CellsOccupiedBy(this);
-        //public bool UsableForBillsAfterFueling() => true;
-        //public bool CurrentlyUsableForBills() => true;
+        public Building_BaseAltar() : base() 
+        {
 
-            /*
-        public override void SpawnSetup(Map map, bool respawningAfterLoad)
-		{
-			base.SpawnSetup(map, respawningAfterLoad);
-			foreach (Bill item in BillStack)
-			{
-				item.ValidateSettings();
-			}
-		}
-        */
+        }
+
 
         //------------------------------------------------------------------------------
-        enum Level { Standard = 0, Sacrificial = 1, Blood = 2, Nightmare = 3, None = 4 }
+        public enum Level { None = 0, Standard = 1, Sacrificial = 2, Blood = 3, Nightmare = 4 }
+        public enum State { None = 0, Sermon = 1, Congregation = 2 }
+        public enum Choice { Food = 0, Item = 1, Animal = 2, Human = 3}
 
         private Level lvl
         {
@@ -106,127 +97,285 @@ namespace Cults
         }
 
         //------------------------------------------------------------------------------
-        // Ritual
+        // Congregation options
 
-        public class RitualParms // exposable
+        public class CongregationParms // exposable
         {
-            public Thing sacrifice;
+            public CongregationRecipeDef recipe;
+            public Pawn sacrifice;
             public SpellDef reward;
         }
 
         // Common
-        public CosmicEntityDef ritualDeity;
-        public Pawn ritualPreacher;
+        public CosmicEntityDef congregationDeity;
+        public Pawn congregationPreacher;
+        public Choice congregationChoice;
 
         // Different
-        public RitualParms ritualParmsFood = new RitualParms();
-        public RitualParms ritualParmsItem = new RitualParms();
-        public RitualParms ritualParmsAnimal = new RitualParms();
-        public RitualParms ritualParmsHuman = new RitualParms();
+        public CongregationParms congregationParmsFood = new CongregationParms();
+        public CongregationParms congregationParmsItem = new CongregationParms();
+        public CongregationParms congregationParmsAnimal = new CongregationParms();
+        public CongregationParms congregationParmsHuman = new CongregationParms();
 
         //------------------------------------------------------------------------------
         // Other
 
         private void giveJob(Pawn pawn)
         {
-            // [WorkGiver_DoBill] class has some useful things
-            
-            List<Thing> things = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+            // get required things based on bill's recipe
+            List<ThingCount> chosen_things = new List<ThingCount>();
+            Bill_Production bill = new Bill_Production(CultsDefOf.Cults_OfferMeatRaw_Worthy);
+            if(!IngredientFinder.TryFindBestBillIngredients(bill, pawn, this, chosen_things))
+            {
+                Messages.Message("Ingredients not available", null, MessageTypeDefOf.RejectInput, null);
+                return;
+            };
 
+            // prepare bill
+            this.billStack.Clear();
+            this.billStack.AddBill(bill);
+            bill.billStack = this.billStack;
+            bill.ingredientSearchRadius = 5f;
+
+            // prepare job   
+            Job job = JobMaker.MakeJob(CultsDefOf.Cults_DoBill); // JobDefOf.DoBill); //  
             List<LocalTargetInfo> target_list = new List<LocalTargetInfo>();
             List<int> thing_count = new List<int>();
+        
+            job.targetQueueB = new List<LocalTargetInfo>(chosen_things.Count);
+            job.countQueue = new List<int>(chosen_things.Count);
 
-            int required_stack = 20;
-            int current_stack = 0;
-
-            for(int i = 0; i < things.Count; i++)
+            for(int i = 0; i < chosen_things.Count; i++)
             {
-                Thing t = things[i];
-
-                if(t.def.IsMeat)
-                {
-                    target_list.Add(t);
-
-                    if(t.stackCount > required_stack)
-                    {
-                        thing_count.Add(required_stack - current_stack);
-                        break;
-                    }
-                    else{
-                        thing_count.Add(t.stackCount);
-                        current_stack += t.stackCount;
-                    }
-                    
-                }
-
+				job.targetQueueB.Add(chosen_things[i].Thing);
+				job.countQueue.Add(chosen_things[i].Count);
             }
-
             
-            Job job = JobMaker.MakeJob(CultsDefOf.Cults_DoBill); // JobDefOf.DoBill); // 
             job.playerForced = true;
             job.targetA = this;
-            job.targetQueueB = target_list;
-            job.countQueue = thing_count; 
             job.targetC = PositionHeld;
             job.haulMode = HaulMode.ToCellNonStorage;
             job.locomotionUrgency = LocomotionUrgency.Sprint;
-            job.bill = new Bill_Production(RecipeDefOf.CookMealSimple);
-            job.bill.billStack = this.BillStack;
+            job.bill = this.billStack.FirstShouldDoNow;
 
-            // DeletedOrDereferenced.ToString()
-            //Log.Message(job.bill.Label);
-
-            Log.Message(job.bill == null?  "Job bill is null" : "Job bill exists " + job.bill.Label);
-
+            // start job
             pawn.jobs.TryTakeOrderedJob(job);
         }
         // [StartOffering()]
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
 		{
-            FloatMenuOption option = new FloatMenuOption("Give something", null);
-            option.action = delegate
-            {
-                 giveJob(pawn);   
-            };
+            FloatMenuOption option = new FloatMenuOption(
+                "Start offering",
+                delegate{
+                    // giveJob(pawn); 
+
+                    foreach(Evaluation e in EvaluationManager.EvaluateAltar(this))
+                    {
+                        Log.Message(e.label + " " + e.score);
+                    };
+                
+                },
+                MenuOptionPriority.Default
+            );
+
 			yield return option;
 		}
 
+        //------------------------------------------------------------------------------
+        // Sacrifice/offer evaluation
 
-
-
-    }
-
-
-
-
-
-    /*
-    public class Building_StandardAltar : Building_BaseAltar
-    {
-        public override void SpawnSetup(Map map, bool ral)
+        /*
+        IEnumerable<Evaluation> GetEvaluations()
         {
-            Log.Message("spawnd: " + this.def.defName);
-            base.SpawnSetup(map, ral);
+            
+            if(congregationDeity != null){ }
+
+            // =============== Preacher ====================
+            if(congregationPreacher != null)
+            {
+                // Preacher apparel
+                Evaluation e1 = new Evaluation();
+
+                foreach(Apparel apparel in congregationPreacher.apparel.WornApparel)
+                {
+                    for(int i = 0; i < congregationDeity.favoredApparel.Count; i++)
+                    {
+                        if(congregationDeity.favoredApparel[i].def == apparel.def)
+                        {
+                            e1.score += 5;
+                            break;
+                        }
+                    }
+                }
+
+                if(e1.score > 0) yield return e1;
+
+                // Preacher skills
+                float talking = congregationPreacher.health.capacities.GetLevel(PawnCapacityDefOf.Talking);
+                if(talking < .70f)
+                {
+                    yield return new Evaluation();
+                }
+                else if(talking < .90f)
+                {
+                    yield return new Evaluation();
+                }
+
+                // Preacher spirituality
+                Spirituality need = congregationPreacher.needs.TryGetNeed<Spirituality>();
+                float skill = 0.0f;
+                if(need != null) skill = need.CurLevelPercentage;
+
+                if( skill > .7f)
+                {
+                    yield return new Evaluation();
+                }
+                else if(skill > .5f)
+                {
+                    yield return new Evaluation();
+                }
+                else if(skill > .3f)
+                {
+                    yield return new Evaluation();
+                }
+                else
+                {
+                    yield return new Evaluation();
+                }
+
+            }
+
+            // =============== Sacrifice ====================
+            CongregationParms parms = new CongregationParms();
+            if(congregationChoice == Choice.Animal) parms = congregationParmsAnimal;
+            if(congregationChoice == Choice.Human)  parms = congregationParmsHuman;
+
+            // Sacrifice health
+            if(parms.sacrifice != null && parms.sacrifice is Pawn)
+            {   
+                float health = (congregationParmsAnimal.sacrifice as Pawn).health.summaryHealth.SummaryHealthPercent;
+
+                if( health < .30f)
+                {
+                    yield return new Evaluation();
+                }
+                else if(health < .60f)
+                {
+                    yield return new Evaluation();
+                }
+                else if(health < .85f)
+                {
+                    yield return new Evaluation();
+                }
+            }
+            
+            // Sacrifice missing body parts
+            //IEnumerable<BodyPartRecord> source = from x in pawn.health.hediffSet.GetNotMissingParts()
+
+
+
+            // =============== Map Conditions ====================
+            // Eclipse
+            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
+            {
+                yield return new Evaluation();
+            };     
+            
+            // Aurora
+            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
+            {
+                yield return new Evaluation();
+            };
+
+            // Blood moon
+            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
+            {
+                yield return new Evaluation();
+            };
+
+            // Stars are wrong
+            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
+            {
+                yield return new Evaluation();
+            };
+
+            // Stars are right
+            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
+            {
+                yield return new Evaluation();
+            };
+
+            // =============== Temple ====================
+            // Room
+            Room temple = this.GetRoom();
+            if(temple != null)
+            {
+                float score_impressivness = temple.GetStat(RoomStatDefOf.Impressiveness);
+                float score_wealth = temple.GetStat(RoomStatDefOf.Wealth);
+                float score_space = temple.GetStat(RoomStatDefOf.Space);
+                float score_beaty = temple.GetStat(RoomStatDefOf.Beauty);
+
+            }
+
+            // linked statues/buildings TODO: statues
+
+            
+            // =============== Spell difficulty ====================
+            // Reward tier difficulty
+            if(parms.reward != null)
+            {
+                // parms.reward.difficultyFactor
+                switch(parms.reward.tier)
+                {
+                    case 0: yield return new Evaluation(); break;
+                    case 1: yield return new Evaluation(); break;
+                    case 2: yield return new Evaluation(); break;
+                    case 3: yield return new Evaluation(); break;
+                    case 4: yield return new Evaluation(); break;
+                    case 5: yield return new Evaluation(); break;
+                }
+            }
+
+            // =============== Time ====================
+
+
+
+
+            // =============== ============== ====================
+
         }
+        */
+
+
+
+
+
     }
 
-    public class Building_AnimalAltar : Building_BaseAltar
-    {
-        public override void SpawnSetup(Map map, bool ral)
-        {
-            Log.Message("spawnd: " + this.def.defName);
-            base.SpawnSetup(map, ral);
-        }
-    }
 
-    public class Building_HumanAltar : Building_BaseAltar
-    {
-        public override void SpawnSetup(Map map, bool ral)
-        {
-            Log.Message("spawnd: " + this.def.defName);
-            base.SpawnSetup(map, ral);
-        }
-    }
-    */
+
+
 
 }
+
+/*
+		public static void DoExecutionByCut(Pawn executioner, Pawn victim)
+		{
+			_ = victim.Map;
+			_ = victim.Position;
+			int num = Mathf.Max(GenMath.RoundRandom(victim.BodySize * 8f), 1);
+			for (int i = 0; i < num; i++)
+			{
+				victim.health.DropBloodFilth();
+			}
+			BodyPartRecord bodyPartRecord = ExecuteCutPart(victim);
+			int num2 = Mathf.Clamp((int)victim.health.hediffSet.GetPartHealth(bodyPartRecord) - 1, 1, 20);
+			DamageInfo damageInfo = new DamageInfo(DamageDefOf.ExecutionCut, num2, 999f, -1f, executioner, bodyPartRecord);
+			victim.TakeDamage(damageInfo);
+			if (!victim.Dead)
+			{
+				victim.Kill(damageInfo);
+			}
+		}
+
+*/

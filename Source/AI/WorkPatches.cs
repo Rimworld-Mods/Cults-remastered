@@ -83,7 +83,7 @@ namespace Cults
 				actor.skills.Learn(SkillDefOf.Intellectual, 0.1f);
 				actor.GainComfortFromCellIfPossible(chairsOnly: true);
 				// -- new code --
-				if(Find.ResearchManager.currentProj.HasModExtension<ForbiddenResearchExtension>())
+				if(Find.ResearchManager.currentProj != null && Find.ResearchManager.currentProj.HasModExtension<ForbiddenResearchExtension>())
 				{
 					Spirituality need = pawn.needs.TryGetNeed<Spirituality>();
 					if(need != null) need.Gain();

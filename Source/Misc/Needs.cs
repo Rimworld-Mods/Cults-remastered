@@ -73,7 +73,7 @@ namespace Cults{
 
         public override void DrawOnGUI(Rect rect, int maxThresholdMarkers = int.MaxValue, float customMargin = -1f, bool drawArrows = true, bool doTooltip = true)
 		{
-            if(!CultKnowledge.IsExposed()) return;
+            if(!CultKnowledge.isExposed) return;
 
 			if (rect.height > 70f)
 			{

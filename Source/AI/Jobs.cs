@@ -37,7 +37,7 @@ namespace Cults
         protected override Job TryGiveJob(Pawn pawn)
         {
             
-            if(!CultKnowledge.IsExposed()) return null;
+            if(!CultKnowledge.isExposed) return null;
             if(CultKnowledge.selectedDeity == null) return null;
 
             /*
@@ -131,6 +131,7 @@ namespace Cults
             {
                 pawn.GainComfortFromCellIfPossible();
                 Spirituality need = pawn.needs.TryGetNeed<Spirituality>();
+                CultKnowledge.GiveFavor(CultKnowledge.selectedDeity, 0.0001f);
                 if(need != null) need.Gain();
             };
 

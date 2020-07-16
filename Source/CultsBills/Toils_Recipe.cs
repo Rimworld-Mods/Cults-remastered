@@ -65,6 +65,7 @@ namespace Cults
 			Toil toil = new Toil();
 			toil.initAction = delegate
 			{
+				Log.Message("Recipe toil init begin");
 				Pawn actor3 = toil.actor;
 				Job curJob3 = actor3.jobs.curJob;
 				Cults.JobDriver_DoBill jobDriver_DoBill2 = (Cults.JobDriver_DoBill)actor3.jobs.curDriver;
@@ -85,6 +86,8 @@ namespace Cults
 				jobDriver_DoBill2.billStartTick = Find.TickManager.TicksGame;
 				jobDriver_DoBill2.ticksSpentDoingRecipeWork = 0;
 				curJob3.bill.Notify_DoBillStarted(actor3);
+
+				Log.Message("Recipe toil init success");
 			};
 			toil.tickAction = delegate
 			{

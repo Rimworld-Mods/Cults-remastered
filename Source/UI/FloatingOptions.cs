@@ -20,14 +20,14 @@ namespace Cults
         //-------------------------------------------------
         // Deity
 
-        public static void SelectDeity(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectDeity(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<CosmicEntityDef> list = new List<CosmicEntityDef>();
 
             foreach (CosmicEntity candidate in CultKnowledge.deities)
             {
-                list.Add(candidate.def);
+                if(candidate.isDiscovered) list.Add(candidate.def);
             }
 
             foreach(CosmicEntityDef thing in list)
@@ -36,14 +36,14 @@ namespace Cults
                     thing.label, 
                     delegate 
                     { 
-                        if(altar.ritualDeity != thing)
+                        if(altar.congregationDeity != thing)
                         {
-                            altar.ritualParmsHuman.reward = null;
-                            altar.ritualParmsAnimal.reward = null;
-                            altar.ritualParmsItem.reward = null;
-                            altar.ritualParmsFood.reward = null;
+                            altar.congregationParmsHuman.reward = null;
+                            altar.congregationParmsAnimal.reward = null;
+                            altar.congregationParmsItem.reward = null;
+                            altar.congregationParmsFood.reward = null;
                         }
-                        altar.ritualDeity = thing; 
+                        altar.congregationDeity = thing; 
                     }, 
                     thing.symbolTex, 
                     new Color(1f, 0f, 0f, 1f), 
@@ -58,7 +58,7 @@ namespace Cults
         //-------------------------------------------------
         // Preacher
 
-        public static void SelectPreacher(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectPreacher(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<Pawn> list = new List<Pawn>();
@@ -73,7 +73,7 @@ namespace Cults
             {
                 options.Add(new FloatMenuOption(
                     "        " + thing.Name.ToString(), 
-                    delegate { altar.ritualPreacher = thing; }, 
+                    delegate { altar.congregationPreacher = thing; }, 
                     MenuOptionPriority.Default,
                     null,
                     null,
@@ -101,7 +101,7 @@ namespace Cults
         //-------------------------------------------------
         // Animal
 
-        public static void SelectAnimalSacrifice(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectAnimalSacrifice(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<Pawn> list = new List<Pawn>();
@@ -131,7 +131,7 @@ namespace Cults
         //-------------------------------------------------
         // Human
 
-        public static void SelectHumanSacrifice(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectHumanSacrifice(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<Pawn> list = new List<Pawn>();
@@ -167,41 +167,57 @@ namespace Cults
         //-------------------------------------------------
         // Food
 
-        public static void SelectFoodSacrifice(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectFoodSacrifice(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<CongregationRecipeDef> recipes = DefDatabase<CongregationRecipeDef>.AllDefs.Where(r => r.requiredChoice == "Food").ToList();
+            
 
+            if(altar.congregationPreacher == null) return;
 
-            // Gets all item on each cell separated
-            List<Thing> things = altar.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
-            List<Thing> list = new List<Thing>();
-
-            foreach(Thing thing in things)
+            foreach (CongregationRecipeDef r in recipes)
             {
-                if(thing.def.IsWithinCategory(ThingCategoryDefOf.Foods))
+                List<ThingCount> chosen = new List<ThingCount>();
+                if(IngredientFinder.TryFindBestBillIngredients(new Bill_Production(r), altar.congregationPreacher, altar, chosen))
                 {
-                    list.Add(thing);
+                    if(!chosen.NullOrEmpty()){
+                        ThingDef def = chosen.First().Thing.def;
+                        Texture2D tex;
+
+                        if(def.graphic is Graphic_StackCount)
+                        {
+                            Graphic graphic = (def.graphic as Graphic_StackCount).SubGraphicForStackCount(r.isWorthy? def.stackLimit : 3, def);
+                            tex = graphic.MatSingle.GetTexture("_MainTex") as Texture2D;
+                        }
+                        else
+                        {
+                            tex = def.graphic.MatSingle.GetTexture("_MainTex") as Texture2D;
+                        }
+                        
+                        options.Add(new FloatMenuOption(
+                            r.label, 
+                            delegate {  }, // parms.sacrifice = thing;
+                            tex,
+                            new Color(1f, 1f, 1f, 1f),
+                            MenuOptionPriority.Default
+                        ));
+                        
+                    }
                 };
             }
 
-            foreach(Thing thing in things)
+            if(options.NullOrEmpty())
             {
-                options.Add(new FloatMenuOption(
-                    thing.def.label, 
-                    delegate { /*parms.sacrifice = thing;*/ }, 
-                    thing.def,
-                    MenuOptionPriority.Default
-                ));
-            }
-
-            if(options.NullOrEmpty()) return;
+                Messages.Message("No suitable amount of food is available", null, MessageTypeDefOf.RejectInput);
+                return;
+            } 
             Find.WindowStack.Add(new FloatMenu(options));
         }
 
         //-------------------------------------------------
         // Artefact
 
-        public static void SelectItemSacrifice(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectItemSacrifice(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 
@@ -213,15 +229,15 @@ namespace Cults
         //-------------------------------------------------
         // Reward
 
-        public static void SelectRewardSpell(Building_BaseAltar altar, Building_BaseAltar.RitualParms parms)
+        public static void SelectRewardSpell(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
             
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<SpellDef> list = new List<SpellDef>();
 
-            if(altar.ritualDeity == null) return;
+            if(altar.congregationDeity == null) return;
 
-            foreach (SpellDef def in altar.ritualDeity.spells)
+            foreach (SpellDef def in altar.congregationDeity.spells)
             {
                 // condition
                 list.Add(def);

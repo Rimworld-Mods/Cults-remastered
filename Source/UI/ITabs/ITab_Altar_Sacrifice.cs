@@ -15,6 +15,8 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
+    using Choice = Building_BaseAltar.Choice;
+
     class ITab_Sacrifice : ITab
     {
         
@@ -30,10 +32,6 @@ namespace Cults
         }
     }
 
-
-
-
-
     public static class SacrificeCardUtility
     {
         public static Vector2 defaultSize = new Vector2(540f, 380f);
@@ -42,10 +40,14 @@ namespace Cults
         //-------------------------------------------------
 
         enum Tab { Offer, Sacrifice };
-        enum Choice { Item, Food, Animal, Human };
 
         static Tab currentTab = Tab.Offer;
-        static Choice currentChoice = Choice.Food;
+        static Choice currentChoice{
+            get => (Find.Selector.SingleSelectedThing as Building_BaseAltar).congregationChoice;
+            set => (Find.Selector.SingleSelectedThing as Building_BaseAltar).congregationChoice = value;
+        }
+        
+        //Choice.Food;
         static Choice previousChoice = Choice.Animal;
 
         //-------------------------------------------------
@@ -156,7 +158,7 @@ namespace Cults
 
             Rect rect3 = new Rect(0, pos, size.x, size.y - pos).ContractedBy(4);
             Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(rect3, "It's free real estate. There should be a long text with a long description.");
+            Widgets.Label(rect3, "Make a sacrifice without any worldly gains.");
         }
 
         //-------------------------------------------------
@@ -165,15 +167,15 @@ namespace Cults
         public static void DrawRitualMenu(Rect rect)
         {
             Building_BaseAltar altar = Find.Selector.SingleSelectedThing as Building_BaseAltar;
-            Building_BaseAltar.RitualParms parms = new Building_BaseAltar.RitualParms();
+            Building_BaseAltar.CongregationParms parms = new Building_BaseAltar.CongregationParms();
 
             switch(currentChoice){
-                case Choice.Food: parms = altar.ritualParmsFood; break;
-                case Choice.Item: parms = altar.ritualParmsItem; break;
-                case Choice.Animal: parms = altar.ritualParmsAnimal; break;
-                case Choice.Human: parms = altar.ritualParmsHuman; break;
+                case Choice.Food: parms = altar.congregationParmsFood; break;
+                case Choice.Item: parms = altar.congregationParmsItem; break;
+                case Choice.Animal: parms = altar.congregationParmsAnimal; break;
+                case Choice.Human: parms = altar.congregationParmsHuman; break;
             }
-            
+
             Action action = delegate{};
             float num = 0;
             
@@ -185,7 +187,7 @@ namespace Cults
                 Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
                 DrawSelector(rect4, "Item", Choice.Item, Textures.HumanColorTex);
 
-                if(currentChoice == Choice.Animal || currentChoice == Choice.Human) Swap(ref currentChoice, ref previousChoice);  // auto-select
+                if(currentChoice == Choice.Animal || currentChoice == Choice.Human) Swap(ref altar.congregationChoice, ref previousChoice);  // auto-select
             }
             else
             {
@@ -195,16 +197,16 @@ namespace Cults
                 Rect rect4 = new Rect(rect.width/2, num, rect.width/2, 30f);
                 DrawSelector(rect4, "Human", Choice.Human, Textures.HumanColorTex);
 
-                if(currentChoice == Choice.Food || currentChoice == Choice.Item) Swap(ref currentChoice, ref previousChoice);  // auto-select
+                if(currentChoice == Choice.Food || currentChoice == Choice.Item) Swap(ref altar.congregationChoice, ref previousChoice);  // auto-select
             }
 
             string s;
             string t;
             num += 40;
-            s = altar.ritualDeity == null? "-": altar.ritualDeity.label;
+            s = altar.congregationDeity == null? "-": altar.congregationDeity.label;
             DrawListSelector("Deity", num, rect.width, s, delegate{ FloatingOptionsUtility.SelectDeity(altar, parms); });
             num += 40;
-            s = altar.ritualPreacher == null? "-": altar.ritualPreacher.Name.ToStringShort;
+            s = altar.congregationPreacher == null? "-": altar.congregationPreacher.Name.ToStringShort;
             t = currentTab == Tab.Offer? "Preacher" : "Executioner";
             DrawListSelector(t, num, rect.width, s, delegate{ FloatingOptionsUtility.SelectPreacher(altar, parms); });
             num += 40;
@@ -232,46 +234,20 @@ namespace Cults
         //-------------------------------------------------
         // Evalutaion
 
-        class Evaluation
-        {
-            public Evaluation(int s){
-                this.score = s;
-            }
-            public string label = "Temple is dirty";
-            public string description = "hohoho";
-            public int score = 0;
-        }
 
-        private static List<Evaluation> evaluationList = new List<Evaluation>() {
-            new Evaluation(0),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-            new Evaluation(Rand.RangeInclusive(-100,100)),
-        };
-
-        private static readonly Color NegativeColor = new Color(0.8f, 0.4f, 0.4f);
-		private static readonly Color PositiveColor = new Color(0.1f, 1f, 0.1f); 
-		private static readonly Color NeutralColor = new Color(0.5f, 0.5f, 0.5f, 0.75f);
 
         private static void DrawEvaluationList(Rect container, ref Vector2 thoughtScrollPosition) // 
 		{
+            Building_BaseAltar altar = Find.Selector.SingleSelectedThing as Building_BaseAltar;
+            List<Evaluation> evaluations = EvaluationManager.EvaluateAltar(altar);
+
 			Text.Font = GameFont.Small;
-			float height = (float)evaluationList.Count * 24f;
+			float height = (float)evaluations.Count * 24f;
 			Widgets.BeginScrollView(container, ref thoughtScrollPosition, new Rect(0f, 0f, container.width - 16f, height));
 			//Text.Anchor = TextAnchor.MiddleLeft;
-			for (int i = 0; i < evaluationList.Count; i++)
+			for (int i = 0; i < evaluations.Count; i++)
 			{
-				DrawEvaluation(new Rect(0f, 24*i, container.width - 16f, 20f), evaluationList[i]);
+				DrawEvaluation(new Rect(0f, 24*i, container.width - 16f, 20f), evaluations[i]);
 			}
 			Widgets.EndScrollView();
 			Text.Anchor = TextAnchor.UpperLeft;
@@ -281,16 +257,16 @@ namespace Cults
             if (Mouse.IsOver(rect))
             {
                 Widgets.DrawHighlight(rect);
-                TooltipHandler.TipRegion(rect, new TipSignal("Tool tip", 7291));
+                TooltipHandler.TipRegion(rect, new TipSignal(evaluation.description, 7291));
             }
 
             Text.Anchor = TextAnchor.UpperRight;
-            GUI.color = evaluation.score > 0? PositiveColor : (evaluation.score < 0? NegativeColor : NeutralColor);
+            GUI.color = evaluation.color;
             Widgets.Label(new Rect(rect.x + rect.xMax - 36, rect.y, 32f, rect.height), evaluation.score.ToString("##0"));
 
             Text.Anchor = TextAnchor.MiddleLeft;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x + 10, rect.y, rect.xMax - 10, rect.height), evaluation.label);
+            Widgets.Label(new Rect(rect.x + 10, rect.y, rect.xMax - 10, rect.height), evaluation.label.CapitalizeFirst());
 		}
     }
 }
@@ -323,49 +299,4 @@ obj.PostMake();
 return obj;
 
 https://rimworldwiki.com/wiki/Psycasts
-
-
-
-
-CosmicEntity deity [shared]
-Pawn preacher [shadred]
-
-
-Item def
-Bill food (amount)
-Pawn animal
-Pawn human
-
-  <WorkGiverDef>
-    <defName>DoExecution</defName>
-    <label>execute prisoners</label>
-    <giverClass>WorkGiver_Warden_DoExecution</giverClass>
-    <workType>Warden</workType>
-    <verb>do execution on</verb>
-    <gerund>doing execution on</gerund>
-    <priorityInType>110</priorityInType>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-  </WorkGiverDef>
-
-    <WorkGiverDef>
-    <defName>DoBillsCook</defName>
-    <label>cook meals at stove</label>
-    <giverClass>WorkGiver_DoBill</giverClass>
-    <workType>Cooking</workType>
-    <priorityInType>100</priorityInType>
-    <fixedBillGiverDefs>
-      <li>ElectricStove</li>
-      <li>FueledStove</li>
-    </fixedBillGiverDefs>
-    <verb>cook</verb>
-    <gerund>cooking at</gerund>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-    <prioritizeSustains>true</prioritizeSustains>
-
-
-
 */

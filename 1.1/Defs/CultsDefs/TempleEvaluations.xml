@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <!--=============== Preacher ====================-->
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Apparel</defName>
+        <workerClass>Cults.EvaluationWorker_Apparel</workerClass>
+        <stages>
+            <li>
+                <label>appropriate apparel</label>
+                <description>Worn favored apparel</description>
+                <score>0</score>
+            </li>
+            <li>
+                <label>appropriate apparel</label>
+                <description>Worn favored apparel</description>
+                <score>5</score>
+            </li>
+            <li>
+                <label>appropriate apparel</label>
+                <description>Worn favored apparel</description>
+                <score>10</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Talking</defName>
+        <workerClass>Cults.EvaluationWorker_Talking</workerClass>
+        <stages>
+            <li>
+                <label>poor chanting</label>
+                <description>Preacher can't chant properly, due to low talking condition.</description>
+                <score>-10</score>
+            </li>
+            <li>
+                <label>awful chanting</label>
+                <description>Preacher can't chant properly, due to low talking condition.</description>
+                <score>-5</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Spirituality</defName>
+        <workerClass>Cults.EvaluationWorker_Spirituality</workerClass>
+        <stages>
+            <li>
+                <label>incompetent preacher</label>
+                <description>Preacher has a very low spirituality.</description>
+                <score>-15</score>
+            </li>
+            <li>
+                <label>inexperienced preacher</label>
+                <description>Preacher has a low spirituality.</description>
+                <score>-7</score>
+            </li>
+            <li>
+                <label>competent preacher</label>
+                <description>Preacher has a decent spirituality.</description>
+                <score>2</score>
+            </li>
+            <li>
+                <label>experienced preacher</label>
+                <description>Preacher has a very high spirituality.</description>
+                <score>10</score>
+            </li>
+        </stages>
+    </Def>
+
+    <!--=============== Sacrifice ====================-->
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Health</defName>
+        <workerClass>Cults.EvaluationWorker_Health</workerClass>
+        <stages>
+            <li>
+                <label>terrible health</label>
+                <description>Sacrifice has awful health. Injuries makes congregation more difficult.</description>
+                <score>-15</score>
+            </li>
+            <li>
+                <label>awful health</label>
+                <description>Sacrifice has awful health. Injuries makes congregation more difficult.</description>
+                <score>-10</score>
+            </li>
+            <li>
+                <label>poor health</label>
+                <description>Sacrifice has awful health. Injuries makes congregation more difficult.</description>
+                <score>-5</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Parts</defName>
+        <workerClass>Cults.EvaluationWorker_Parts</workerClass>
+        <stages>
+            <li>
+                <label>missing body parts</label>
+                <description>Body parts are missing! Incomplete sacrifice makes incomplete congregation.</description>
+                <score>-30</score>
+            </li>
+            <li>
+                <label>missing body parts</label>
+                <description>Body parts are missing! Incomplete sacrifice makes incomplete congregation.</description>
+                <score>-15</score>
+            </li>
+            <li>
+                <label>missing body part</label>
+                <description>Body parts are missing! Incomplete sacrifice makes incomplete congregation.</description>
+                <score>-5</score>
+            </li>
+        </stages>
+    </Def> 
+
+    <!--=============== Map conditions ====================-->
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Eclipse</defName>
+        <workerClass>Cults.EvaluationWorker_Eclipse</workerClass>
+        <stages>
+            <li>
+                <label>eclipse</label>
+                <description>Eclipse is occurring right now. Correct moon position increaces preacher's spirituality.</description>
+                <score>5</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Aurora</defName>
+        <workerClass>Cults.EvaluationWorker_Aurora</workerClass>
+        <stages>
+            <li>
+                <label>aurora</label>
+                <description>Aurora is occurring right now. Mix of otherworldy colors allows preacher to calm down and focus on congregation.</description>
+                <score>5</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_BloodMoon</defName>
+        <workerClass>Cults.EvaluationWorker_BloodMoon</workerClass>
+        <stages>
+            <li>
+                <label>blood moon</label>
+                <description>Blood moon is occurring right now. Strangely red moon creates deeper connection with cosmic beings.</description>
+                <score>15</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_StarsAreRight</defName>
+        <workerClass>Cults.EvaluationWorker_StarsAreRight</workerClass>
+        <stages>
+            <li>
+                <label>stars are right</label>
+                <description>Celestial bodies positions creates perfect conditions for sacifice</description>
+                <score>40</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_StarsAreWrong</defName>
+        <workerClass>Cults.EvaluationWorker_StarsAreWrong</workerClass>
+        <stages>
+            <li>
+                <label>stars are wrong</label>
+                <description>Celestial bodies are aligned incorrectly</description>
+                <score>-30</score>
+            </li>
+        </stages>
+    </Def>
+
+    <!--=============== Temple ====================-->
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Temple</defName>
+        <workerClass>Cults.EvaluationWorker_Temple</workerClass>
+        <stages>
+            <li>
+                <label>awful temple</label>
+                <description>Awful temple quality.</description>
+                <score>-30</score>
+            </li>
+            <li>
+                <label>dull temple</label>
+                <description>Poor temple quality</description>
+                <score>-20</score>
+            </li>
+            <li>
+                <label>mediocre temple</label>
+                <description>Normal temple quality</description>
+                <score>-5</score>
+            </li>
+            <li>
+                <label>decent</label>
+                <description>Normal temple quality</description>
+                <score>0</score>
+            </li>
+            <li>
+                <label>slighly impressive temple</label>
+                <description>Impressive temple</description>
+                <score>6</score>
+            </li>
+            <li>
+                <label>impressive temple</label>
+                <description>Impressive temple</description>
+                <score>10</score>
+            </li>
+            <li>
+                <label>very impressive temple</label>
+                <description>Impressive temple</description>
+                <score>15</score>
+            </li>
+            <li>
+                <label>worthy temple</label>
+                <description>Impressive temple</description>
+                <score>20</score>
+            </li>
+        </stages>
+    </Def>
+
+    <Def Class="Cults.EvaluationDef">
+        <defName>Cults_Evaluation_Statues</defName>
+        <workerClass>Cults.EvaluationWorker_Statues</workerClass>
+        <stages>
+            <li>
+                <label>null</label>
+                <description>null</description>
+                <score>0</score>
+            </li>
+        </stages>
+    </Def>
+
+</Defs>

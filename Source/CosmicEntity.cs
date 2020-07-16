@@ -23,7 +23,7 @@ namespace Cults
         public float maxFavor;
         public float discoveryChance = 0.02f;
         public List<float> favorThresholds;
-        public List<string> favoredApparel; // TODO: should be defs
+        public List<Apparel> favoredApparel; // TODO: should be defs
         public List<string> domains; 
         public List<string> titles; 
         public readonly string symbol;
@@ -41,29 +41,26 @@ namespace Cults
 
     public class CosmicEntity : IExposable
     {        
-        
         public CosmicEntity(){}
-        public CosmicEntity(CosmicEntityDef def)
-        {
-            this.def = def;
-        }
-
         public CosmicEntityDef def;
         public float maxFavor => this.def.maxFavor;
         public float baseFavorGainRate => this.def.baseFavorGainRate;
-        public float currentFavor;
+        private float _currentFavor;
+        private bool _isDiscovered;
+        public bool isDiscovered => _isDiscovered;
+        public float currentFavor => _currentFavor;
 
-
+        public void GiveFavor(float f)
+        {
+            _currentFavor += f;
+            if(_currentFavor >= this.def.maxFavor * 2) _currentFavor = this.def.maxFavor * 2;
+        }
+        public void Discover() => _isDiscovered = true;
         public void ExposeData()
         {
-            if(this.def == null){
-                Log.Message("exposing data to null " + this.currentFavor.ToString());
-            }else{
-                Log.Message("exposing data to " + this.def.label + " " + this.currentFavor.ToString());
-            }
-
             Scribe_Defs.Look(ref this.def, "def");
-            Scribe_Values.Look(ref this.currentFavor, "currentFavor", 0.0f, true);
+            Scribe_Values.Look(ref this._currentFavor, "currentFavor", 0.0f, true);
+            Scribe_Values.Look(ref this._isDiscovered, "isDiscovered", false, true);
         }
     }
 }
