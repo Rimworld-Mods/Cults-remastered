@@ -15,6 +15,7 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
+
     public static class FloatingOptionsUtility
     { 
         //-------------------------------------------------
@@ -172,8 +173,7 @@ namespace Cults
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<CongregationRecipeDef> recipes = DefDatabase<CongregationRecipeDef>.AllDefs.Where(r => r.requiredChoice == "Food").ToList();
             
-
-            if(altar.congregationPreacher == null) return;
+            if(altar.congregationPreacher == null) return; // TODO: warning message?
 
             foreach (CongregationRecipeDef r in recipes)
             {
@@ -231,16 +231,15 @@ namespace Cults
 
         public static void SelectRewardSpell(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
-            
+            //Building_BaseAltar.Choice choice = ;
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<SpellDef> list = new List<SpellDef>();
 
-            if(altar.congregationDeity == null) return;
+            if(altar.congregationDeity == null) return; // TODO: warning message?
 
             foreach (SpellDef def in altar.congregationDeity.spells)
             {
-                // condition
-                list.Add(def);
+                if(def.hasChoice(altar.congregationChoice)) list.Add(def);
             }
 
             

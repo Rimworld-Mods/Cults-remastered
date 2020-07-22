@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef>
+        <defName>Cults_OccultSpark</defName>
+        <label>spark</label>
+        <category>Projectile</category>
+        <thingClass>Cults.OccultSpark</thingClass>
+        <graphicData>
+            <texPath>Fire/Projectile/Spark</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>Transparent</shaderType>
+        </graphicData>
+        <tickerType>Normal</tickerType>
+        <altitudeLayer>Projectile</altitudeLayer>
+        <useHitPoints>false</useHitPoints>
+        <neverMultiSelect>true</neverMultiSelect>
+        <projectile>
+            <alwaysFreeIntercept>true</alwaysFreeIntercept>
+            <speed>1.5</speed>
+        </projectile>
+    </ThingDef>
+</Defs>

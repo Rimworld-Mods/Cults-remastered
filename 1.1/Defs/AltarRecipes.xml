@@ -17,10 +17,14 @@ defaultIngredientFilter = UI "when you start a new bill with this recipe, these 
         <allowMixingIngredients>true</allowMixingIngredients>
 
         <allowedSpellTierRange>0~5</allowedSpellTierRange>
-        <requiredDeity>Cults_CosmicEntity_Cthulhu</requiredDeity>
-        <exclusiveSpells>
-            <li>Cults_Spell_Favor</li>
-        </exclusiveSpells>
+
+        <!--
+            <requiredDeity>Cults_CosmicEntity_Cthulhu</requiredDeity>
+            <exclusiveSpells>
+                <li>Cults_Spell_Favor</li>
+            </exclusiveSpells>
+        -->
+
 
         <!-- <requiredGiverWorkType>Cooking</requiredGiverWorkType> -->
         <!--

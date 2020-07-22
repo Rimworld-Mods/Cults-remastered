@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<packageId>Arvkus.Rimworld.Cults</packageId>
+	<packageId>Arvkus.Cults</packageId>
 	<name>Cults Remastered</name>
 	<author>Arvkus</author>
 	<supportedVersions>
 		<li>1.1</li>
 	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
+			<steamWorkshopUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+
 	<incompatibleWith>
+	<!--
 		<li>rimofmadness.callofcthulhu.cults</li>
 		<li>rimofmadness.hplovecraft</li>
-		<li>rimofmadness.cosmichorrors</li>
+		<li>rimofmadness.cosmichorrors</li> 
+	-->
 	</incompatibleWith>
 	<description>...</description>
+	<!--
+		Transfer:
+			Discovered deities
+			Deity favor
 
+			Replace building defs
+			Replace pawn defs (byatvee, dark goat)
+			Replace item defs
+
+			Patch events that has baseChange higher than 0 - remove them
+	-->
 
 </ModMetaData>

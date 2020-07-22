@@ -1,40 +1,57 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
+    <!--=============== Common ====================-->
+
     <IncidentDef Name="SpellDef" Abstract="True">
         <category>Misc</category>
         <baseChance>0</baseChance>
-        <letterDef>Cults_Letter_Success</letterDef>
+        <letterDef>NegativeEvent</letterDef>
+
         <targetTags>
             <li>Map_PlayerHome</li>
         </targetTags>
 
         <tier>0</tier>
         <difficultyFactor>1</difficultyFactor>
-        <requirements>
+
+        <requiredChoices>
             <li>Food</li>
             <li>Item</li>
             <li>Animal</li>
             <li>Human</li>
-        </requirements>
+        </requiredChoices>
+
     </IncidentDef>
 
     <IncidentDef Class="Cults.SpellDef"  ParentName="SpellDef">
         <defName>Cults_Spell_Favor</defName>
         <workerClass>Cults.SpellWorker_Favor</workerClass>
         <label>Favor</label>
-        <description>Make a sacrifice without any worldly gains.</description>
-        <letterLabel>to be noticed</letterLabel>
-        <letterText>felt a supernatural presence connect with them from beyond space and time</letterText>
+        <description>Sacrifice without any worldly gains. Gives huge amount of favor.</description>
+        <letterText>{0} felt a supernatural presence connect with them from beyond space and time</letterText>
     </IncidentDef>
+
+    <!--=============== Cthuhlu ====================-->
 
     <IncidentDef Class="Cults.SpellDef" ParentName="SpellDef">
         <defName>Cults_Spell_Shit</defName>
         <workerClass>Cults.SpellWorker_Favor</workerClass>
-        <label>Shit</label>
-        <description>Make a sacrifice without any worldly gains.</description>
-        <letterLabel>to be noticed</letterLabel>
-        <letterText>felt a supernatural presence connect with them from beyond space and time</letterText>
+        <label>Aspect of Cthulhu</label>
+        <description>Generates a tumorous growth within the brain of the colonist granting them a powerful psionic melee attack.</description>
+        <letterText>{0} felt an intense pressure in their skull and looked on the world with new and strange eyes</letterText>
     </IncidentDef>
+
+    <!--=============== Nyarlathotep ====================-->
+
+    <!--=============== Dagon ====================-->
+
+    <!--=============== Hastur ====================-->
+
+    <!--=============== Shub ====================-->
+
+    <!--=============== Tsathoggua ====================-->
+
+    <!--=============== Bast ====================-->
 
 </Defs>

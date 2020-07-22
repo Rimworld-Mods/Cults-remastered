@@ -120,6 +120,12 @@ namespace Cults
             // sort list
             deities.SortBy(d => d.def.index);
         }
+
+        public static CosmicEntity getDeityFromDef(CosmicEntityDef def)
+        {
+            for(int i = 0; i < deities.Count; i++) if(deities[i].def == def) return deities[i];
+            return null;
+        }
     }
 
     /*
@@ -143,17 +149,4 @@ namespace Cults
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
         }
     }
-
-    public class CongregationRecipeDef : RecipeDef
-    {
-        public bool isWorthy = false;
-        public string requiredChoice = "None";
-        
-        
-        public float additionalFavorGain = 0;
-        public IntRange allowedSpellTierRange; // = new RangeInt(0,5);
-        public CosmicEntityDef requiredDeity;
-        public List<SpellDef> exclusiveSpells; // = new List<SpellDef>();
-    }
-
 }

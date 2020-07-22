@@ -20,6 +20,7 @@ namespace Cults
     [HarmonyPatch(typeof(ResearchManager), "FinishProject")]
     public class ExtraFinishProjectFunction
     {
+        // on research finish
         private static void Prefix(ref ResearchProjectDef proj) // on research finish "event"
         {
             CultKnowledge.DiscoverRandomDeity();
@@ -31,7 +32,7 @@ namespace Cults
     {
         private static TimeAssignmentDef Postfix(TimeAssignmentDef __result) 
         {
-            // custom TimeAssignment def breaks vanilla pawn AI functions, do not return it
+            // custom [TimeAssignment] def breaks vanilla pawn AI functions, do not return it
             return (__result == CultsDefOf.Cults_TimeAssignment_Worship)? TimeAssignmentDefOf.Anything : __result;
         }
     }
@@ -56,5 +57,32 @@ namespace Cults
             }
         }
     }
+
+
+    
+    [HarmonyPatch(typeof(Verb_BeatFire), "TryCastShot")] 
+    public class OccultFireBeating
+    {
+        // reduce occult fire taken damage value
+		private static bool Prefix(LocalTargetInfo ___currentTarget, Verb_BeatFire __instance, ref bool __result)
+		{
+            OccultFire fire = (OccultFire)___currentTarget.Thing;
+            Pawn casterPawn = __instance.CasterPawn;
+            if (casterPawn.stances.FullBodyBusy || fire.TicksSinceSpawn == 0)
+            {
+                __result = false;
+            }
+            fire.TakeDamage(new DamageInfo(DamageDefOf.Extinguish, (fire.occult? 24f : 32f) , 0f, -1f, __instance.caster));
+            casterPawn.Drawer.Notify_MeleeAttackOn(fire);
+
+            __result = true;
+            return false;
+		}
+    }
+    
+    
+
+
+    
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>	
-	<!-- MainTab button -->
+	<!-- MainTab button: Restrict -->
 	<Operation Class="PatchOperationReplace">
 		<xpath>/Defs/MainButtonDef[defName="Restrict"]/tabWindowClass</xpath>
 		<value>
@@ -8,7 +8,7 @@
 		</value>
 	</Operation>
 	
-	<!-- Research job -->
+	<!-- Research jobs -->
 	<Operation Class="PatchOperationReplace">
 		<xpath>/Defs/WorkGiverDef[giverClass="WorkGiver_Researcher"]/giverClass</xpath>
 		<value>
@@ -22,12 +22,13 @@
 			<driverClass>Cults.JobDriver_CultResearch</driverClass>
 		</value>
 	</Operation>
-	<!--
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThingDef[defName="ElectricStove"]/recipes</xpath>
+
+	<!-- Fire -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="Fire"]/thingClass</xpath>
 		<value>
-			<li>Cults_CookMealSimple</li>
+			<thingClass>Cults.OccultFire</thingClass>
 		</value>
 	</Operation>
-	-->
+
 </Patch>

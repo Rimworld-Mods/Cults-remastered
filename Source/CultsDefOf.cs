@@ -26,6 +26,11 @@ namespace Cults
         public static TimeAssignmentDef Cults_TimeAssignment_Worship;
         public static NeedDef Cults_Need_Spirituality;
 
+        
+        //public static ThingDef Cults_OccultFire;
+        public static ThingDef Cults_OccultSpark;
+        
+
         //-------------------------------------------------------
         // Buildings
         //public static ThingDef Cults_Building_StandardAltar;
@@ -79,6 +84,10 @@ namespace Cults
         // Thoughts
         public static ThoughtDef Cults_Thought_SawBloodMoonSad;
         public static ThoughtDef Cults_Thought_SawBloodMoonHappy;
+
+        //-------------------------------------------------------
+        // Abilities
+        public static AbilityDef Cults_Ability_Test; 
 
     }
 

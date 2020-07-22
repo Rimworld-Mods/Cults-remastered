@@ -10,8 +10,11 @@ using Verse.AI;            // Needed when you do something with the AI
 using Verse.AI.Group;
 using Verse.Sound;         // Needed when you do something with Sound
 using Verse.Noise;         // Needed when you do something with Noises
+using Verse.Grammar;
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
+
+
 
 namespace Cults
 {
@@ -19,7 +22,19 @@ namespace Cults
     {
         public int tier = 0;
         public float difficultyFactor = 1.0f;
-        public List<string> requirements;
+        public List<string> requiredChoices;
+
+        public bool hasChoice(Building_BaseAltar.Choice choice)
+        {
+            switch(choice)
+            {
+                case Building_BaseAltar.Choice.Food:   if(this.requiredChoices.Contains("Food"))   return true; break;
+                case Building_BaseAltar.Choice.Item:   if(this.requiredChoices.Contains("Item"))   return true; break;
+                case Building_BaseAltar.Choice.Animal: if(this.requiredChoices.Contains("Animal")) return true; break;
+                case Building_BaseAltar.Choice.Human:  if(this.requiredChoices.Contains("Human"))  return true; break;
+            }
+            return false;
+        }
 
         public void CastSpell() // Pawn caster
         {
@@ -32,7 +47,14 @@ namespace Cults
     {
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
+            //GenCollection.
+            Log.Message("trying to execute!");
+            // calculate chances
+            SendStandardLetter("Success", def.letterText, def.letterDef, parms, null);
             return true;
         }
     }
+    
 }
+
+

@@ -161,194 +161,21 @@ namespace Cults
             // start job
             pawn.jobs.TryTakeOrderedJob(job);
         }
+        
         // [StartOffering()]
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
 		{
             FloatMenuOption option = new FloatMenuOption(
-                "Start offering",
+                "Give ability",
                 delegate{
                     // giveJob(pawn); 
-
-                    foreach(Evaluation e in EvaluationManager.EvaluateAltar(this))
-                    {
-                        Log.Message(e.label + " " + e.score);
-                    };
-                
+                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_Test);
                 },
                 MenuOptionPriority.Default
             );
 
 			yield return option;
 		}
-
-        //------------------------------------------------------------------------------
-        // Sacrifice/offer evaluation
-
-        /*
-        IEnumerable<Evaluation> GetEvaluations()
-        {
-            
-            if(congregationDeity != null){ }
-
-            // =============== Preacher ====================
-            if(congregationPreacher != null)
-            {
-                // Preacher apparel
-                Evaluation e1 = new Evaluation();
-
-                foreach(Apparel apparel in congregationPreacher.apparel.WornApparel)
-                {
-                    for(int i = 0; i < congregationDeity.favoredApparel.Count; i++)
-                    {
-                        if(congregationDeity.favoredApparel[i].def == apparel.def)
-                        {
-                            e1.score += 5;
-                            break;
-                        }
-                    }
-                }
-
-                if(e1.score > 0) yield return e1;
-
-                // Preacher skills
-                float talking = congregationPreacher.health.capacities.GetLevel(PawnCapacityDefOf.Talking);
-                if(talking < .70f)
-                {
-                    yield return new Evaluation();
-                }
-                else if(talking < .90f)
-                {
-                    yield return new Evaluation();
-                }
-
-                // Preacher spirituality
-                Spirituality need = congregationPreacher.needs.TryGetNeed<Spirituality>();
-                float skill = 0.0f;
-                if(need != null) skill = need.CurLevelPercentage;
-
-                if( skill > .7f)
-                {
-                    yield return new Evaluation();
-                }
-                else if(skill > .5f)
-                {
-                    yield return new Evaluation();
-                }
-                else if(skill > .3f)
-                {
-                    yield return new Evaluation();
-                }
-                else
-                {
-                    yield return new Evaluation();
-                }
-
-            }
-
-            // =============== Sacrifice ====================
-            CongregationParms parms = new CongregationParms();
-            if(congregationChoice == Choice.Animal) parms = congregationParmsAnimal;
-            if(congregationChoice == Choice.Human)  parms = congregationParmsHuman;
-
-            // Sacrifice health
-            if(parms.sacrifice != null && parms.sacrifice is Pawn)
-            {   
-                float health = (congregationParmsAnimal.sacrifice as Pawn).health.summaryHealth.SummaryHealthPercent;
-
-                if( health < .30f)
-                {
-                    yield return new Evaluation();
-                }
-                else if(health < .60f)
-                {
-                    yield return new Evaluation();
-                }
-                else if(health < .85f)
-                {
-                    yield return new Evaluation();
-                }
-            }
-            
-            // Sacrifice missing body parts
-            //IEnumerable<BodyPartRecord> source = from x in pawn.health.hediffSet.GetNotMissingParts()
-
-
-
-            // =============== Map Conditions ====================
-            // Eclipse
-            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
-            {
-                yield return new Evaluation();
-            };     
-            
-            // Aurora
-            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
-            {
-                yield return new Evaluation();
-            };
-
-            // Blood moon
-            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
-            {
-                yield return new Evaluation();
-            };
-
-            // Stars are wrong
-            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
-            {
-                yield return new Evaluation();
-            };
-
-            // Stars are right
-            if(this.Map.GameConditionManager.GetActiveCondition(GameConditionDefOf.Aurora) != null)
-            {
-                yield return new Evaluation();
-            };
-
-            // =============== Temple ====================
-            // Room
-            Room temple = this.GetRoom();
-            if(temple != null)
-            {
-                float score_impressivness = temple.GetStat(RoomStatDefOf.Impressiveness);
-                float score_wealth = temple.GetStat(RoomStatDefOf.Wealth);
-                float score_space = temple.GetStat(RoomStatDefOf.Space);
-                float score_beaty = temple.GetStat(RoomStatDefOf.Beauty);
-
-            }
-
-            // linked statues/buildings TODO: statues
-
-            
-            // =============== Spell difficulty ====================
-            // Reward tier difficulty
-            if(parms.reward != null)
-            {
-                // parms.reward.difficultyFactor
-                switch(parms.reward.tier)
-                {
-                    case 0: yield return new Evaluation(); break;
-                    case 1: yield return new Evaluation(); break;
-                    case 2: yield return new Evaluation(); break;
-                    case 3: yield return new Evaluation(); break;
-                    case 4: yield return new Evaluation(); break;
-                    case 5: yield return new Evaluation(); break;
-                }
-            }
-
-            // =============== Time ====================
-
-
-
-
-            // =============== ============== ====================
-
-        }
-        */
-
-
-
-
 
     }
 

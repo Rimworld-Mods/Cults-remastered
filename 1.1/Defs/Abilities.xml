@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <AbilityDef>
+        <abilityClass>Cults.OccultAbility</abilityClass>
+        <gizmoClass>Cults.Command_OccultAbility</gizmoClass>
+
+        <defName>Cults_Ability_Test</defName>
+        <label>Test ability</label>
+        <description>Description test.</description>
+
+        <level>2</level>
+        <cooldownTicksRange>300~1000</cooldownTicksRange>
+
+        <iconPath>UI/Abilities/Test</iconPath>
+        <hotKey>Misc1</hotKey>
+
+        <statBases>
+            <Ability_Duration>0</Ability_Duration>
+        </statBases>
+
+        <verbProperties>
+            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <requireLineOfSight>True</requireLineOfSight>
+            <warmupTime>1</warmupTime>
+            <range>24.9</range>
+            <targetParams>
+                <canTargetSelf>True</canTargetSelf>
+                <canTargetAnimals>True</canTargetAnimals>
+                <canTargetItems>True</canTargetItems>
+                <canTargetLocations>True</canTargetLocations>
+            </targetParams>
+        </verbProperties>
+
+        <comps>
+            <li Class="Cults.CompProperties_AbilityMakeFire">
+                <compClass>Cults.CompAbilityEffect_MakeFire</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+</Defs>
