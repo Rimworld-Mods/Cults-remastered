@@ -169,7 +169,9 @@ namespace Cults
                 "Give ability",
                 delegate{
                     // giveJob(pawn); 
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_Test);
+                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBlast);
+                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBurn);
+                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_WrathOfCthulhu);
                 },
                 MenuOptionPriority.Default
             );

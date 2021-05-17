@@ -87,7 +87,9 @@ namespace Cults
 
         //-------------------------------------------------------
         // Abilities
-        public static AbilityDef Cults_Ability_Test; 
+        public static AbilityDef Cults_Ability_PsionicBlast; 
+        public static AbilityDef Cults_Ability_PsionicBurn; 
+        public static AbilityDef Cults_Ability_WrathOfCthulhu; 
 
     }
 

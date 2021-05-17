@@ -16,33 +16,26 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-	public class CompProperties_AbilityMakeFire : CompProperties_AbilityEffect
+    
+    public class CompProperties_AbilityPsionicBurn : CompProperties_AbilityEffect
 	{
-		public CompProperties_AbilityMakeFire()
+		public CompProperties_AbilityPsionicBurn()
 		{
-			compClass = typeof(CompAbilityEffect_MakeFire);
+			compClass = typeof(CompAbilityEffect_PsionicBurn);
 		}
 	}
 
-    public class CompAbilityEffect_MakeFire : CompAbilityEffect
+    public class CompAbilityEffect_PsionicBurn : CompAbilityEffect
     {
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			/*
-            //FireUtility.TryStartFireIn(target.Cell, target.Thing.Map, 0.1f);
-			if(target != null)
-			{
-				OccultFireUtility.TryStartFireIn(target.Cell, target.Thing.Map, 0.1f);
-			}
 
-			//List<Thing> thingList = cell.GetThingList(base.Map);
-			*/
-			
 			if(target.Thing != null)
 			{
 				Log.Message(target.Label);
 				OccultFireUtility.TryStartFireIn(target.Cell, target.Thing.Map, 0.1f);
+				//List<Thing> thingList = cell.GetThingList(base.Map);
 			}
 			
             
