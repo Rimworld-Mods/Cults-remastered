@@ -68,7 +68,7 @@ namespace Cults
 			OccultFire obj = (OccultFire)ThingMaker.MakeThing(ThingDefOf.Fire);
             obj.fireSize = fireSize;
 
-			Log.Message((obj is Fire).ToString());
+			// Log.Message((obj is Fire).ToString());
 			obj.occult = true; // make occult fire
             GenSpawn.Spawn(obj, c, map, Rot4.North);
             return true;

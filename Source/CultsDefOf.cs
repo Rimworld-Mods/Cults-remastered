@@ -25,6 +25,7 @@ namespace Cults
         public static LetterDef Cults_Letter_Success;
         public static TimeAssignmentDef Cults_TimeAssignment_Worship;
         public static NeedDef Cults_Need_Spirituality;
+        public static SkillDef Cults_Skill_Occultism;
 
         
         //public static ThingDef Cults_OccultFire;

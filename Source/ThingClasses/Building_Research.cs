@@ -23,7 +23,7 @@ namespace Cults
         public override void Tick(){
             base.Tick();
             num +=1;
-            Log.Message(num.ToString());
+            // Log.Message(num.ToString());
         }
     }
 }

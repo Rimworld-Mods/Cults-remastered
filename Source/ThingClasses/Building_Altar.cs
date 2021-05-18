@@ -165,7 +165,7 @@ namespace Cults
         // [StartOffering()]
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
 		{
-            FloatMenuOption option = new FloatMenuOption(
+            yield return new FloatMenuOption(
                 "Give ability",
                 delegate{
                     // giveJob(pawn); 
@@ -176,7 +176,13 @@ namespace Cults
                 MenuOptionPriority.Default
             );
 
-			yield return option;
+            yield return new FloatMenuOption(
+                "Give Occultism XP",
+                delegate{
+                    pawn.skills.Learn(CultsDefOf.Cults_Skill_Occultism, 3500f);
+                },
+                MenuOptionPriority.Default
+            );
 		}
 
     }

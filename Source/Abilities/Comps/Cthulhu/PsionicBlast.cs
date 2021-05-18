@@ -19,6 +19,7 @@ namespace Cults
 
 	public class CompProperties_AbilityPsionicBlast : CompProperties_AbilityEffect
 	{
+		public String deity;
 		public CompProperties_AbilityPsionicBlast()
 		{
 			compClass = typeof(CompAbilityEffect_PsionicBlast);
@@ -26,10 +27,12 @@ namespace Cults
 	}
 
 	public class CompAbilityEffect_PsionicBlast : CompAbilityEffect{
+		public new CompProperties_AbilityPsionicBlast Props => (CompProperties_AbilityPsionicBlast)props;
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
 			Log.Message(target.Label);            
+			Log.Message(Props.deity);            
 		}
 	}
 

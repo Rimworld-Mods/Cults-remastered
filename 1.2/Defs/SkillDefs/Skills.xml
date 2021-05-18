@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <SkillDef>
+        <defName>Cults_Skill_Occultism</defName>
+        <description>...</description>
+        <skillLabel>occultism</skillLabel>
+        <!-- <pawnCreatorSummaryVisible>true</pawnCreatorSummaryVisible> -->
+        <!-- <disablingWorkTags>Violent</disablingWorkTags> -->
+        <usuallyDefinedInBackstories>false</usuallyDefinedInBackstories>
+        <neverDisabledBasedOnWorkTypes>true</neverDisabledBasedOnWorkTypes>
+        <listOrder>4</listOrder>
+    </SkillDef>
+</Defs>

@@ -27,6 +27,7 @@ namespace Cults
         }
     }
 
+
     [HarmonyPatch(typeof(Pawn_TimetableTracker), "CurrentAssignment", MethodType.Getter)]
     public class WorshipAssignment
     {
@@ -36,6 +37,7 @@ namespace Cults
             return (__result == CultsDefOf.Cults_TimeAssignment_Worship)? TimeAssignmentDefOf.Anything : __result;
         }
     }
+
 
     [HarmonyPatch(typeof(InspectPaneFiller), "DrawTimetableSetting")]
     public class FixTimeAssignmentInspectPane
@@ -57,9 +59,8 @@ namespace Cults
             }
         }
     }
-
-
     
+
     [HarmonyPatch(typeof(Verb_BeatFire), "TryCastShot")] 
     public class OccultFireBeating
     {
@@ -79,10 +80,54 @@ namespace Cults
             return false;
 		}
     }
-    
-    
 
 
+    [HarmonyPatch(typeof(SkillUI), "DrawSkill", new Type[]{ typeof(SkillRecord), typeof(Rect), typeof(SkillUI.SkillDrawMode), typeof(string) } )] 
+    public class HideOccultSkill
+    {
+		private static bool Prefix(SkillRecord skill, Rect holdingRect)
+		{
+            if(skill.def == CultsDefOf.Cults_Skill_Occultism){
+                if(skill.levelInt == 0){
+                    return false; // not a cultist, skip
+                }else{
+                    GUI.BeginGroup(holdingRect);
+                    float levelLabelWidth = -1f;
+                    List<SkillDef> allDefsListForReading = DefDatabase<SkillDef>.AllDefsListForReading;
+                    for (int i = 0; i < allDefsListForReading.Count; i++)
+                    {
+                        float x = Text.CalcSize(allDefsListForReading[i].skillLabel.CapitalizeFirst()).x;
+                        if (x > levelLabelWidth)
+                        {
+                            levelLabelWidth = x;
+                        }
+			        }
+                    Rect rect = new Rect(6f, 0f, levelLabelWidth + 6f, holdingRect.height);
+                    Rect position = new Rect(rect.xMax, 0f, 24f, 24f);
+                    Texture2D image = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Bleeding");
+                    GUI.DrawTexture(position, image);
+                    GUI.EndGroup();
+                    return true;
+                }
+            }
+            return true; // not Occultism, skip
+		}
+    }
+
+
+    [HarmonyPatch(typeof(PawnGenerator), "FinalLevelOfSkill")] // TODO: maybe add postfix to [PawnGenerator.GenerateSkills] and change pawn [Occultism] skill and passion
+    public class DoNotGenerateOccultism 
+    {
+		private static bool Prefix(Pawn pawn, SkillDef sk, ref int __result)
+		{
+            if(sk == CultsDefOf.Cults_Skill_Occultism){
+                __result = 0; // New pawns always have [Occultism] level 0
+                return false;
+            }else{
+                return true;
+            }
+		}
+    }
     
 
 }

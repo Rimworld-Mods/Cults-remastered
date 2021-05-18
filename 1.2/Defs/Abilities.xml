@@ -33,6 +33,7 @@
         </verbProperties>
         <comps>
             <li Class="Cults.CompProperties_AbilityPsionicBlast">
+                <deity>Arvydas</deity>
                 <compClass>Cults.CompAbilityEffect_PsionicBlast</compClass>
             </li>
         </comps>
