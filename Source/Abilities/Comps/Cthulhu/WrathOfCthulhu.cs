@@ -17,20 +17,20 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 namespace Cults
 {
 
-    public class CompProperties_AbilityShootLighting : CompProperties_AbilityEffect
+    public class CompProperties_AbilityWrathOfCthulhu : CompProperties_AbilityEffect
 	{
-		public CompProperties_AbilityShootLighting()
+		public CompProperties_AbilityWrathOfCthulhu()
 		{
-			compClass = typeof(CompAbilityEffect_ShootLighting);
+			compClass = typeof(CompAbilityEffect_WrathOfCthulhu);
 		}
 	}
 
 
-	public class CompAbilityEffect_ShootLighting : CompAbilityEffect{
+	public class CompAbilityEffect_WrathOfCthulhu : CompAbilityEffect{
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message(target.Label);            
+			// Log.Message(target.Label);            
 		}
 	}
 

@@ -31,8 +31,7 @@ namespace Cults
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message(target.Label);            
-			Log.Message(Props.deity);            
+			// Log.Message(target.Label);                       
 		}
 	}
 

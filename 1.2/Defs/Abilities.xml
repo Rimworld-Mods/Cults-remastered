@@ -16,7 +16,6 @@
         <defName>Cults_Ability_PsionicBlast</defName>
         <label>Psionic Blast</label>
         <description>Description test.</description>
-        <level>2</level>
         <cooldownTicksRange>300~1000</cooldownTicksRange>
         <iconPath>UI/Abilities/Test</iconPath>
         <verbProperties>
@@ -32,9 +31,14 @@
             </targetParams>
         </verbProperties>
         <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>30~100</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
             <li Class="Cults.CompProperties_AbilityPsionicBlast">
-                <deity>Arvydas</deity>
                 <compClass>Cults.CompAbilityEffect_PsionicBlast</compClass>
+                <deity>Arvydas</deity>
             </li>
         </comps>
     </AbilityDef>
@@ -43,7 +47,6 @@
         <defName>Cults_Ability_PsionicBurn</defName>
         <label>Psionic Burn</label>
         <description>Description test.</description>
-        <level>2</level>
         <cooldownTicksRange>300~1000</cooldownTicksRange>
         <iconPath>UI/Abilities/Test</iconPath>
         <verbProperties>
@@ -59,6 +62,11 @@
             </targetParams>
         </verbProperties>
         <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>30~100</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
             <li Class="Cults.CompProperties_AbilityPsionicBurn">
                 <compClass>Cults.CompAbilityEffect_PsionicBurn</compClass>
             </li>
@@ -85,8 +93,13 @@
             </targetParams>
         </verbProperties>
         <comps>
-            <li Class="Cults.CompProperties_AbilityShootLighting">
-                <compClass>Cults.CompAbilityEffect_ShootLighting</compClass>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>30~100</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityWrathOfCthulhu">
+                <compClass>Cults.CompAbilityEffect_WrathOfCthulhu</compClass>
             </li>
         </comps>
     </AbilityDef>

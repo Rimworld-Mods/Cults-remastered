@@ -33,8 +33,8 @@ namespace Cults
 
 			if(target.Thing != null)
 			{
-				Log.Message(target.Label);
 				OccultFireUtility.TryStartFireIn(target.Cell, target.Thing.Map, 0.1f);
+				// Log.Message(target.Label);
 				//List<Thing> thingList = cell.GetThingList(base.Map);
 			}
 			

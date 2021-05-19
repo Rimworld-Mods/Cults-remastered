@@ -92,6 +92,11 @@ namespace Cults
         public static AbilityDef Cults_Ability_PsionicBurn; 
         public static AbilityDef Cults_Ability_WrathOfCthulhu; 
 
+        //-------------------------------------------------------
+        // Heddifs
+
+        public static HediffDef Cults_SanityLoss;
+
     }
 
 }
