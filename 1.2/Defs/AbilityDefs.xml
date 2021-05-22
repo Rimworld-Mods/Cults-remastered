@@ -32,13 +32,12 @@
         </verbProperties>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
-                <residualEnergyGain>30~100</residualEnergyGain>
+                <residualEnergyGain>0.01~0.03</residualEnergyGain>
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
             <li Class="Cults.CompProperties_AbilityPsionicBlast">
                 <compClass>Cults.CompAbilityEffect_PsionicBlast</compClass>
-                <deity>Arvydas</deity>
             </li>
         </comps>
     </AbilityDef>

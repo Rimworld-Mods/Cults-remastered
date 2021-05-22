@@ -31,7 +31,6 @@ namespace Cults
         //public static ThingDef Cults_OccultFire;
         public static ThingDef Cults_OccultSpark;
         
-
         //-------------------------------------------------------
         // Buildings
         //public static ThingDef Cults_Building_StandardAltar;
@@ -70,6 +69,7 @@ namespace Cults
 
         //-------------------------------------------------------
         // Buildings
+        // public static ThingDef Cults_Building_Debug;
         public static ThingDef Cults_Building_StandardAltar;
         public static ThingDef Cults_Building_SacrificialAltar;
         public static ThingDef Cults_Building_BloodAltar;
@@ -80,6 +80,7 @@ namespace Cults
         public static GameConditionDef Cults_GameCondition_StarsAreWrong;
         public static GameConditionDef Cults_GameCondition_StarsAreRight;
         public static GameConditionDef Cults_GameCondition_BloodMoon;
+        public static GameConditionDef Cults_GameCondition_ResidualEnergy;
         
         //-------------------------------------------------------
         // Thoughts

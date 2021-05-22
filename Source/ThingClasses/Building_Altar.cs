@@ -163,27 +163,18 @@ namespace Cults
         }
         
         // [StartOffering()]
-        public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
-		{
-            yield return new FloatMenuOption(
-                "Give ability",
-                delegate{
-                    // giveJob(pawn); 
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBlast);
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBurn);
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_WrathOfCthulhu);
-                },
-                MenuOptionPriority.Default
-            );
-
-            yield return new FloatMenuOption(
-                "Give Occultism XP",
-                delegate{
-                    pawn.skills.Learn(CultsDefOf.Cults_Skill_Occultism, 3500f);
-                },
-                MenuOptionPriority.Default
-            );
-		}
+        // public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
+		// {
+        //     yield return new FloatMenuOption(
+        //         "Give ability", delegate
+        //         {
+        //             // giveJob(pawn); 
+        //             pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBlast);
+        //             pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBurn);
+        //             pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_WrathOfCthulhu);
+        //         }
+        //     );
+		// }
 
     }
 

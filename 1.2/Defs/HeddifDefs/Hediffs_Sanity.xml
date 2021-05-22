@@ -7,7 +7,7 @@
         <description>sanity loss</description>
         <hediffClass>HediffWithComps</hediffClass>
         <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
-        <initialSeverity>0.1</initialSeverity>
+        <initialSeverity>0.05</initialSeverity>
         <maxSeverity>1.0</maxSeverity>
         <comps>
             <li>
@@ -18,6 +18,10 @@
             </li>
         </comps>
         <stages>
+            <li>
+                <label>none</label>
+                <becomeVisible>false</becomeVisible>
+            </li>
             <li>
                 <label>initial</label>
                 <minSeverity>0.1</minSeverity>

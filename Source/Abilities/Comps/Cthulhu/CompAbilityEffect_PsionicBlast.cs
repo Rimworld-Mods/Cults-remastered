@@ -19,7 +19,6 @@ namespace Cults
 
 	public class CompProperties_AbilityPsionicBlast : CompProperties_AbilityEffect
 	{
-		public String deity;
 		public CompProperties_AbilityPsionicBlast()
 		{
 			compClass = typeof(CompAbilityEffect_PsionicBlast);

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="BuildingBase">
+    	<defName>Cults_Building_Debug</defName>
+		<label>cults debug box</label>
+		<thingClass>Cults.Building_Debug</thingClass>
+		<description>A solid surface on which to elevate speeches of worship to extra-cosmic entities.</description>
+		<designationCategory>Cults_DesignationCategory</designationCategory>
+
+		<graphicData>
+			<texPath>Building/Debug/DebugBox</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <color>(139,122,87)</color>
+		</graphicData>
+
+		<passability>PassThroughOnly</passability>
+		<pathCost>70</pathCost>
+		<thingCategories>
+			<li>BuildingsMisc</li>
+		</thingCategories>
+		<drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+		<defaultPlacingRot>South</defaultPlacingRot>
+		<minifiedDef>MinifiedThing</minifiedDef>
+		<socialPropernessMatters>true</socialPropernessMatters>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Woody</li>
+			<li>Stony</li>
+		</stuffCategories>
+		<costStuffCount>1</costStuffCount>
+		<altitudeLayer>Building</altitudeLayer>
+		<fillPercent>0.5</fillPercent>
+		<useHitPoints>True</useHitPoints>
+		<statBases>
+			<WorkToBuild>1</WorkToBuild>
+			<MaxHitPoints>10000</MaxHitPoints>
+			<Flammability>0</Flammability>
+			<Beauty>0</Beauty>
+			<JoyGainFactor>0</JoyGainFactor>
+			<Mass>70</Mass>
+		</statBases>
+		<size>(1,1)</size>
+		<surfaceType>Item</surfaceType>
+		<inspectorTabs>
+			<li>Cults.ITab_Debug</li>
+		</inspectorTabs>
+	</ThingDef>
+</Defs>

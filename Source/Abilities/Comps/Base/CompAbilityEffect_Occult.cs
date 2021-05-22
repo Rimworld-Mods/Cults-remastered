@@ -20,7 +20,7 @@ namespace Cults
 	{
 		public float sanityLoss = 0;
 		public float occultismGain = 0;
-		public IntRange residualEnergyGain = new IntRange(0,1);
+		public FloatRange residualEnergyGain = new FloatRange(0.02f, 0.04f);
 		public CompProperties_AbilityOccult()
 		{
 			compClass = typeof(CompAbilityEffect_Occult);
@@ -35,7 +35,7 @@ namespace Cults
             Pawn caster = parent.pawn;  
             caster.skills.Learn(CultsDefOf.Cults_Skill_Occultism, Props.occultismGain);
             GiveInsanity(caster);
-            // caster.Map // give residual energy to map                  
+            releaseResidualEnergy();              
 		}
 
         public void GiveInsanity(Pawn target)
@@ -51,6 +51,15 @@ namespace Cults
                 sanityLossHediff.Severity = Props.sanityLoss;
                 target.health.AddHediff(sanityLossHediff); // sanity loss to pawn
             }
+        }
+
+        public void releaseResidualEnergy()
+        {
+            FloatRange amount =  Props.residualEnergyGain;
+            ResidualEnergy residualEnergy = parent.pawn.Map.GetComponent<ResidualEnergy>(); 
+            float add = Rand.Range(amount.min, amount.max);
+            Log.Message("Energy: " + amount.min + " - " + amount.max + " - " + add);
+            residualEnergy.Severity += add;
         }
 	}
 }

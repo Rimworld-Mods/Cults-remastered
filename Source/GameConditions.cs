@@ -88,4 +88,28 @@ namespace Cults
         }
 
     }
+
+
+    public class GameCondition_ResidualEnergy : GameCondition
+    {
+		public override bool Expired
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		public override string TooltipString
+		{
+			get
+			{
+                ResidualEnergy residualEnergy = this.AffectedMaps[0].GetComponent<ResidualEnergy>();
+                return string.Format(def.description, residualEnergy?.Severity ?? 0);
+            }
+		}
+
+
+    }
+    
 }

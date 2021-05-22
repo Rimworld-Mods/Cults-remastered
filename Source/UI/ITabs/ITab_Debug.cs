@@ -15,11 +15,11 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    class ITab_AltarDebug : ITab
+    class ITab_Debug : ITab
     {
         public override bool IsVisible => Prefs.DevMode;
 
-        public ITab_AltarDebug()
+        public ITab_Debug()
         {
             this.size = WorshipCardUtility.defaultSize;
             this.labelKey = "Debug";
