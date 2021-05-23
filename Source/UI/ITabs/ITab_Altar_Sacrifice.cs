@@ -167,14 +167,7 @@ namespace Cults
         public static void DrawRitualMenu(Rect rect)
         {
             Building_BaseAltar altar = Find.Selector.SingleSelectedThing as Building_BaseAltar;
-            Building_BaseAltar.CongregationParms parms = new Building_BaseAltar.CongregationParms();
-
-            switch(currentChoice){
-                case Choice.Food: parms = altar.congregationParmsFood; break;
-                case Choice.Item: parms = altar.congregationParmsItem; break;
-                case Choice.Animal: parms = altar.congregationParmsAnimal; break;
-                case Choice.Human: parms = altar.congregationParmsHuman; break;
-            }
+            Building_BaseAltar.CongregationParms parms = altar.congregationParms;
 
             Action action = delegate{};
             float num = 0;
@@ -203,10 +196,10 @@ namespace Cults
             string s;
             string t;
             num += 40;
-            s = altar.congregationDeity == null? "-": altar.congregationDeity.label;
+            s = parms.deity == null? "-": parms.deity.label;
             DrawListSelector("Deity", num, rect.width, s, delegate{ FloatingOptionsUtility.SelectDeity(altar, parms); });
             num += 40;
-            s = altar.congregationPreacher == null? "-": altar.congregationPreacher.Name.ToStringShort;
+            s = parms.preacher == null? "-": parms.preacher.Name.ToStringShort;
             t = currentTab == Tab.Offer? "Preacher" : "Executioner";
             DrawListSelector(t, num, rect.width, s, delegate{ FloatingOptionsUtility.SelectPreacher(altar, parms); });
             num += 40;

@@ -37,14 +37,11 @@ namespace Cults
                     thing.label, 
                     delegate 
                     { 
-                        if(altar.congregationDeity != thing)
+                        if(parms.deity != thing)
                         {
-                            altar.congregationParmsHuman.reward = null;
-                            altar.congregationParmsAnimal.reward = null;
-                            altar.congregationParmsItem.reward = null;
-                            altar.congregationParmsFood.reward = null;
+                            altar.setRewardForAllParms(null);
                         }
-                        altar.congregationDeity = thing; 
+                        altar.setDeityForAllParms(thing);
                     }, 
                     thing.symbolTex, 
                     new Color(1f, 0f, 0f, 1f), 
@@ -74,7 +71,7 @@ namespace Cults
             {
                 options.Add(new FloatMenuOption(
                     "        " + thing.Name.ToString(), 
-                    delegate { altar.congregationPreacher = thing; }, 
+                    delegate { altar.setPreacherForAllParms(thing); }, 
                     MenuOptionPriority.Default,
                     null,
                     null,
@@ -172,13 +169,13 @@ namespace Cults
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<CongregationRecipeDef> recipes = DefDatabase<CongregationRecipeDef>.AllDefs.Where(r => r.requiredChoice == "Food").ToList();
-            
-            if(altar.congregationPreacher == null) return; // TODO: warning message?
+
+            if(parms.preacher == null) return; // TODO: warning message?
 
             foreach (CongregationRecipeDef r in recipes)
             {
                 List<ThingCount> chosen = new List<ThingCount>();
-                if(IngredientFinder.TryFindBestBillIngredients(new Bill_Production(r), altar.congregationPreacher, altar, chosen))
+                if(IngredientFinder.TryFindBestBillIngredients(new Bill_Production(r), parms.preacher, altar, chosen))
                 {
                     if(!chosen.NullOrEmpty()){
                         ThingDef def = chosen.First().Thing.def;
@@ -235,9 +232,9 @@ namespace Cults
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<SpellDef> list = new List<SpellDef>();
 
-            if(altar.congregationDeity == null) return; // TODO: warning message?
+            if(parms.deity == null) return; // TODO: warning message?
 
-            foreach (SpellDef def in altar.congregationDeity.spells)
+            foreach (SpellDef def in parms.deity.spells)
             {
                 if(def.hasChoice(altar.congregationChoice)) list.Add(def);
             }

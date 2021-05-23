@@ -51,23 +51,13 @@
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
-        <defName>Cults_CosmicEntity_Nyarlathotep</defName>
-        <label>Nyarlathotep</label>
-    </Def>
-
-    <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Dagon</defName>
         <label>Dagon</label>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
-        <defName>Cults_CosmicEntity_Hastur</defName>
-        <label>Hastur</label>
-    </Def>
-
-    <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
-        <defName>Cults_CosmicEntity_Shub</defName>
-        <label>Shub-Niggurath</label>
+        <defName>Cults_CosmicEntity_Nyarlathotep</defName>
+        <label>Nyarlathotep</label>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
@@ -76,7 +66,23 @@
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
-        <defName>Cults_CosmicEntity_Bast</defName>
-        <label>Bast</label>
+        <defName>Cults_CosmicEntity_Shub</defName>
+        <label>Shub-Niggurath</label>
     </Def>
+
+    <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
+        <defName>Cults_CosmicEntity_Yog</defName>
+        <label>Yog-Sothoth</label>
+    </Def>
+
+    <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
+        <defName>Cults_CosmicEntity_Hastur</defName>
+        <label>Hastur</label>
+    </Def>
+
+
+
+
+
+
 </Defs>

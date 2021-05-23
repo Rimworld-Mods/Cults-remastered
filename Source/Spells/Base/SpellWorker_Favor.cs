@@ -16,5 +16,16 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    
+    class SpellWorker_Favor : IncidentWorker
+    {
+        protected override bool TryExecuteWorker(IncidentParms parms)
+        {
+            //GenCollection.
+            Log.Message("trying to execute!");
+            // calculate chances
+            SendStandardLetter("Success", def.letterText, def.letterDef, parms, null);
+            return true;
+        }
+    }
+
 }

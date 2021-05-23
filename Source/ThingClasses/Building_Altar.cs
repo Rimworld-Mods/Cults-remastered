@@ -99,23 +99,60 @@ namespace Cults
         //------------------------------------------------------------------------------
         // Congregation options
 
-        public class CongregationParms // exposable
+        public Choice congregationChoice; // what ITab option is open
+        private Dictionary<Choice, CongregationParms> parms; // default parms come from [exposeData]
+
+        public class CongregationParms : IExposable
         {
-            public CongregationRecipeDef recipe;
-            public Pawn sacrifice;
+            public CosmicEntityDef deity;
+            public Pawn preacher;
+            public CongregationRecipeDef recipe; // recipe def to find what Things to offer/sacrifice
+            public Pawn sacrifice; // with sacrifices extra option to select specific Thing/Pawn
             public SpellDef reward;
+
+            public void ExposeData()
+            {
+                Scribe_Defs.Look(ref this.deity, "deity");
+                Scribe_Defs.Look(ref this.recipe, "recipe");
+                Scribe_Defs.Look(ref this.reward, "reward");
+                Scribe_References.Look(ref this.preacher, "preacher");
+                Scribe_References.Look(ref this.sacrifice, "sacrifice");
+            }
         }
 
-        // Common
-        public CosmicEntityDef congregationDeity;
-        public Pawn congregationPreacher;
-        public Choice congregationChoice;
+        
 
-        // Different
-        public CongregationParms congregationParmsFood = new CongregationParms();
-        public CongregationParms congregationParmsItem = new CongregationParms();
-        public CongregationParms congregationParmsAnimal = new CongregationParms();
-        public CongregationParms congregationParmsHuman = new CongregationParms();
+        public CongregationParms congregationParms 
+        {
+            get
+            {
+                return this.parms[this.congregationChoice];
+            }
+        }
+
+        public void setPreacherForAllParms(Pawn thing)
+        {
+            foreach(KeyValuePair<Choice, CongregationParms> kvp in this.parms)
+            {
+                kvp.Value.preacher = thing;
+            }
+        }
+
+        public void setDeityForAllParms(CosmicEntityDef def)
+        {
+            foreach(KeyValuePair<Choice, CongregationParms> kvp in this.parms)
+            {
+                kvp.Value.deity = def;
+            }
+        }
+
+        public void setRewardForAllParms(SpellDef def)
+        {
+            foreach(KeyValuePair<Choice, CongregationParms> kvp in this.parms)
+            {
+                kvp.Value.reward = def;
+            }
+        }
 
         //------------------------------------------------------------------------------
         // Other
@@ -173,7 +210,7 @@ namespace Cults
 
             // prepare job   
             Job job = JobMaker.MakeJob(CultsDefOf.Cults_DoBill); // JobDefOf.DoBill); //  
-            job.targetQueueB = new List<LocalTargetInfo>() { congregationParmsHuman.sacrifice };
+            job.targetQueueB = new List<LocalTargetInfo>() { this.congregationParms.sacrifice };
             job.countQueue = new List<int>() { 1 };
             job.playerForced = true;
             job.targetA = this;
@@ -185,6 +222,23 @@ namespace Cults
             // start job
             pawn.jobs.TryTakeOrderedJob(job);
 
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            if(this.parms == null)
+            {
+                Log.Message("Null parms condition");
+                this.parms = new Dictionary<Choice, CongregationParms>() {
+                    { Choice.Food, new CongregationParms() },
+                    { Choice.Item, new CongregationParms() },
+                    { Choice.Animal, new CongregationParms() },
+                    { Choice.Human, new CongregationParms() },
+                };
+            }
+            Scribe_Collections.Look<Choice, CongregationParms>(ref this.parms, "congregationParms", LookMode.Value, LookMode.Deep);
+            Scribe_Values.Look(ref this.congregationChoice, "congregationChoice", defaultValue: Choice.Food);
         }
         
         // [StartOffering()]

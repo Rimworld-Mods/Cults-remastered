@@ -58,7 +58,7 @@ namespace Cults
         public static CosmicEntityDef Cults_CosmicEntity_Hastur;
         public static CosmicEntityDef Cults_CosmicEntity_Shub;
         public static CosmicEntityDef Cults_CosmicEntity_Tsathoggua;
-        public static CosmicEntityDef Cults_CosmicEntity_Bast;
+        public static CosmicEntityDef Cults_CosmicEntity_Yog;
 
         //-------------------------------------------------------
         // Research

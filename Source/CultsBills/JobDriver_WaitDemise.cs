@@ -23,6 +23,14 @@ namespace Cults
 		// 	wait.AddFailCondition(() => true);
 		// }
 
+		protected Building_BaseAltar DropAltar
+        {
+            get
+            {
+                return (Building_BaseAltar)base.job.GetTarget(TargetIndex.A).Thing;
+            }
+        }
+
 		protected override IEnumerable<Toil> MakeNewToils()
         {
 

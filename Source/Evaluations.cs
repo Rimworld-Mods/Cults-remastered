@@ -94,8 +94,7 @@ namespace Cults
         protected Pawn getSacrificePawn(Building_BaseAltar altar)
         {
             CongregationParms parms = new CongregationParms();
-            if(altar.congregationChoice == Choice.Animal) parms = altar.congregationParmsAnimal;
-            if(altar.congregationChoice == Choice.Human)  parms = altar.congregationParmsHuman;
+            if(altar.congregationChoice == Choice.Animal || altar.congregationChoice == Choice.Human) parms = altar.congregationParms;
             if(parms.sacrifice == null) return null;
             return parms.sacrifice;
         }
@@ -112,14 +111,15 @@ namespace Cults
     {
         public override Evaluation GetStage(Building_BaseAltar altar)
         {
-            if(altar.congregationDeity == null || altar.congregationPreacher == null) return null;
+            CongregationParms parms = altar.congregationParms;
+            if(parms.deity == null || parms.preacher == null) return null;
 
             int stage = 0;
-            foreach(Apparel apparel in altar.congregationPreacher.apparel.WornApparel)
+            foreach(Apparel apparel in parms.preacher.apparel.WornApparel)
             {
-                for(int i = 0; i < altar.congregationDeity.favoredApparel.Count; i++)
+                for(int i = 0; i < parms.deity.favoredApparel.Count; i++)
                 {
-                    if(altar.congregationDeity.favoredApparel[i].def == apparel.def)
+                    if(parms.deity.favoredApparel[i].def == apparel.def)
                     {
                         stage++;
                         break;
@@ -135,9 +135,11 @@ namespace Cults
     {
         public override Evaluation GetStage(Building_BaseAltar altar)
         {
-            if(altar.congregationPreacher == null) return null;
+            CongregationParms parms = altar.congregationParms;
+            
+            if(parms.preacher == null) return null;
 
-            float talking = altar.congregationPreacher.health.capacities.GetLevel(PawnCapacityDefOf.Talking);
+            float talking = parms.preacher.health.capacities.GetLevel(PawnCapacityDefOf.Talking);
             if(talking > .90f)
             {
                 return evaluations[1];
@@ -157,9 +159,11 @@ namespace Cults
     {
         public override Evaluation GetStage(Building_BaseAltar altar)
         {
-            if(altar.congregationPreacher == null) return null;
+            CongregationParms parms = altar.congregationParms;
 
-            Spirituality need = altar.congregationPreacher.needs.TryGetNeed<Spirituality>();
+            if(parms.preacher == null) return null;
+
+            Spirituality need = parms.preacher.needs.TryGetNeed<Spirituality>();
 
             float skill = 0.0f;
             if(need != null) skill = need.CurLevelPercentage;
@@ -189,8 +193,7 @@ namespace Cults
         public override Evaluation GetStage(Building_BaseAltar altar)
         {
             CongregationParms parms = new CongregationParms();
-            if(altar.congregationChoice == Choice.Animal) parms = altar.congregationParmsAnimal;
-            if(altar.congregationChoice == Choice.Human)  parms = altar.congregationParmsHuman;
+            if(altar.congregationChoice == Choice.Animal || altar.congregationChoice == Choice.Human) parms = altar.congregationParms;
             if(parms.sacrifice == null || !(parms.sacrifice is Pawn)) return null;
             
             float health = (parms.sacrifice as Pawn).health.summaryHealth.SummaryHealthPercent;
