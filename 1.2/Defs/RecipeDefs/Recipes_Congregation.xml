@@ -5,6 +5,9 @@ ingredients = "these items can be used in this recipe" and count
 fixedIngredientFilter = UI "when bill is started these items can be checked"
 defaultIngredientFilter = UI "when you start a new bill with this recipe, these items are checked"
 -->
+
+
+
 <Defs>
     <RecipeDef Name="AltarRecipeBase" Abstract="True">
         <effectWorking>Surgery</effectWorking>

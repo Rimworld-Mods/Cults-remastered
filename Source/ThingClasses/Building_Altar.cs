@@ -163,18 +163,16 @@ namespace Cults
         }
         
         // [StartOffering()]
-        // public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
-		// {
-        //     yield return new FloatMenuOption(
-        //         "Give ability", delegate
-        //         {
-        //             // giveJob(pawn); 
-        //             pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBlast);
-        //             pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBurn);
-        //             pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_WrathOfCthulhu);
-        //         }
-        //     );
-		// }
+        public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
+		{
+            yield return new FloatMenuOption(
+                "Give ability", delegate
+                {
+                    giveJob(pawn); 
+      
+                }
+            );
+		}
 
     }
 
