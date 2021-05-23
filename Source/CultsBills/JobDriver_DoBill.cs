@@ -80,11 +80,11 @@ namespace Cults
 
 			// bill!
 			
-			yield return Cults.Toils_Recipe.MakeUnfinishedThingIfNeeded();
+			yield return Toils_Recipe.MakeUnfinishedThingIfNeeded();
 
 			// index 12
-			yield return Cults.Toils_Recipe.DoRecipeWork().FailOnDespawnedNullOrForbiddenPlacedThings().FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
-			yield return Cults.Toils_Recipe.FinishRecipeAndStartStoringProduct();
+			yield return Toils_Recipe.DoRecipeWork().FailOnDespawnedNullOrForbiddenPlacedThings().FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
+			yield return Toils_Recipe.FinishRecipeAndStartStoringProduct();
 			if (job.RecipeDef.products.NullOrEmpty() && job.RecipeDef.specialProducts.NullOrEmpty())
 			{
 				yield break;

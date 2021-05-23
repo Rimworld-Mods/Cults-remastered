@@ -120,11 +120,11 @@ namespace Cults
         //------------------------------------------------------------------------------
         // Other
 
-        private void giveJob(Pawn pawn)
+        private void FoodCongregation(Pawn pawn)
         {
             // get required things based on bill's recipe
             List<ThingCount> chosen_things = new List<ThingCount>();
-            Bill_Production bill = new Bill_Production(CultsDefOf.Cults_OfferMeatRaw_Worthy);
+            Bill_Spell bill = new Bill_Spell(CultsDefOf.Cults_OfferMeatRaw_Worthy);
             if(!IngredientFinder.TryFindBestBillIngredients(bill, pawn, this, chosen_things))
             {
                 Messages.Message("Ingredients not available", null, MessageTypeDefOf.RejectInput, null);
@@ -161,24 +161,50 @@ namespace Cults
             // start job
             pawn.jobs.TryTakeOrderedJob(job);
         }
+
+        private void HumanCongregation(Pawn pawn)
+        {
+            // prepare bill
+            Bill_Spell bill = new Bill_Spell(CultsDefOf.Cults_SacrificeHuman);
+            this.billStack.Clear();
+            this.billStack.AddBill(bill);
+            bill.billStack = this.billStack;
+            bill.ingredientSearchRadius = 5f;
+
+            // prepare job   
+            Job job = JobMaker.MakeJob(CultsDefOf.Cults_DoBill); // JobDefOf.DoBill); //  
+            job.targetQueueB = new List<LocalTargetInfo>() { congregationParmsHuman.sacrifice };
+            job.countQueue = new List<int>() { 1 };
+            job.playerForced = true;
+            job.targetA = this;
+            job.targetC = PositionHeld;
+            job.haulMode = HaulMode.ToCellNonStorage;
+            job.locomotionUrgency = LocomotionUrgency.Sprint;
+            job.bill = this.billStack.FirstShouldDoNow;
+
+            // start job
+            pawn.jobs.TryTakeOrderedJob(job);
+
+        }
         
         // [StartOffering()]
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
 		{
             yield return new FloatMenuOption(
-                "Give ability", delegate
+                "Offer meat", delegate
                 {
-                    giveJob(pawn); 
-      
+                    FoodCongregation(pawn); 
+                }
+            );
+
+            yield return new FloatMenuOption(
+                "Offer human", delegate
+                {
+                    HumanCongregation(pawn); 
                 }
             );
 		}
-
     }
-
-
-
-
 
 }
 

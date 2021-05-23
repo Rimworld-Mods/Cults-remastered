@@ -39,9 +39,13 @@ namespace Cults
         // AI, think, work
         public static JobDef Cults_Job_Worship;
         public static JobDef Cults_DoBill;
+        public static JobDef Cults_WaitDemise;
 
+        //-------------------------------------------------------
+        // Recipes
         public static RecipeDef Cults_OfferMeatRaw;
         public static RecipeDef Cults_OfferMeatRaw_Worthy;
+        public static RecipeDef Cults_SacrificeHuman;
 
         //-------------------------------------------------------
         // Items

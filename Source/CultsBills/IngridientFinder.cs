@@ -13,9 +13,9 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
-/*
-	
-*/
+// With vanilla code ingridients can only be found with [WorkGiver_DoBill] class.
+// ingridient finder function is private
+// Extracted from [WorkGiver_DoBill] class finder to use it for spell ingridients checker
 
 namespace Cults
 {

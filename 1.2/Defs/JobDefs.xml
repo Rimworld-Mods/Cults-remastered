@@ -46,4 +46,10 @@
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>
 
+    <JobDef>
+        <defName>Cults_WaitDemise</defName>
+        <driverClass>Cults.JobDriver_WaitDemise</driverClass>
+        <reportString>waiting for death.</reportString>
+    </JobDef>
+
 </Defs>

@@ -13,6 +13,10 @@ using Verse.Noise;         // Needed when you do something with Noises
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
+// [Cults.JobDriver_DoBill] uses custom job def ([Cults_DoBill])
+// Hauled ingridients are tracked if def is vanilla [DoBill]
+// if ingridients are not tracked, they are not destroyed upon recipe completion
+
 namespace Cults
 {
     public class Toils_Haul : Verse.AI.Toils_Haul
@@ -53,6 +57,13 @@ namespace Cults
 							else
 							{
 								curJob.placedThings.Add(new ThingCountClass(th, added));
+								if(th is Pawn) // inserted code, sacrifice must not move
+								{
+									Pawn sacrifice = (Pawn)th;
+									Job job = JobMaker.MakeJob(Cults.CultsDefOf.Cults_WaitDemise);
+									sacrifice.jobs.TryTakeOrderedJob(job);
+									Log.Message("sacrificing: " + sacrifice.LabelShort.ToString());
+								}
 							}
 						};
 					}
