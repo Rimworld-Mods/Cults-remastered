@@ -41,43 +41,48 @@
         <baseFavorGainRate>0.0001</baseFavorGainRate> 
         <maxFavor>1.0</maxFavor>
         <discoveryChance>0.005</discoveryChance> <!-- 5 tries per 1 in game hour -->
-
-        <symbol>Mote/Symbols/Cthulhu</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Cthulhu</defName>
         <label>Cthulhu</label>
+        <symbol>Mote/Deity/Cthulhu</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Dagon</defName>
         <label>Dagon</label>
+        <symbol>Mote/Deity/Dagon</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Nyarlathotep</defName>
         <label>Nyarlathotep</label>
+        <symbol>Mote/Deity/Nyarlathotep</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Tsathoggua</defName>
         <label>Tsathoggua</label>
+        <symbol>Mote/Deity/Tsathoggua</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Shub</defName>
         <label>Shub-Niggurath</label>
+        <symbol>Mote/Deity/Shub</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Yog</defName>
         <label>Yog-Sothoth</label>
+        <symbol>Mote/Deity/Yog</symbol>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Hastur</defName>
         <label>Hastur</label>
+        <symbol>Mote/Deity/Hastur</symbol>
     </Def>
 
 

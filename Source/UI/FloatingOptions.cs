@@ -23,6 +23,7 @@ namespace Cults
 
         public static void SelectDeity(Building_BaseAltar altar, Building_BaseAltar.CongregationParms parms)
         {
+            // For congregation
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<CosmicEntityDef> list = new List<CosmicEntityDef>();
 
@@ -44,7 +45,7 @@ namespace Cults
                         altar.setDeityForAllParms(thing);
                     }, 
                     thing.symbolTex, 
-                    new Color(1f, 0f, 0f, 1f), 
+                    Color.white,
                     MenuOptionPriority.Default
                 ));
             }
@@ -70,7 +71,7 @@ namespace Cults
             foreach(Pawn thing in list)
             {
                 options.Add(new FloatMenuOption(
-                    "        " + thing.Name.ToString(), 
+                    new String(' ', 8) + thing.Name.ToString(), 
                     delegate { altar.setPreacherForAllParms(thing); }, 
                     MenuOptionPriority.Default,
                     null,
@@ -144,7 +145,7 @@ namespace Cults
             {
                 
                 options.Add(new FloatMenuOption(
-                    "        " + thing.Name.ToString(), 
+                    new String(' ', 8) + thing.Name.ToString(), 
                     delegate { parms.sacrifice = thing; }, 
                     MenuOptionPriority.Default,
                     null,

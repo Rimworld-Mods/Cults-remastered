@@ -186,7 +186,8 @@ namespace Cults
         }
 
         public static void OpenDeitySelectMenu(Building_BaseAltar altar)
-        {            
+        {    
+            // For worship selection        
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<CosmicEntityDef> list = new List<CosmicEntityDef>();
 
@@ -209,7 +210,7 @@ namespace Cults
                     thing.label, 
                     delegate { CultKnowledge.selectedDeity = thing; }, 
                     thing.symbolTex, 
-                    new Color(1f, 0f, 0f, 1f), 
+                    Color.white,
                     MenuOptionPriority.Default
                 ));
             }

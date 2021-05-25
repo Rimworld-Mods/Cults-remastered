@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+    <!-- 
+        Spell available choices by tiers:
+            0   - food
+            0-1 - item
+            0-5 - animal/human
+        
+        Difficulty factor (D):
+            0.0 - impossible
+            1.0 - base chance
+            2.0 - doubles the odds
+
+        Offering factors (O):
+            0.5 - food
+            0.5 - item
+            0.5 - animal
+            1.0 - human
+
+        T - temple evaluation number
+        D - spell difficulty factor
+        O - offering factor
+
+        Total success = TS = T * D * O
+        Mixed success = MS = TS * 0.50
+        Minor failure = F1 = TS * 0.25
+        Major failure = F2 = TS * 0.25
+
+        TS + MS + F1 + F2 = 1.0 
+
+        Example:
+            total success chance - 50%
+            mixed success chance - 25%
+            minor failure chance - 12.5%
+            major failure chance - 12.5%
+
+                Favor 0 - Food Item Animal Human
+                Tier  1 - Item Animal Human
+                Tier +2 - Animal Human
+    -->
 
     <!--=============== Common ====================-->
 
@@ -13,7 +51,7 @@
         </targetTags>
 
         <tier>0</tier>
-        <difficultyFactor>1</difficultyFactor>
+        <difficultyFactor>1.0</difficultyFactor>
 
         <requiredChoices>
             <li>Food</li>
