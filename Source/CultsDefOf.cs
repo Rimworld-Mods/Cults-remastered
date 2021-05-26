@@ -94,8 +94,24 @@ namespace Cults
         //-------------------------------------------------------
         // Abilities
         public static AbilityDef Cults_Ability_PsionicBlast; 
-        public static AbilityDef Cults_Ability_PsionicBurn; 
-        public static AbilityDef Cults_Ability_WrathOfCthulhu; 
+        public static AbilityDef Cults_Ability_EerieScorch; 
+        public static AbilityDef Cults_Ability_Castigation; 
+
+        public static AbilityDef Cults_Ability_BreathOfTheSea;
+        public static AbilityDef Cults_Ability_GraspFromBellow; 
+        public static AbilityDef Cults_Ability_SwellingTorment; 
+
+        public static AbilityDef Cults_Ability_UtteranceOfBile;
+        public static AbilityDef Cults_Ability_MiasmaField; 
+        public static AbilityDef Cults_Ability_Zymoticism; 
+
+        public static AbilityDef Cults_Ability_ObscureVision;
+        public static AbilityDef Cults_Ability_Madness; 
+        public static AbilityDef Cults_Ability_MindDance; 
+
+        public static AbilityDef Cults_Ability_AbnormalJump;
+        public static AbilityDef Cults_Ability_Shriveling; 
+        public static AbilityDef Cults_Ability_SpectralShield; 
 
         //-------------------------------------------------------
         // Heddifs

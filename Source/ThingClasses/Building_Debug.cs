@@ -20,11 +20,12 @@ namespace Cults
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn pawn)
 		{
             yield return new FloatMenuOption(
-                "Give ability", delegate
+                "Give abilities", delegate
                 {
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBlast);
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_PsionicBurn);
-                    pawn.abilities.GainAbility(CultsDefOf.Cults_Ability_WrathOfCthulhu);
+                    List<AbilityDef> abilities = DefDatabase<AbilityDef>.AllDefs.Where(def => def.abilityClass == typeof(OccultAbility)).ToList();
+                    foreach(AbilityDef def in abilities){
+                        pawn.abilities.GainAbility(def);
+                    }
                 }
             );
 

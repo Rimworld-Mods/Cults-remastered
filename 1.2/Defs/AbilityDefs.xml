@@ -3,10 +3,25 @@
     <AbilityDef Name="OccultPsycastBase" Abstract="True">
         <abilityClass>Cults.OccultAbility</abilityClass>
         <gizmoClass>Cults.Command_OccultAbility</gizmoClass>
+        <iconPath>UI/Abilities/Test</iconPath>
+        <description>Test...</description>
         <hotKey>Misc1</hotKey>
         <statBases>
             <Ability_Duration>0</Ability_Duration>
         </statBases>
+        <verbProperties>
+            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <requireLineOfSight>True</requireLineOfSight>
+            <warmupTime>1</warmupTime>
+            <range>10</range>
+            <targetParams>
+                <canTargetSelf>True</canTargetSelf>
+                <canTargetAnimals>True</canTargetAnimals>
+                <canTargetItems>True</canTargetItems>
+                <canTargetLocations>True</canTargetLocations>
+            </targetParams>
+        </verbProperties>
+        <cooldownTicksRange>300~1000</cooldownTicksRange>
     </AbilityDef>
 
     <!-- ///////////////////////////////////////////////////// -->
@@ -15,24 +30,9 @@
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_PsionicBlast</defName>
         <label>Psionic Blast</label>
-        <description>Description test.</description>
-        <cooldownTicksRange>300~1000</cooldownTicksRange>
-        <iconPath>UI/Abilities/Test</iconPath>
-        <verbProperties>
-            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
-            <requireLineOfSight>True</requireLineOfSight>
-            <warmupTime>1</warmupTime>
-            <range>4</range>
-            <targetParams>
-                <canTargetSelf>True</canTargetSelf>
-                <canTargetAnimals>True</canTargetAnimals>
-                <canTargetItems>True</canTargetItems>
-                <canTargetLocations>True</canTargetLocations>
-            </targetParams>
-        </verbProperties>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
-                <residualEnergyGain>0.01~0.03</residualEnergyGain>
+                <residualEnergyGain>1~3</residualEnergyGain>
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
@@ -43,62 +43,31 @@
     </AbilityDef>
 
     <AbilityDef ParentName="OccultPsycastBase">
-        <defName>Cults_Ability_PsionicBurn</defName>
-        <label>Psionic Burn</label>
-        <description>Description test.</description>
-        <cooldownTicksRange>300~1000</cooldownTicksRange>
-        <iconPath>UI/Abilities/Test</iconPath>
-        <verbProperties>
-            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
-            <requireLineOfSight>True</requireLineOfSight>
-            <warmupTime>1</warmupTime>
-            <range>24.9</range>
-            <targetParams>
-                <canTargetSelf>True</canTargetSelf>
-                <canTargetAnimals>True</canTargetAnimals>
-                <canTargetItems>True</canTargetItems>
-                <canTargetLocations>True</canTargetLocations>
-            </targetParams>
-        </verbProperties>
+        <defName>Cults_Ability_EerieScorch</defName>
+        <label>Eerie Scorch</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
-                <residualEnergyGain>30~100</residualEnergyGain>
+                <residualEnergyGain>2~4</residualEnergyGain>
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityPsionicBurn">
-                <compClass>Cults.CompAbilityEffect_PsionicBurn</compClass>
+            <li Class="Cults.CompProperties_AbilityEerieScorch">
+                <compClass>Cults.CompAbilityEffect_EerieScorch</compClass>
             </li>
         </comps>
     </AbilityDef>
 
     <AbilityDef ParentName="OccultPsycastBase">
-        <defName>Cults_Ability_WrathOfCthulhu</defName>
-        <label>Wrath of Cthulhu</label>
-        <description>Description test.</description>
-        <level>2</level>
-        <cooldownTicksRange>300~1000</cooldownTicksRange>
-        <iconPath>UI/Abilities/Test</iconPath>
-        <verbProperties>
-            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
-            <requireLineOfSight>True</requireLineOfSight>
-            <warmupTime>1</warmupTime>
-            <range>24.9</range>
-            <targetParams>
-                <canTargetSelf>True</canTargetSelf>
-                <canTargetAnimals>True</canTargetAnimals>
-                <canTargetItems>True</canTargetItems>
-                <canTargetLocations>True</canTargetLocations>
-            </targetParams>
-        </verbProperties>
+        <defName>Cults_Ability_Castigation</defName>
+        <label>Castigation</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
-                <residualEnergyGain>30~100</residualEnergyGain>
+                <residualEnergyGain>2~5</residualEnergyGain>
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityWrathOfCthulhu">
-                <compClass>Cults.CompAbilityEffect_WrathOfCthulhu</compClass>
+            <li Class="Cults.CompProperties_AbilityCastigation">
+                <compClass>Cults.CompAbilityEffect_Castigation</compClass>
             </li>
         </comps>
     </AbilityDef>
@@ -106,16 +75,194 @@
     <!-- ///////////////////////////////////////////////////// -->
     <!-- /////////////////////// Dagon /////////////////////// -->
 
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_BreathOfTheSea</defName>
+        <label>Breath of The Sea</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityBreathOfTheSea">
+                <compClass>Cults.CompAbilityEffect_BreathOfTheSea</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_SwellingTorment</defName>
+        <label>Swelling Torment</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilitySwellingTorment">
+                <compClass>Cults.CompAbilityEffect_SwellingTorment</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_GraspFromBellow</defName>
+        <label>Grasp From Bellow</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityGraspFromBellow">
+                <compClass>Cults.CompAbilityEffect_GraspFromBellow</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
 
     <!-- ///////////////////////////////////////////////////// -->
     <!-- ////////////////// Shub-Niggurath /////////////////// -->
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_UtteranceOfBile</defName>
+        <label>Utterance of Bile</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityUtteranceOfBile">
+                <compClass>Cults.CompAbilityEffect_UtteranceOfBile</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_MiasmaField</defName>
+        <label>Miasma Field</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityMiasmaField">
+                <compClass>Cults.CompAbilityEffect_MiasmaField</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_Zymoticism</defName>
+        <label>Zymoticism</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityZymoticism">
+                <compClass>Cults.CompAbilityEffect_Zymoticism</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
 
 
     <!-- ///////////////////////////////////////////////////// -->
     <!-- /////////////////// Nyarlathotep //////////////////// -->
 
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_ObscureVision</defName>
+        <label>Obscure Vision</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityObscureVision">
+                <compClass>Cults.CompAbilityEffect_ObscureVision</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_Madness</defName>
+        <label>Madness</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityMadness">
+                <compClass>Cults.CompAbilityEffect_Madness</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_MindDance</defName>
+        <label>Mind Dance</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityMindDance">
+                <compClass>Cults.CompAbilityEffect_MindDance</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
 
     <!-- ///////////////////////////////////////////////////// -->
     <!-- //////////////////// Yog-Sothoth //////////////////// -->
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_AbnormalJump</defName>
+        <label>Abnormal Jump</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityAbnormalJump">
+                <compClass>Cults.CompAbilityEffect_AbnormalJump</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_Shriveling</defName>
+        <label>Shriveling</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilityShriveling">
+                <compClass>Cults.CompAbilityEffect_Shriveling</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OccultPsycastBase">
+        <defName>Cults_Ability_SpectralShield</defName>
+        <label>Spectral Shield</label>
+        <comps>
+            <li Class="Cults.CompProperties_AbilityOccult">
+                <residualEnergyGain>2~5</residualEnergyGain>
+                <sanityLoss>0.05</sanityLoss>
+                <occultismGain>15</occultismGain>
+            </li>
+            <li Class="Cults.CompProperties_AbilitySpectralShield">
+                <compClass>Cults.CompAbilityEffect_SpectralShield</compClass>
+            </li>
+        </comps>
+    </AbilityDef>
 
 </Defs>

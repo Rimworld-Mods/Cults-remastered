@@ -17,21 +17,22 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 namespace Cults
 {
 
-	public class CompProperties_AbilityPsionicBlast : CompProperties_AbilityEffect
+    public class CompProperties_AbilitySpectralShield : CompProperties_AbilityEffect
 	{
-		public CompProperties_AbilityPsionicBlast()
+		public CompProperties_AbilitySpectralShield()
 		{
-			compClass = typeof(CompAbilityEffect_PsionicBlast);
+			compClass = typeof(CompAbilityEffect_SpectralShield);
 		}
 	}
 
-	public class CompAbilityEffect_PsionicBlast : CompAbilityEffect{
-		public new CompProperties_AbilityPsionicBlast Props => (CompProperties_AbilityPsionicBlast)props;
+
+	public class CompAbilityEffect_SpectralShield : CompAbilityEffect{
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);                       
+			Log.Message("Casted spell: " + parent.def.label);             
 		}
 	}
+
 
 }

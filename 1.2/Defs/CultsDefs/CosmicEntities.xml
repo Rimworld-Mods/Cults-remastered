@@ -13,13 +13,6 @@
             <li>Water</li>
         </domains>
 
-        <titles>
-            <li>High Priest of the Great Old Ones</li>
-            <li>The Great Dreamer</li>
-            <li>The Sleeper of R'lyeh</li>
-            <li>The Star Spawn</li>
-        </titles>
-
         <favoredApparel>
         </favoredApparel>
 
@@ -47,47 +40,77 @@
         <defName>Cults_CosmicEntity_Cthulhu</defName>
         <label>Cthulhu</label>
         <symbol>Mote/Deity/Cthulhu</symbol>
+        <titles>
+            <li>The Great Dreamer</li>
+            <li>Lord of the Watery Abyss</li>
+            <li>The Star Spawn</li>
+        </titles>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Dagon</defName>
         <label>Dagon</label>
         <symbol>Mote/Deity/Dagon</symbol>
+        <titles>
+            <li>Demon Lord of the Ocean</li>
+            <li>The Deep One</li>
+            <li>The Shadow in the Sea</li>
+        </titles>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Nyarlathotep</defName>
         <label>Nyarlathotep</label>
         <symbol>Mote/Deity/Nyarlathotep</symbol>
+        <titles>
+            <li>The Dark One</li>
+            <li>The Crawling Chaos</li>
+            <li>The Haunter of the Dark</li>
+        </titles>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Tsathoggua</defName>
         <label>Tsathoggua</label>
         <symbol>Mote/Deity/Tsathoggua</symbol>
+        <titles>
+            <li>The Black Thing</li>
+            <li>The Toad God</li>
+            <li>The Sleeper in the Deep</li>
+        </titles>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Shub</defName>
         <label>Shub-Niggurath</label>
         <symbol>Mote/Deity/Shub</symbol>
+        <titles>
+            <li>The Black Goat with a Thousand Young</li>
+            <li>Lord of the Woods</li>
+            <li>The Mighty Mother</li>
+        </titles>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Yog</defName>
         <label>Yog-Sothoth</label>
         <symbol>Mote/Deity/Yog</symbol>
+        <titles>
+            <li>The Lurker at the Threshold</li>
+            <li>The Beyond One</li>
+            <li>Opener of the Way</li>
+        </titles>
     </Def>
 
     <Def Class="Cults.CosmicEntityDef" ParentName="BaseCosmicEntity">
         <defName>Cults_CosmicEntity_Hastur</defName>
         <label>Hastur</label>
         <symbol>Mote/Deity/Hastur</symbol>
+        <titles>
+            <li>The Unspeakable</li>
+            <li>The King in Yellow</li>
+            <li>The Feaster from Afar</li>
+        </titles>
     </Def>
-
-
-
-
-
 
 </Defs>
