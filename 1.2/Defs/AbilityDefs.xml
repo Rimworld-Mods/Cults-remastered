@@ -84,8 +84,12 @@
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityBreathOfTheSea">
+            <li Class="Cults.CompProperties_AbilityGiveHediff">
                 <compClass>Cults.CompAbilityEffect_BreathOfTheSea</compClass>
+                <partsToAffect>
+                    <li>Lung</li>
+                </partsToAffect>
+                <bodyPartCount>2</bodyPartCount>
             </li>
         </comps>
     </AbilityDef>

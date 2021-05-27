@@ -41,11 +41,18 @@ namespace Cults
         public static JobDef Cults_DoBill;
         public static JobDef Cults_WaitDemise;
 
+        public static JobDef Cults_Job_VomitWater;
+        public static JobDef Cults_Job_VomitBile;
+
         //-------------------------------------------------------
         // Recipes
         public static RecipeDef Cults_OfferMeatRaw;
         public static RecipeDef Cults_OfferMeatRaw_Worthy;
         public static RecipeDef Cults_SacrificeHuman;
+
+        //-------------------------------------------------------
+        // Effecters
+        public static EffecterDef Cults_Effecter_VomitWater;
 
         //-------------------------------------------------------
         // Items
@@ -79,6 +86,11 @@ namespace Cults
         public static ThingDef Cults_Building_BloodAltar;
         public static ThingDef Cults_Building_NightmareAltar;
 
+        //-------------------------------------------------------
+        // Filth
+        public static ThingDef Cults_Filth_WaterVomit;
+        public static ThingDef Cults_Filth_BileVomit;
+        
         //-------------------------------------------------------
         // Conditions
         public static GameConditionDef Cults_GameCondition_StarsAreWrong;
@@ -117,6 +129,7 @@ namespace Cults
         // Heddifs
 
         public static HediffDef Cults_SanityLoss;
+        public static HediffDef Cults_Hediff_WateryLungs;
 
     }
 

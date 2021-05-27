@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <!-- initial, minor, major, serious/severe, extreme -->
+
+    <HediffDef Name="AbilityHediffBase" Abstract="True">
+        <maxSeverity>1.0</maxSeverity>
+        <hediffClass>Cults.HediffWithComps</hediffClass>
+    </HediffDef>
+
+    <HediffDef ParentName="AbilityHediffBase">
+        <defName>Cults_Hediff_WateryLungs</defName>
+        <label>watery lungs</label>
+        <description>description</description>
+        <defaultLabelColor>(0.45, 0.2, 1.0)</defaultLabelColor>
+        <initialSeverity>0.3</initialSeverity>
+        <comps>
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>-0.6</severityPerDay>
+            </li>
+            <li Class="Cults.HediffCompProperties_PerformJob">
+                <compClass>Cults.HediffComp_Vomit</compClass>
+                <jobDef>Cults_Job_VomitWater</jobDef>
+                <jobMtbDays>0.1</jobMtbDays>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <minSeverity>0.2</minSeverity>
+                <label>minor</label>
+                <painOffset>0.1</painOffset>
+                <capMods>
+                    <li><offset>-0.15</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.05</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.4</minSeverity>
+                <label>major</label>
+                <painOffset>0.15</painOffset>
+                <capMods>
+                    <li><offset>-0.30</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.10</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+</Defs>

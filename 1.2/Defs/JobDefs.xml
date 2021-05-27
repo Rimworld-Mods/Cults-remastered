@@ -52,4 +52,24 @@
         <reportString>waiting for death.</reportString>
     </JobDef>
 
+    <JobDef>
+        <defName>Cults_Job_VomitWater</defName>
+        <driverClass>Cults.JobDriver_VomitWater</driverClass>
+        <playerInterruptible>false</playerInterruptible>
+        <casualInterruptible>false</casualInterruptible>
+        <reportString>vomiting.</reportString>
+        <suspendable>false</suspendable>
+    </JobDef>
+
+    <JobDef>
+        <defName>Cults_Job_VomitBile</defName>
+        <!-- todo: vomit bile -->
+        <driverClass>Cults.JobDriver_VomitWater</driverClass>
+        <playerInterruptible>false</playerInterruptible>
+        <casualInterruptible>false</casualInterruptible>
+        <reportString>vomiting.</reportString>
+        <suspendable>false</suspendable>
+    </JobDef>
+
+
 </Defs>
