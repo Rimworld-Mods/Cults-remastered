@@ -19,16 +19,19 @@ namespace Cults
 
 	public class CompAbilityEffect_BreathOfTheSea : CompAbilityEffect
 	{
+		public CompAbilityEffect_BreathOfTheSea(){
+
+		}
 		public new CompProperties_AbilityGiveHediff Props => (CompProperties_AbilityGiveHediff)props;
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
-			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);  
-
+			// base.Apply(target, dest);
+			// Log.Message("Casted spell: " + parent.def.label);  
+			
 			HediffGiverUtility.TryApply(target.Pawn, CultsDefOf.Cults_Hediff_WateryLungs, Props.partsToAffect, true, Props.bodyPartCount, null);
 			Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_VomitWater);
 			target.Pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
-			// target.Pawn.jobs.TryTakeOrderedJob(job);
+			target.Pawn.jobs.TryTakeOrderedJob(job);
 		}
 
 		// protected void ApplyInner(Pawn target, Pawn other)
