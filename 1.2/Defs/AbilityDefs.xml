@@ -24,7 +24,7 @@
                 <canTargetMechs>false</canTargetMechs>
             </targetParams>
         </verbProperties>
-        <cooldownTicksRange>300~1000</cooldownTicksRange>
+        <cooldownTicksRange>10~30</cooldownTicksRange>
     </AbilityDef>
 
     <!-- ///////////////////////////////////////////////////// -->
@@ -224,23 +224,24 @@
     <!-- //////////////////// Yog-Sothoth //////////////////// -->
 
     <AbilityDef ParentName="OccultPsycastBase">
-        <defName>Cults_Ability_AbnormalJump</defName>
-        <label>Abnormal Jump</label>
+        <defName>Cults_Ability_AbnormalShift</defName>
+        <label>abnormal shift</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
                 <residualEnergyGain>2~5</residualEnergyGain>
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityAbnormalJump">
-                <compClass>Cults.CompAbilityEffect_AbnormalJump</compClass>
+            <li Class="Cults.CompProperties_AbilityAbnormalShift">
+                <compClass>Cults.CompAbilityEffect_AbnormalShift</compClass>
             </li>
         </comps>
         <verbProperties>
-            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <verbClass>Cults.Verb_MoveOccultMagic</verbClass>
             <requireLineOfSight>True</requireLineOfSight>
-            <warmupTime>1</warmupTime>
-            <range>10</range>
+            <warmupTime>0.5</warmupTime>
+            <range>26</range>
+            <violent>false</violent>
             <targetParams>
                 <canTargetSelf>false</canTargetSelf>
                 <canTargetAnimals>false</canTargetAnimals>

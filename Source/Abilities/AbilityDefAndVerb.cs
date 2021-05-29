@@ -39,8 +39,59 @@ namespace Cults
         }
     }
 
+
+
+    // Methods not required, they only add proper field of view highlight
     public class Verb_CastOccultMagic : Verb_CastAbility 
     {
+
     }
 
+    public class Verb_MoveOccultMagic : Verb_CastAbility 
+    {
+        public override bool ValidateTarget(LocalTargetInfo target)
+		{
+			if (caster == null)
+			{
+				return false;
+			}
+			if (!CanHitTarget(target) || !ValidJumpTarget(caster.Map, target.Cell))
+			{
+				return false;
+			}
+			if (!ReloadableUtility.CanUseConsideringQueuedJobs(CasterPawn, base.EquipmentSource))
+			{
+				return false;
+			}
+			return true;
+		}
+
+		public override void DrawHighlight(LocalTargetInfo target)
+		{
+			if (target.IsValid && ValidJumpTarget(caster.Map, target.Cell))
+			{
+				GenDraw.DrawTargetHighlightWithLayer(target.CenterVector3, AltitudeLayer.MetaOverlays);
+			}
+			GenDraw.DrawRadiusRing(caster.Position, EffectiveRange, Color.white, (IntVec3 c) => GenSight.LineOfSight(caster.Position, c, caster.Map) && ValidJumpTarget(caster.Map, c));
+		}
+
+        public static bool ValidJumpTarget(Map map, IntVec3 cell)
+		{
+			if (!cell.IsValid || !cell.InBounds(map))
+			{
+				return false;
+			}
+			if (cell.Impassable(map) || !cell.Walkable(map) || cell.Fogged(map))
+			{
+				return false;
+			}
+			Building edifice = cell.GetEdifice(map);
+			Building_Door building_Door;
+			if (edifice != null && (building_Door = (edifice as Building_Door)) != null && !building_Door.Open)
+			{
+				return false;
+			}
+			return true;
+		}
+    }
 }

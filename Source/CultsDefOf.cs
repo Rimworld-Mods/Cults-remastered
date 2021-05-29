@@ -122,7 +122,7 @@ namespace Cults
         public static AbilityDef Cults_Ability_Madness; 
         public static AbilityDef Cults_Ability_MindDance; 
 
-        public static AbilityDef Cults_Ability_AbnormalJump;
+        public static AbilityDef Cults_Ability_AbnormalShift;
         public static AbilityDef Cults_Ability_Shriveling; 
         public static AbilityDef Cults_Ability_SpectralShield; 
 

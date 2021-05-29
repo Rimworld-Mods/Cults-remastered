@@ -20,14 +20,21 @@
         </projectile>
     </ThingDef>
 
-    <ThingDef ParentName="PawnFlyerBase">
+    <ThingDef>
         <defName>Cults_AbnormalShift</defName>
-        <thingClass>PawnJumper</thingClass>
+        <label>moving</label>
+        <category>Ethereal</category>
+        <useHitPoints>true</useHitPoints>
+        <drawOffscreen>true</drawOffscreen>
+        <tickerType>Normal</tickerType>
+        <altitudeLayer>Skyfaller</altitudeLayer>
+        <drawerType>RealtimeOnly</drawerType>
+        <thingClass>Cults.ThingMover</thingClass>
         <pawnFlyer>
             <flightDurationMin>0.4</flightDurationMin>
-            <flightSpeed>15</flightSpeed>
-            <!-- <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
-            <soundLanding>JumpPackLand</soundLanding> -->
+            <flightSpeed>20</flightSpeed>
+            <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
+            <soundLanding>JumpPackLand</soundLanding>
         </pawnFlyer>
     </ThingDef>
 </Defs>
