@@ -30,6 +30,7 @@ namespace Cults
         
         //public static ThingDef Cults_OccultFire;
         public static ThingDef Cults_OccultSpark;
+        public static ThingDef Cults_AbnormalShift;
         
         //-------------------------------------------------------
         // Buildings

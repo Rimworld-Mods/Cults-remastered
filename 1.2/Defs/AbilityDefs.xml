@@ -15,10 +15,13 @@
             <warmupTime>1</warmupTime>
             <range>10</range>
             <targetParams>
-                <canTargetSelf>True</canTargetSelf>
-                <canTargetAnimals>True</canTargetAnimals>
-                <canTargetItems>True</canTargetItems>
-                <canTargetLocations>True</canTargetLocations>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetAnimals>true</canTargetAnimals>
+                <canTargetHumans>true</canTargetHumans>
+                <canTargetItems>false</canTargetItems>
+                <canTargetLocations>false</canTargetLocations>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetMechs>false</canTargetMechs>
             </targetParams>
         </verbProperties>
         <cooldownTicksRange>300~1000</cooldownTicksRange>
@@ -84,12 +87,8 @@
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityGiveHediff">
+            <li Class="CompProperties_AbilityEffect">
                 <compClass>Cults.CompAbilityEffect_BreathOfTheSea</compClass>
-                <partsToAffect>
-                    <li>Lung</li>
-                </partsToAffect>
-                <bodyPartCount>2</bodyPartCount>
             </li>
         </comps>
     </AbilityDef>
@@ -237,6 +236,21 @@
                 <compClass>Cults.CompAbilityEffect_AbnormalJump</compClass>
             </li>
         </comps>
+        <verbProperties>
+            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <requireLineOfSight>True</requireLineOfSight>
+            <warmupTime>1</warmupTime>
+            <range>10</range>
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetAnimals>false</canTargetAnimals>
+                <canTargetHumans>false</canTargetHumans>
+                <canTargetItems>false</canTargetItems>
+                <canTargetLocations>true</canTargetLocations>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetMechs>false</canTargetMechs>
+            </targetParams>
+        </verbProperties>
     </AbilityDef>
 
     <AbilityDef ParentName="OccultPsycastBase">

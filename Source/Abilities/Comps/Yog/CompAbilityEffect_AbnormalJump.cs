@@ -30,7 +30,15 @@ namespace Cults
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);             
+			Pawn caster = parent.pawn;
+			IntVec3 cell = target.Cell;
+			Map map = caster.Map;
+			PawnFlyer pawnFlyer = PawnFlyer.MakeFlyer(CultsDefOf.Cults_AbnormalShift, caster, cell);
+			if (pawnFlyer != null)
+			{
+				GenSpawn.Spawn(pawnFlyer, cell, map);
+			}
+		      
 		}
 	}
 

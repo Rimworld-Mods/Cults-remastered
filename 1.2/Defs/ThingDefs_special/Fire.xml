@@ -19,4 +19,15 @@
             <speed>1.5</speed>
         </projectile>
     </ThingDef>
+
+    <ThingDef ParentName="PawnFlyerBase">
+        <defName>Cults_AbnormalShift</defName>
+        <thingClass>PawnJumper</thingClass>
+        <pawnFlyer>
+            <flightDurationMin>0.4</flightDurationMin>
+            <flightSpeed>15</flightSpeed>
+            <!-- <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
+            <soundLanding>JumpPackLand</soundLanding> -->
+        </pawnFlyer>
+    </ThingDef>
 </Defs>
