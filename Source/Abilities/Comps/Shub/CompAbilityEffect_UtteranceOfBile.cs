@@ -30,7 +30,25 @@ namespace Cults
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);             
+			Hediff hediff = target.Pawn.health.hediffSet.GetFirstHediffOfDef(CultsDefOf.Cults_Hediff_FoulBile);
+			IEnumerable<BodyPartRecord> liver = target.Pawn.RaceProps.body.GetPartsWithDef(BodyPartDefOf.Liver);
+			if(!liver.Any())
+			{
+				Messages.Message(parent.def.LabelCap + ": failed. Target does not have a liver", new LookTargets(target.Pawn), MessageTypeDefOf.RejectInput, historical: false);
+			}
+			if(hediff != null)
+			{
+				hediff.Severity += hediff.def.initialSeverity;
+				Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_VomitBile);
+				target.Pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
+			}
+			else
+			{
+				HediffGiverUtility.TryApply(target.Pawn, CultsDefOf.Cults_Hediff_FoulBile, new List<BodyPartDef>() { BodyPartDefOf.Liver }, true, 1, null);
+				Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_VomitBile);
+				target.Pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
+			}
+          
 		}
 	}
 

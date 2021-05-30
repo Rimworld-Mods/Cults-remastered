@@ -16,27 +16,8 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    
-    public class CompProperties_AbilityEerieScorch : CompProperties_AbilityEffect
-	{
-		public CompProperties_AbilityEerieScorch()
-		{
-			compClass = typeof(CompAbilityEffect_EerieScorch);
-		}
-	}
-
-    public class CompAbilityEffect_EerieScorch : CompAbilityEffect
+    public class Verb_CastOccultMagic : Verb_CastAbility 
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
-		{
-			base.Apply(target, dest);
-			if(target.Thing != null)
-			{
-				OccultFireUtility.TryAttachOccultFire(target.Thing, 0.5f);
-				Log.Message("Casted spell: " + parent.def.label);  
-			}
-		}
-        
-    }
 
+    }
 }

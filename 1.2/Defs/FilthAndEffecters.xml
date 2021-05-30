@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <!-- ////////////////////////////////////////////////////////// -->
-    <!-- /////////////////////// Filth //////////////////////////// -->
+    <!-- ///////////////////// Water vomit //////////////////////// -->
 
     <ThingDef ParentName="BaseFilth">
         <defName>Cults_Filth_WaterVomit</defName>
@@ -12,7 +12,7 @@
         </statBases>
         <graphicData>
             <texPath>Things/Filth/PoolSoft</texPath>
-            <color>(120, 100, 210, 90)</color>
+            <color>(130, 150, 230, 110)</color>
         </graphicData>
         <filth>
             <disappearsInDays>10~15</disappearsInDays>
@@ -23,28 +23,6 @@
         </filth>
     </ThingDef>
 
-    <ThingDef ParentName="BaseFilth">
-        <defName>Cults_Filth_BileVomit</defName>
-        <label>black bile vomit</label>
-        <statBases>
-            <Beauty>-50</Beauty>
-            <Cleanliness>-20</Cleanliness>
-        </statBases>
-        <graphicData>
-            <texPath>Things/Filth/PoolSoft</texPath>
-            <color>(20, 10, 10, 180)</color>
-        </graphicData>
-        <filth>
-            <disappearsInDays>50~60</disappearsInDays>
-            <rainWashes>true</rainWashes>
-            <cleaningWorkToReduceThickness>100</cleaningWorkToReduceThickness>
-            <canFilthAttach>true</canFilthAttach>
-            <cleaningSound>Interact_CleanFilth_Fluid</cleaningSound>
-        </filth>
-    </ThingDef>
-
-    <!-- ////////////////////////////////////////////////////////// -->
-    <!-- ////////////////////// Effecters ///////////////////////// -->
 
     <EffecterDef>
         <defName>Cults_Effecter_VomitWater</defName>
@@ -63,7 +41,53 @@
     <ThingDef ParentName="FoodBitBase">
         <defName>Cults_Mote_VomitWaterBit</defName>
         <graphicData>
-            <color>(120, 100, 210, 90)</color>
+            <color>(130, 150, 230, 110)</color>
+            <texPath>Mote/VomitBit</texPath>
+            <shaderType>Mote</shaderType>
+        </graphicData>
+    </ThingDef>
+
+    <!-- ////////////////////////////////////////////////////////// -->
+    <!-- ////////////////////// Bile vomit //////////////////////// -->
+
+    <ThingDef ParentName="BaseFilth">
+        <defName>Cults_Filth_BileVomit</defName>
+        <label>black bile vomit</label>
+        <statBases>
+            <Beauty>-50</Beauty>
+            <Cleanliness>-20</Cleanliness>
+        </statBases>
+        <graphicData>
+            <texPath>Things/Filth/PoolSoft</texPath>
+            <color>(10, 30, 5, 150)</color>
+        </graphicData>
+        <filth>
+            <disappearsInDays>50~60</disappearsInDays>
+            <rainWashes>true</rainWashes>
+            <cleaningWorkToReduceThickness>100</cleaningWorkToReduceThickness>
+            <canFilthAttach>true</canFilthAttach>
+            <cleaningSound>Interact_CleanFilth_Fluid</cleaningSound>
+        </filth>
+    </ThingDef>
+
+    <EffecterDef>
+        <defName>Cults_Effecter_VomitBile</defName>
+        <children>
+            <li>
+                <subEffecterClass>SubEffecter_SprayerContinuous</subEffecterClass>
+                <scale>0.5~0.7</scale>
+                <ticksBetweenMotes>20</ticksBetweenMotes>
+                <positionLerpFactor>0.35</positionLerpFactor>
+                <positionRadius>0.2</positionRadius>
+                <moteDef>Cults_Mote_VomitBileBit</moteDef>
+            </li>
+        </children>
+    </EffecterDef>
+
+    <ThingDef ParentName="FoodBitBase">
+        <defName>Cults_Mote_VomitBileBit</defName>
+        <graphicData>
+            <color>(10, 30, 5, 150)</color>
             <texPath>Mote/VomitBit</texPath>
             <shaderType>Mote</shaderType>
         </graphicData>

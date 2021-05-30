@@ -31,6 +31,7 @@ namespace Cults
         //public static ThingDef Cults_OccultFire;
         public static ThingDef Cults_OccultSpark;
         public static ThingDef Cults_AbnormalShift;
+        public static ThingDef Cults_BlastThing;
         
         //-------------------------------------------------------
         // Buildings
@@ -54,6 +55,7 @@ namespace Cults
         //-------------------------------------------------------
         // Effecters
         public static EffecterDef Cults_Effecter_VomitWater;
+        public static EffecterDef Cults_Effecter_VomitBile;
 
         //-------------------------------------------------------
         // Items
@@ -131,6 +133,7 @@ namespace Cults
 
         public static HediffDef Cults_SanityLoss;
         public static HediffDef Cults_Hediff_WateryLungs;
+        public static HediffDef Cults_Hediff_FoulBile;
 
     }
 

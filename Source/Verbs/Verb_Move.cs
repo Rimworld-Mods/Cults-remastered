@@ -16,40 +16,29 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    public class OccultAbility : Ability
+    public class Verb_Move : Verb_CastAbility 
     {
-        public OccultAbility(Pawn pawn) : base(pawn)
-        {
-            //comps = new List<AbilityComp>(); // By default [comps] are null and base class tries to use this var without checking it
-        }
-        public OccultAbility(Pawn pawn, AbilityDef def) : base(pawn, def)
-        {
-            //comps = new List<AbilityComp>();
-        }
-
-		public override bool GizmoDisabled(out string reason)
+		public override void OrderForceTarget(LocalTargetInfo target)
 		{
-            // extra reasons to disable ability
-            return base.GizmoDisabled(out reason);
+			Map map = CasterPawn.Map;
+			IntVec3 intVec = RCellFinder.BestOrderedGotoDestNear_NewTemp(target.Cell, CasterPawn, AcceptableDestination);
+			Job job = JobMaker.MakeJob(JobDefOf.CastJump, intVec);
+			job.verbToUse = this;
+			if (CasterPawn.jobs.TryTakeOrderedJob(job))
+			{
+				MoteMaker.MakeStaticMote(intVec, map, ThingDefOf.Mote_FeedbackGoto);
+			}
+			bool AcceptableDestination(IntVec3 c)
+			{
+				if (ValidJumpTarget(map, c))
+				{
+					return CanHitTargetFrom(caster.Position, c);
+				}
+				return false;
+			}
 		}
 
-        public override bool Activate(LocalTargetInfo target, LocalTargetInfo dest)
-        {
-            return base.Activate(target, dest);
-        }
-    }
-
-
-
-    // Methods not required, they only add proper field of view highlight
-    public class Verb_CastOccultMagic : Verb_CastAbility 
-    {
-
-    }
-
-    public class Verb_MoveOccultMagic : Verb_CastAbility 
-    {
-        public override bool ValidateTarget(LocalTargetInfo target)
+		public override bool ValidateTarget(LocalTargetInfo target)
 		{
 			if (caster == null)
 			{
@@ -66,6 +55,29 @@ namespace Cults
 			return true;
 		}
 
+		public override bool CanHitTargetFrom(IntVec3 root, LocalTargetInfo targ)
+		{
+			float num = EffectiveRange * EffectiveRange;
+			IntVec3 cell = targ.Cell;
+			if ((float)caster.Position.DistanceToSquared(cell) <= num)
+			{
+				return GenSight.LineOfSight(root, cell, caster.Map);
+			}
+			return false;
+		}
+
+		public override void OnGUI(LocalTargetInfo target)
+		{
+			if (CanHitTarget(target) && ValidJumpTarget(caster.Map, target.Cell))
+			{
+				base.OnGUI(target);
+			}
+			else
+			{
+				GenUI.DrawMouseAttachment(TexCommand.CannotShoot);
+			}
+		}
+
 		public override void DrawHighlight(LocalTargetInfo target)
 		{
 			if (target.IsValid && ValidJumpTarget(caster.Map, target.Cell))
@@ -75,7 +87,7 @@ namespace Cults
 			GenDraw.DrawRadiusRing(caster.Position, EffectiveRange, Color.white, (IntVec3 c) => GenSight.LineOfSight(caster.Position, c, caster.Map) && ValidJumpTarget(caster.Map, c));
 		}
 
-        public static bool ValidJumpTarget(Map map, IntVec3 cell)
+		public static bool ValidJumpTarget(Map map, IntVec3 cell)
 		{
 			if (!cell.IsValid || !cell.InBounds(map))
 			{

@@ -23,7 +23,6 @@ namespace Cults
 		protected Vector3 startVec;
 		protected float distance;
 		protected float ticksPassed = 0;
-		protected float speed = 20;
 		protected bool wasDrafted = false;
 		protected bool wasSelected = false;
 
@@ -43,8 +42,8 @@ namespace Cults
 		{
 			get
 			{
-				if(speed <= 0) return distance * 60 / 20;
-				return distance * 60 / speed;
+				if(this.def.pawnFlyer.flightSpeed <= 0) return distance * 60 / 20;
+				return distance * 60 / this.def.pawnFlyer.flightSpeed;
 			}
 		}
 
@@ -70,7 +69,6 @@ namespace Cults
 			thingMover.distance = thing.Position.DistanceTo(destCell);
 			thingMover.wasSelected = Find.Selector.IsSelected(thing);
 			thingMover.wasDrafted = thing is Pawn ? ((Pawn)thing).Drafted : false;
-			thingMover.speed = thingMover.def.pawnFlyer?.flightSpeed ?? 20;
 
 			Find.Selector.ShelveSelected(thing);
 			thing.DeSpawn();
@@ -125,7 +123,6 @@ namespace Cults
 			Scribe_Values.Look(ref startVec, "startVec");
 			Scribe_Values.Look(ref ticksPassed, "ticksFlightTime", 0);
 			Scribe_Values.Look(ref distance, "flightDistance", 0f);
-			Scribe_Values.Look(ref speed, "speed", 1f);
 			Scribe_Values.Look(ref wasDrafted, "wasDrafted", defaultValue: false);
 			Scribe_Values.Look(ref wasSelected, "wasSelected", defaultValue: false);
 		}

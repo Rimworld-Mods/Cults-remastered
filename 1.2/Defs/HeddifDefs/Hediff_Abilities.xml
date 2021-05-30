@@ -25,6 +25,15 @@
         </comps>
         <stages>
             <li>
+                <minSeverity>0</minSeverity>
+                <label>initial</label>
+                <painOffset>0</painOffset>
+                <capMods>
+                    <li><offset>-0.05</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.00</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
                 <minSeverity>0.2</minSeverity>
                 <label>minor</label>
                 <painOffset>0.1</painOffset>
@@ -40,6 +49,90 @@
                 <capMods>
                     <li><offset>-0.30</offset><capacity>Breathing</capacity></li>
                     <li><offset>-0.10</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.6</minSeverity>
+                <label>serious</label>
+                <painOffset>0.20</painOffset>
+                <capMods>
+                    <li><offset>-0.45</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.15</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.8</minSeverity>
+                <label>extreme</label>
+                <painOffset>0.25</painOffset>
+                <capMods>
+                    <li><offset>-0.60</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.20</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+
+    <HediffDef ParentName="AbilityHediffBase">
+        <defName>Cults_Hediff_FoulBile</defName>
+        <label>foul bile</label>
+        <description>description</description>
+        <defaultLabelColor>(0.4, 0.7, 0.3)</defaultLabelColor>
+        <initialSeverity>0.3</initialSeverity>
+        <comps>
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>-0.6</severityPerDay>
+            </li>
+            <li Class="Cults.HediffCompProperties_PerformJob">
+                <compClass>Cults.HediffComp_Vomit</compClass>
+                <jobDef>Cults_Job_VomitBile</jobDef>
+                <jobMtbDays>0.1</jobMtbDays>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <minSeverity>0</minSeverity>
+                <label>initial</label>
+                <painOffset>0</painOffset>
+                <capMods>
+                    <li><offset>-0.00</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.05</offset><capacity>Metabolism</capacity></li>
+                    <li><offset>-0.05</offset><capacity>BloodFiltration</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.2</minSeverity>
+                <label>minor</label>
+                <painOffset>0.1</painOffset>
+                <capMods>
+                    <li><offset>-0.15</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.05</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.4</minSeverity>
+                <label>major</label>
+                <painOffset>0.15</painOffset>
+                <capMods>
+                    <li><offset>-0.30</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.10</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.6</minSeverity>
+                <label>serious</label>
+                <painOffset>0.20</painOffset>
+                <capMods>
+                    <li><offset>-0.45</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.15</offset><capacity>Manipulation</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.8</minSeverity>
+                <label>extreme</label>
+                <painOffset>0.25</painOffset>
+                <capMods>
+                    <li><offset>-0.60</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.20</offset><capacity>Manipulation</capacity></li>
                 </capMods>
             </li>
         </stages>

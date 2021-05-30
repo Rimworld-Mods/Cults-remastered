@@ -16,27 +16,27 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    
-    public class CompProperties_AbilityEerieScorch : CompProperties_AbilityEffect
-	{
-		public CompProperties_AbilityEerieScorch()
-		{
-			compClass = typeof(CompAbilityEffect_EerieScorch);
-		}
-	}
-
-    public class CompAbilityEffect_EerieScorch : CompAbilityEffect
+    public class OccultAbility : Ability
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        public OccultAbility(Pawn pawn) : base(pawn)
+        {
+            //comps = new List<AbilityComp>(); // By default [comps] are null and base class tries to use this var without checking it
+        }
+        public OccultAbility(Pawn pawn, AbilityDef def) : base(pawn, def)
+        {
+            //comps = new List<AbilityComp>();
+        }
+
+		public override bool GizmoDisabled(out string reason)
 		{
-			base.Apply(target, dest);
-			if(target.Thing != null)
-			{
-				OccultFireUtility.TryAttachOccultFire(target.Thing, 0.5f);
-				Log.Message("Casted spell: " + parent.def.label);  
-			}
+            // extra reasons to disable ability
+            return base.GizmoDisabled(out reason);
 		}
-        
+
+        public override bool Activate(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            return base.Activate(target, dest);
+        }
     }
 
 }

@@ -3,7 +3,6 @@
     <AbilityDef Name="OccultPsycastBase" Abstract="True">
         <abilityClass>Cults.OccultAbility</abilityClass>
         <gizmoClass>Cults.Command_OccultAbility</gizmoClass>
-        <iconPath>UI/Abilities/Test</iconPath>
         <description>Test...</description>
         <hotKey>Misc1</hotKey>
         <statBases>
@@ -32,6 +31,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_PsionicBlast</defName>
+        <iconPath>UI/Abilities/PsionicBlast</iconPath>
         <label>Psionic Blast</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -39,7 +39,7 @@
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityPsionicBlast">
+            <li Class="CompProperties_AbilityEffect">
                 <compClass>Cults.CompAbilityEffect_PsionicBlast</compClass>
             </li>
         </comps>
@@ -47,7 +47,23 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_EerieScorch</defName>
+        <iconPath>UI/Abilities/EerieScorch</iconPath>
         <label>Eerie Scorch</label>
+        <verbProperties>
+        <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <requireLineOfSight>True</requireLineOfSight>
+            <warmupTime>1</warmupTime>
+            <range>10</range>
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetAnimals>true</canTargetAnimals>
+                <canTargetHumans>true</canTargetHumans>
+                <canTargetItems>false</canTargetItems>
+                <canTargetLocations>false</canTargetLocations>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetMechs>false</canTargetMechs>
+            </targetParams>
+        </verbProperties>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
                 <residualEnergyGain>2~4</residualEnergyGain>
@@ -62,6 +78,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_Castigation</defName>
+        <iconPath>UI/Abilities/Castigation</iconPath>
         <label>Castigation</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -80,6 +97,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_BreathOfTheSea</defName>
+        <iconPath>UI/Abilities/BreathOfTheSea</iconPath>
         <label>Breath of The Sea</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -95,6 +113,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_SwellingTorment</defName>
+        <iconPath>UI/Abilities/SwellingTorment</iconPath>
         <label>Swelling Torment</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -110,6 +129,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_GraspFromBellow</defName>
+        <iconPath>UI/Abilities/GraspFromBellow</iconPath>
         <label>Grasp From Bellow</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -128,6 +148,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_UtteranceOfBile</defName>
+        <iconPath>UI/Abilities/UtteranceOfBile</iconPath>
         <label>Utterance of Bile</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -143,6 +164,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_MiasmaField</defName>
+        <iconPath>UI/Abilities/MiasmaField</iconPath>
         <label>Miasma Field</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -158,6 +180,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_Zymoticism</defName>
+        <iconPath>UI/Abilities/Zymoticism</iconPath>
         <label>Zymoticism</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -177,6 +200,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_ObscureVision</defName>
+        <iconPath>UI/Abilities/ObscureVision</iconPath>
         <label>Obscure Vision</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -192,6 +216,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_Madness</defName>
+        <iconPath>UI/Abilities/Madness</iconPath>
         <label>Madness</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -207,6 +232,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_MindDance</defName>
+        <iconPath>UI/Abilities/MindDance</iconPath>
         <label>Mind Dance</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -225,6 +251,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_AbnormalShift</defName>
+        <iconPath>UI/Abilities/AbnormalShift</iconPath>
         <label>abnormal shift</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -237,7 +264,7 @@
             </li>
         </comps>
         <verbProperties>
-            <verbClass>Cults.Verb_MoveOccultMagic</verbClass>
+            <verbClass>Cults.Verb_Move</verbClass>
             <requireLineOfSight>True</requireLineOfSight>
             <warmupTime>0.5</warmupTime>
             <range>26</range>
@@ -256,6 +283,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_Shriveling</defName>
+        <iconPath>UI/Abilities/Shriveling</iconPath>
         <label>Shriveling</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
@@ -271,6 +299,7 @@
 
     <AbilityDef ParentName="OccultPsycastBase">
         <defName>Cults_Ability_SpectralShield</defName>
+        <iconPath>UI/Abilities/SpectralShield</iconPath>
         <label>Spectral Shield</label>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">

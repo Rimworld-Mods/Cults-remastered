@@ -14,12 +14,15 @@ using Verse.Grammar;
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
 using RimWorld.Planet;     // RimWorld specific functions for world creation
 
+
+// TODO: remove?
 namespace Cults
 {
 	public class CompProperties_AbilityGiveHediff : RimWorld.CompProperties_AbilityGiveHediff
 	{
         public List<BodyPartDef> partsToAffect;
         public int bodyPartCount = 1;
+		public JobDef jobToStart;
 	}
 }
 

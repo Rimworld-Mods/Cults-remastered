@@ -63,8 +63,7 @@
 
     <JobDef>
         <defName>Cults_Job_VomitBile</defName>
-        <!-- todo: vomit bile -->
-        <driverClass>Cults.JobDriver_VomitWater</driverClass>
+        <driverClass>Cults.JobDriver_VomitBile</driverClass>
         <playerInterruptible>false</playerInterruptible>
         <casualInterruptible>false</casualInterruptible>
         <reportString>vomiting.</reportString>

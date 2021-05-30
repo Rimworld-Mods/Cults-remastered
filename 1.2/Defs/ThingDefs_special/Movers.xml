@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef Abstract="True" Name="BaseMover">
+        <label>moving</label>
+        <category>Ethereal</category>
+        <useHitPoints>true</useHitPoints>
+        <drawOffscreen>true</drawOffscreen>
+        <tickerType>Normal</tickerType>
+        <altitudeLayer>Skyfaller</altitudeLayer>
+        <drawerType>RealtimeOnly</drawerType>
+    </ThingDef>
+
+
+
+    <ThingDef ParentName="BaseMover">
+        <defName>Cults_AbnormalShift</defName>
+        <thingClass>Cults.ThingMover</thingClass>
+        <pawnFlyer>
+            <flightDurationMin>0.4</flightDurationMin>
+            <flightSpeed>20</flightSpeed>
+            <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
+            <soundLanding>JumpPackLand</soundLanding>
+        </pawnFlyer>
+    </ThingDef>
+
+    <ThingDef ParentName="BaseMover">
+        <defName>Cults_BlastThing</defName>
+        <thingClass>Cults.ThingMover</thingClass>
+        <pawnFlyer>
+            <flightDurationMin>0.4</flightDurationMin>
+            <flightSpeed>50</flightSpeed>
+            <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
+            <soundLanding>JumpPackLand</soundLanding>
+        </pawnFlyer>
+    </ThingDef>
+</Defs>
