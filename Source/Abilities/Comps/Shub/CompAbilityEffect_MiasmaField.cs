@@ -25,12 +25,16 @@ namespace Cults
 		}
 	}
 
+	// PawnObserver.cs
 
 	public class CompAbilityEffect_MiasmaField : CompAbilityEffect{
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);             
+			Pawn pawn = parent.pawn;
+			Log.Message("Casted spell: " + parent.def.label);   
+			// GenExplosion.DoExplosion(pawn.Position, pawn.Map, 8, DamageDefOf.Smoke, null, -1, -1f, null, null, null, null, ThingDefOf.Gas_Smoke, 1f);          
+			GenExplosion.DoExplosion(target.Cell, pawn.Map, 8, CultsDefOf.Cults_Damage_Miasma, null, -1, -1f, null, null, null, null, CultsDefOf.Cults_Gas_Miasma, 1f);          
 		}
 	}
 

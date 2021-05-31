@@ -50,7 +50,7 @@
         <iconPath>UI/Abilities/EerieScorch</iconPath>
         <label>Eerie Scorch</label>
         <verbProperties>
-        <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
             <requireLineOfSight>True</requireLineOfSight>
             <warmupTime>1</warmupTime>
             <range>10</range>
@@ -166,6 +166,21 @@
         <defName>Cults_Ability_MiasmaField</defName>
         <iconPath>UI/Abilities/MiasmaField</iconPath>
         <label>Miasma Field</label>
+        <verbProperties>
+            <verbClass>Cults.Verb_CastOccultMagic</verbClass>
+            <requireLineOfSight>True</requireLineOfSight>
+            <warmupTime>1</warmupTime>
+            <range>10</range>
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetAnimals>false</canTargetAnimals>
+                <canTargetHumans>false</canTargetHumans>
+                <canTargetItems>false</canTargetItems>
+                <canTargetLocations>true</canTargetLocations>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetMechs>false</canTargetMechs>
+            </targetParams>
+        </verbProperties>
         <comps>
             <li Class="Cults.CompProperties_AbilityOccult">
                 <residualEnergyGain>2~5</residualEnergyGain>

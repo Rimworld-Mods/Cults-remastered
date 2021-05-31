@@ -28,6 +28,12 @@ namespace Cults
     {
         //private CompProperties_Altar Props => (CompProperties_Altar)this.props;
 
+        public override void CompTick()
+        {
+            base.CompTick();
+            Log.Message("altar is ticking");
+        }
+
         public override void PostSpawnSetup(bool raf) // respawn after laod
         {
             Log.Message("spawn");

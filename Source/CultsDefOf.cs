@@ -93,6 +93,10 @@ namespace Cults
         // Filth
         public static ThingDef Cults_Filth_WaterVomit;
         public static ThingDef Cults_Filth_BileVomit;
+        public static ThingDef Cults_Gas_Miasma;
+
+
+        public static DamageDef Cults_Damage_Miasma;
         
         //-------------------------------------------------------
         // Conditions
@@ -134,6 +138,9 @@ namespace Cults
         public static HediffDef Cults_SanityLoss;
         public static HediffDef Cults_Hediff_WateryLungs;
         public static HediffDef Cults_Hediff_FoulBile;
+        
+
+        public static ThingDef Cults_Mote_Miasma;
 
     }
 

@@ -23,7 +23,6 @@
         </filth>
     </ThingDef>
 
-
     <EffecterDef>
         <defName>Cults_Effecter_VomitWater</defName>
         <children>

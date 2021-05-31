@@ -30,23 +30,25 @@ namespace Cults
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Hediff hediff = target.Pawn.health.hediffSet.GetFirstHediffOfDef(CultsDefOf.Cults_Hediff_FoulBile);
-			IEnumerable<BodyPartRecord> liver = target.Pawn.RaceProps.body.GetPartsWithDef(BodyPartDefOf.Liver);
+			Pawn pawn = target.Pawn;
+			Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(CultsDefOf.Cults_Hediff_FoulBile);
+			IEnumerable<BodyPartRecord> liver = pawn.RaceProps.body.GetPartsWithDef(BodyPartDefOf.Liver);
 			if(!liver.Any())
 			{
-				Messages.Message(parent.def.LabelCap + ": failed. Target does not have a liver", new LookTargets(target.Pawn), MessageTypeDefOf.RejectInput, historical: false);
+				Messages.Message(parent.def.LabelCap + ": failed. Target does not have a liver", new LookTargets(pawn), MessageTypeDefOf.RejectInput, historical: false);
+				return;
 			}
 			if(hediff != null)
 			{
 				hediff.Severity += hediff.def.initialSeverity;
 				Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_VomitBile);
-				target.Pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
+				pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
 			}
 			else
 			{
-				HediffGiverUtility.TryApply(target.Pawn, CultsDefOf.Cults_Hediff_FoulBile, new List<BodyPartDef>() { BodyPartDefOf.Liver }, true, 1, null);
+				HediffGiverUtility.TryApply(pawn, CultsDefOf.Cults_Hediff_FoulBile, new List<BodyPartDef>() { BodyPartDefOf.Liver }, true, 1, null);
 				Job job = JobMaker.MakeJob(CultsDefOf.Cults_Job_VomitBile);
-				target.Pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
+				pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
 			}
           
 		}

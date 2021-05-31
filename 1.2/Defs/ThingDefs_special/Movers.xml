@@ -18,8 +18,8 @@
         <pawnFlyer>
             <flightDurationMin>0.4</flightDurationMin>
             <flightSpeed>20</flightSpeed>
-            <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
-            <soundLanding>JumpPackLand</soundLanding>
+            <!-- <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
+            <soundLanding>JumpPackLand</soundLanding> -->
         </pawnFlyer>
     </ThingDef>
 
@@ -29,8 +29,8 @@
         <pawnFlyer>
             <flightDurationMin>0.4</flightDurationMin>
             <flightSpeed>50</flightSpeed>
-            <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
-            <soundLanding>JumpPackLand</soundLanding>
+            <!-- <flightEffecterDef>JumpFlightEffect</flightEffecterDef>
+            <soundLanding>JumpPackLand</soundLanding> -->
         </pawnFlyer>
     </ThingDef>
 </Defs>

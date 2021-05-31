@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="BaseGas">
+		<defName>Cults_Gas_Miasma</defName>
+		<thingClass>Cults.Miasma</thingClass>
+		<label>miasma</label>
+		<graphicData>
+			<texPath>Things/Gas/Puff</texPath>
+			<drawSize>3.4</drawSize>
+			<color>(0.1,0.1,0.1, 0.7)</color>
+		</graphicData>
+		<gas>
+			<expireSeconds>60~62</expireSeconds>
+			<blockTurretTracking>true</blockTurretTracking>
+			<accuracyPenalty>0.7</accuracyPenalty>
+			<rotationSpeed>10</rotationSpeed>
+		</gas>
+	</ThingDef>
+
+	<DamageDef>
+		<workerClass>Cults.MiasmaWorker</workerClass>
+		<defName>Cults_Damage_Miasma</defName>
+		<label>miasma</label>
+		<canInterruptJobs>false</canInterruptJobs>
+		<makesBlood>false</makesBlood>
+		<defaultDamage>0</defaultDamage>
+		<!-- <explosionCellMote>Mote_BlastExtinguisher</explosionCellMote> -->
+		<explosionColorEdge>(0, 0, 0, 0.05)</explosionColorEdge>
+		<harmsHealth>false</harmsHealth>
+		<soundExplosion>Explosion_Smoke</soundExplosion>
+		<combatLogRules>Damage_Smoke</combatLogRules>
+	</DamageDef>
+
+	<ThingDef ParentName="MoteBase">
+		<defName>Cults_Mote_Miasma</defName>
+		<graphicData>
+			<!-- <texPath>Things/Mote/Smoke</texPath> -->
+			<texPath>Things/Gas/Puff</texPath>
+			<color>(0.1,0.1,0.1, 0.6)</color>
+		</graphicData>
+		<altitudeLayer>MoteOverhead</altitudeLayer>
+		<mote>
+			<fadeInTime>0.50</fadeInTime>
+			<solidTime>8</solidTime>
+			<fadeOutTime>3.2</fadeOutTime>
+			<growthRate>0.005</growthRate>
+		</mote>
+	</ThingDef>
+</Defs>
