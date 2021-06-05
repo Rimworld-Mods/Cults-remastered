@@ -26,16 +26,12 @@ namespace Cults
         public static TimeAssignmentDef Cults_TimeAssignment_Worship;
         public static NeedDef Cults_Need_Spirituality;
         public static SkillDef Cults_Skill_Occultism;
+        public static DamageDef Cults_Damage_Miasma;
 
-        
         //public static ThingDef Cults_OccultFire;
         public static ThingDef Cults_OccultSpark;
         public static ThingDef Cults_AbnormalShift;
         public static ThingDef Cults_BlastThing;
-        
-        //-------------------------------------------------------
-        // Buildings
-        //public static ThingDef Cults_Building_StandardAltar;
 
         //-------------------------------------------------------
         // AI, think, work
@@ -51,11 +47,6 @@ namespace Cults
         public static RecipeDef Cults_OfferMeatRaw;
         public static RecipeDef Cults_OfferMeatRaw_Worthy;
         public static RecipeDef Cults_SacrificeHuman;
-
-        //-------------------------------------------------------
-        // Effecters
-        public static EffecterDef Cults_Effecter_VomitWater;
-        public static EffecterDef Cults_Effecter_VomitBile;
 
         //-------------------------------------------------------
         // Items
@@ -83,7 +74,6 @@ namespace Cults
 
         //-------------------------------------------------------
         // Buildings
-        // public static ThingDef Cults_Building_Debug;
         public static ThingDef Cults_Building_StandardAltar;
         public static ThingDef Cults_Building_SacrificialAltar;
         public static ThingDef Cults_Building_BloodAltar;
@@ -95,9 +85,6 @@ namespace Cults
         public static ThingDef Cults_Filth_BileVomit;
         public static ThingDef Cults_Gas_Miasma;
 
-
-        public static DamageDef Cults_Damage_Miasma;
-        
         //-------------------------------------------------------
         // Conditions
         public static GameConditionDef Cults_GameCondition_StarsAreWrong;
@@ -134,13 +121,24 @@ namespace Cults
 
         //-------------------------------------------------------
         // Heddifs
-
         public static HediffDef Cults_SanityLoss;
         public static HediffDef Cults_Hediff_WateryLungs;
         public static HediffDef Cults_Hediff_FoulBile;
+        public static HediffDef Cults_Hediff_MiasmaSickness;
+        public static HediffDef Cults_Hediff_FungalInfection;
+        public static HediffDef Cults_Hediff_SwellingBrain;
+        public static HediffDef Cults_Hediff_UnspeakableOath;
+        public static HediffDef Cults_Hediff_SpectralShield;
         
+        //-------------------------------------------------------
+        // Effecters
+        public static EffecterDef Cults_Effecter_VomitWater;
+        public static EffecterDef Cults_Effecter_VomitBile;
 
+        //-------------------------------------------------------
+        // Motes
         public static ThingDef Cults_Mote_Miasma;
+        public static ThingDef Cults_Mote_Slash;
 
     }
 

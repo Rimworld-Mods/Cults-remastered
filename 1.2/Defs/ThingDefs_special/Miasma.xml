@@ -30,20 +30,5 @@
 		<soundExplosion>Explosion_Smoke</soundExplosion>
 		<combatLogRules>Damage_Smoke</combatLogRules>
 	</DamageDef>
-
-	<ThingDef ParentName="MoteBase">
-		<defName>Cults_Mote_Miasma</defName>
-		<graphicData>
-			<!-- <texPath>Things/Mote/Smoke</texPath> -->
-			<texPath>Things/Gas/Puff</texPath>
-			<color>(0.1,0.1,0.1, 0.6)</color>
-		</graphicData>
-		<altitudeLayer>MoteOverhead</altitudeLayer>
-		<mote>
-			<fadeInTime>0.50</fadeInTime>
-			<solidTime>8</solidTime>
-			<fadeOutTime>3.2</fadeOutTime>
-			<growthRate>0.005</growthRate>
-		</mote>
-	</ThingDef>
+	
 </Defs>

@@ -2,25 +2,22 @@
 <Defs>
     <!-- initial, minor, major, serious/severe, extreme -->
 
-    <HediffDef Name="AbilityHediffBase" Abstract="True">
-        <maxSeverity>1.0</maxSeverity>
+    <HediffDef>
         <hediffClass>Cults.HediffWithComps</hediffClass>
-    </HediffDef>
-
-    <HediffDef ParentName="AbilityHediffBase">
         <defName>Cults_Hediff_WateryLungs</defName>
         <label>watery lungs</label>
         <description>description</description>
-        <defaultLabelColor>(0.45, 0.2, 1.0)</defaultLabelColor>
+        <defaultLabelColor>(0.45, 0.3, 1.0)</defaultLabelColor>
         <initialSeverity>0.3</initialSeverity>
+        <maxSeverity>1.0</maxSeverity>
         <comps>
             <li Class="HediffCompProperties_SeverityPerDay">
                 <severityPerDay>-0.6</severityPerDay>
             </li>
             <li Class="Cults.HediffCompProperties_PerformJob">
-                <compClass>Cults.HediffComp_Vomit</compClass>
+                <compClass>Cults.HediffComp_PerformJob</compClass>
                 <jobDef>Cults_Job_VomitWater</jobDef>
-                <jobMtbDays>0.1</jobMtbDays>
+                <jobMtbDays>0.05</jobMtbDays>
             </li>
         </comps>
         <stages>
@@ -52,15 +49,6 @@
                 </capMods>
             </li>
             <li>
-                <minSeverity>0.6</minSeverity>
-                <label>serious</label>
-                <painOffset>0.20</painOffset>
-                <capMods>
-                    <li><offset>-0.45</offset><capacity>Breathing</capacity></li>
-                    <li><offset>-0.15</offset><capacity>Manipulation</capacity></li>
-                </capMods>
-            </li>
-            <li>
                 <minSeverity>0.8</minSeverity>
                 <label>extreme</label>
                 <painOffset>0.25</painOffset>
@@ -72,18 +60,21 @@
         </stages>
     </HediffDef>
 
-    <HediffDef ParentName="AbilityHediffBase">
+
+    <HediffDef>
+        <hediffClass>Cults.HediffWithComps</hediffClass>
         <defName>Cults_Hediff_FoulBile</defName>
         <label>foul bile</label>
         <description>description</description>
         <defaultLabelColor>(0.4, 0.7, 0.3)</defaultLabelColor>
         <initialSeverity>0.3</initialSeverity>
+        <maxSeverity>1.0</maxSeverity>
         <comps>
             <li Class="HediffCompProperties_SeverityPerDay">
                 <severityPerDay>-0.6</severityPerDay>
             </li>
             <li Class="Cults.HediffCompProperties_PerformJob">
-                <compClass>Cults.HediffComp_Vomit</compClass>
+                <compClass>Cults.HediffComp_PerformJob</compClass>
                 <jobDef>Cults_Job_VomitBile</jobDef>
                 <jobMtbDays>0.1</jobMtbDays>
             </li>
@@ -118,15 +109,6 @@
                 </capMods>
             </li>
             <li>
-                <minSeverity>0.6</minSeverity>
-                <label>serious</label>
-                <painOffset>0.20</painOffset>
-                <capMods>
-                    <li><offset>-0.45</offset><capacity>Breathing</capacity></li>
-                    <li><offset>-0.15</offset><capacity>Manipulation</capacity></li>
-                </capMods>
-            </li>
-            <li>
                 <minSeverity>0.8</minSeverity>
                 <label>extreme</label>
                 <painOffset>0.25</painOffset>
@@ -137,4 +119,214 @@
             </li>
         </stages>
     </HediffDef>
+
+
+    <HediffDef>
+        <hediffClass>HediffWithComps</hediffClass>
+        <defName>Cults_Hediff_MiasmaSickness</defName>
+        <label>miasma sickness</label>
+        <description>description</description>
+        <defaultLabelColor>(0.78, 0.78, 0.33)</defaultLabelColor>
+        <initialSeverity>0.01</initialSeverity>
+        <lethalSeverity>1.0</lethalSeverity>
+        <maxSeverity>1.0</maxSeverity>
+        <comps>
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>-0.2</severityPerDay>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <minSeverity>0</minSeverity>
+                <label>initial</label>
+                <capMods>
+                    <li><offset>-0.05</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.05</offset><capacity>Consciousness</capacity></li>
+                    <li><offset>-0.00</offset><capacity>Talking</capacity></li>
+                    <li><offset>-0.00</offset><capacity>Moving</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.2</minSeverity>
+                <label>minor</label>
+                <capMods>
+                    <li><offset>-0.10</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.10</offset><capacity>Consciousness</capacity></li>
+                    <li><offset>-0.02</offset><capacity>Talking</capacity></li>
+                    <li><offset>-0.05</offset><capacity>Moving</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.4</minSeverity>
+                <label>major</label>
+                <painOffset>0</painOffset>
+                <capMods>
+                    <li><offset>-0.15</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.20</offset><capacity>Consciousness</capacity></li>
+                    <li><offset>-0.04</offset><capacity>Talking</capacity></li>
+                    <li><offset>-0.10</offset><capacity>Moving</capacity></li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.8</minSeverity>
+                <label>extreme</label>
+                <lifeThreatening>true</lifeThreatening>
+                <painOffset>0</painOffset>
+                <capMods>
+                    <li><offset>-0.30</offset><capacity>Breathing</capacity></li>
+                    <li><offset>-0.40</offset><capacity>Consciousness</capacity></li>
+                    <li><offset>-0.08</offset><capacity>Talking</capacity></li>
+                    <li><offset>-0.20</offset><capacity>Moving</capacity></li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+
+
+    <HediffDef ParentName="InfectionBase">
+        <defName>Cults_Hediff_FungalInfection</defName>
+        <label>fungal infection</label>
+        <labelNoun>an infection</labelNoun>
+        <description>Fungal infection. Without treatment, the fungus will spread, causing blood poisoning and painful death.</description>
+        <defaultLabelColor>(0.8, 0.7, 0.2)</defaultLabelColor>
+        <makesSickThought>true</makesSickThought>
+        <lethalSeverity>1</lethalSeverity>
+        <maxSeverity>1</maxSeverity>
+        <tendable>true</tendable>
+        <comps>
+            <li Class="HediffCompProperties_TendDuration">
+                <baseTendDurationHours>12</baseTendDurationHours>
+                <severityPerDayTended>-0.53</severityPerDayTended>
+            </li>
+            <li Class="HediffCompProperties_Immunizable">
+                <severityPerDayNotImmune>0.84</severityPerDayNotImmune>
+                <immunityPerDaySick>0.6441</immunityPerDaySick>
+                <severityPerDayImmune>-0.70</severityPerDayImmune>
+                <immunityPerDayNotSick>-0.40</immunityPerDayNotSick>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <minSeverity>0</minSeverity>
+                <label>initial</label>
+                <painOffset>0.02</painOffset>
+            </li>
+            <li>
+                <minSeverity>0.16</minSeverity>
+                <label>minor</label>
+                <painOffset>0.05</painOffset>
+            </li> 
+            <li>
+                <minSeverity>0.33</minSeverity>
+                <label>major</label>
+                <painOffset>0.08</painOffset>
+            </li>
+            <li>
+                <minSeverity>0.78</minSeverity>
+                <label>extreme</label>
+                <lifeThreatening>true</lifeThreatening>
+                <painOffset>0.12</painOffset>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <offset>-0.05</offset>
+                    </li>
+                </capMods>
+            </li>
+            <li>
+                <minSeverity>0.87</minSeverity>
+                <label>extreme</label>
+                <lifeThreatening>true</lifeThreatening>
+                <painOffset>0.85</painOffset>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <setMax>0.1</setMax>
+                    </li>
+                    <li>
+                        <capacity>Breathing</capacity>
+                        <offset>-0.05</offset>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+
+
+    <HediffDef>
+        <hediffClass>HediffWithComps</hediffClass>
+        <defName>Cults_Hediff_SwellingBrain</defName>
+        <label>swelling brain</label>
+        <description>description.</description>
+        <defaultLabelColor>(0.7, 0.8, 0.3)</defaultLabelColor>
+        <makesSickThought>true</makesSickThought>
+        <lethalSeverity>1</lethalSeverity>
+        <maxSeverity>1.0</maxSeverity>
+        <tendable>true</tendable>
+        <comps>
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>60000~90000</disappearsAfterTicks> <!-- 1.0 ~ 1.5 days -->
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <label>intense pain</label>
+                <painOffset>0.6</painOffset>
+                <restFallFactorOffset>1.0</restFallFactorOffset>
+                <capMods>
+                    <li><offset>0.5</offset><capacity>Manipulation</capacity></li>
+                    <li><offset>0.5</offset><capacity>Moving</capacity></li>
+                    <li><offset>0.5</offset><capacity>BloodPumping</capacity></li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+    
+
+    <HediffDef>
+        <hediffClass>HediffWithComps</hediffClass>
+        <defName>Cults_Hediff_UnspeakableOath</defName>
+        <label>unspeakable oath</label>
+        <description>description.</description>
+        <defaultLabelColor>(0.7, 0.8, 0.2)</defaultLabelColor>
+        <comps>
+            <li Class="HediffCompProperties">
+                <compClass>Cults.HediffComp_Resurrect</compClass>
+            </li>
+        </comps>
+    </HediffDef>
+
+
+    <HediffDef>
+        <hediffClass>Cults.Hediff_SpectralShield</hediffClass>
+        <defName>Cults_Hediff_SpectralShield</defName>
+        <label>spectral shield</label>
+        <description>description.</description>
+        <defaultLabelColor>(0.7, 0.8, 0.2)</defaultLabelColor>
+        <initialSeverity>1.0</initialSeverity>
+        <stages>
+            <li>
+                <minSeverity>0.0</minSeverity>
+                <label>fragile</label>
+            </li>
+            <li>
+                <minSeverity>0.2</minSeverity>
+                <label>weak</label>
+            </li>
+            <li>
+                <minSeverity>0.4</minSeverity>
+                <label>intermediate</label>
+            </li>
+            <li>
+                <minSeverity>0.7</minSeverity>
+                <label>strong</label>
+            </li>
+        </stages>
+        <comps>
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>-1.0</severityPerDay>
+            </li>
+        </comps>
+    </HediffDef>
+
 </Defs>

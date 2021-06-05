@@ -30,7 +30,19 @@ namespace Cults
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);             
+			Log.Message("Casted spell: " + parent.def.label);     
+			Pawn pawn = target.Pawn;
+			// List<BodyPartRecord> parts = pawn.RaceProps.body.AllParts;
+
+			Hediff hediff = pawn?.health?.hediffSet?.GetFirstHediffOfDef(CultsDefOf.Cults_Hediff_FoulBile);
+			if(hediff == null)
+			{
+				HediffGiverUtility.TryApply(pawn, CultsDefOf.Cults_Hediff_FoulBile, null, false, 1, null);
+			}
+			else
+			{
+				Messages.Message("Target already has an infection", new LookTargets(pawn), MessageTypeDefOf.RejectInput, historical: false);
+			}        
 		}
 	}
 

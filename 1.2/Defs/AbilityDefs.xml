@@ -203,8 +203,14 @@
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityZymoticism">
-                <compClass>Cults.CompAbilityEffect_Zymoticism</compClass>
+            <li Class="Cults.CompProperties_AbilityGiveHediff">
+                <partsToAffect>
+                    <li>Lung</li>
+                </partsToAffect>
+                <partsCount>2</partsCount>
+                <hediffDef>Cults_Hediff_WateryLungs</hediffDef>
+                <jobToStart>Cults_Job_VomitWater</jobToStart>
+                <affectRandomPart>true</affectRandomPart>
             </li>
         </comps>
     </AbilityDef>
@@ -223,8 +229,8 @@
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilityObscureVision">
-                <compClass>Cults.CompAbilityEffect_ObscureVision</compClass>
+            <li Class="Cults.CompProperties_AbilityGiveHediff">
+                <hediffDef>Cults_Hediff_UnspeakableOath</hediffDef>
             </li>
         </comps>
     </AbilityDef>
@@ -322,8 +328,8 @@
                 <sanityLoss>0.05</sanityLoss>
                 <occultismGain>15</occultismGain>
             </li>
-            <li Class="Cults.CompProperties_AbilitySpectralShield">
-                <compClass>Cults.CompAbilityEffect_SpectralShield</compClass>
+            <li Class="Cults.CompProperties_AbilityGiveHediff">
+                <hediffDef>Cults_Hediff_SpectralShield</hediffDef>
             </li>
         </comps>
     </AbilityDef>

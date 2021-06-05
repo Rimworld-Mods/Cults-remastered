@@ -30,7 +30,26 @@ namespace Cults
 		public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
 		{
 			base.Apply(target, dest);
-			Log.Message("Casted spell: " + parent.def.label);             
+			Log.Message("Casted spell: " + parent.def.label);   
+
+			Pawn pawn = target.Pawn;
+			if(pawn != null && pawn.stances != null)
+			{
+				DamageInfo dinfo = new DamageInfo(DamageDefOf.Cut, 20, 1.0f);
+				this.MakeMote(target.Pawn);
+				pawn.stances.StaggerFor(45);
+				pawn.TakeDamage(dinfo); // todo: associate with combat log: .AssociateWithLog(battleLogEntry_RangedImpact);
+			}          
+		}
+		
+
+		private void MakeMote(Pawn pawn){
+			Vector3 loc = pawn.TrueCenter();
+			Mote obj = (Mote)ThingMaker.MakeThing(CultsDefOf.Cults_Mote_Slash);
+			obj.Scale = 1.9f;
+			obj.rotationRate = Rand.Range(-60, 60);
+			obj.exactPosition = loc;
+			GenSpawn.Spawn(obj, loc.ToIntVec3(), pawn.Map);
 		}
 	}
 

@@ -15,20 +15,19 @@ using RimWorld.Planet;     // RimWorld specific functions for world creation
 
 namespace Cults
 {
-    
-    public class HediffComp_Vomit : Verse.HediffComp
+    class MoteSlash : Mote
     {
-        HediffCompProperties_PerformJob Props => (HediffCompProperties_PerformJob)props;
-        public override void CompPostTick(ref float severityAdjustment)
-		{
-            Pawn pawn = parent.pawn;
-            // parent.CurStage;
-            // TODO: make with stages
-			if (Props.jobMtbDays > 0f && pawn.IsHashIntervalTick(600) && Rand.MTBEventOccurs(Props.jobMtbDays, 60000f, 600f) && parent.pawn.Spawned && pawn.Awake() && pawn.RaceProps.IsFlesh)
-			{
-				pawn.jobs.StartJob(JobMaker.MakeJob(Props.jobDef), JobCondition.InterruptForced, null, resumeCurJobAfterwards: true);
-			}
-		}
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            this.exactRotation = Rand.Value * 180;
+            base.SpawnSetup(map, respawningAfterLoad);
+        }
+
+        public override void Tick()
+        {
+            this.exactScale += new Vector3(-0.2f, 0.0f, 0.4f);
+            base.Tick();
+        }
     }
 
 }
